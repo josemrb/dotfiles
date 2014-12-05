@@ -1,0 +1,16 @@
+set nocompatible
+filetype off
+
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" vundle
+Plugin 'gmarik/Vundle.vim'
+
+" theme
+Plugin 'chriskempson/base16-vim'
+
+call vundle#end()
+filetype plugin indent on
+
+cmap w!! w !sudo tee > /dev/null %
