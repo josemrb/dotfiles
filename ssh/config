@@ -1,0 +1,6 @@
+# github global account
+Host github.com
+  HostName github.com
+  User josemrb
+  IdentityOnly yes
+  IdentityFile ~/.ssh/id_rsa.josermb.com
