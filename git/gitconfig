@@ -13,3 +13,5 @@
 [user]
 	name = josemrb
 	email = work@josemrb.com
+[push]
+	default = simple
