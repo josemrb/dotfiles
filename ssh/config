@@ -1,4 +1,4 @@
 Host github.com
   User josemrb
-  IdentityOnly yes
   IdentityFile /home/josemrb/.ssh/id_rsa.josemrb.com
+

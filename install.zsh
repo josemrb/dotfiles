@@ -20,3 +20,14 @@ done
 
 git clone https://github.com/gmarik/Vundle.vim.git "${ZDOTDIR:-$HOME}/.vim/bundle/Vundle.vim"
 vim +PluginInstall +qall
+
+# git
+for rcfile in $pwd/git/*(.N); do
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.${rcfile:t}"
+done
+
+# ssh
+for rcfile in $pwd/ssh/*(.N); do
+  ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.ssh/${rcfile:t}"
+done
+

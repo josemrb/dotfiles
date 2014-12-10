@@ -4,13 +4,96 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" vundle
+" vundle manages vundle
 Plugin 'gmarik/Vundle.vim'
 
-" theme
-Plugin 'chriskempson/base16-vim'
+""" system visuals
+" status bar / tab line
+Plugin 'bling/vim-airline'
+" status / show buffers
+Plugin 'bling/vim-bufferline'
+" buffer gator
+Plugin 'jeetsukumaran/vim-buffergator'
+" themes"
+Plugin 'tomasr/molokai'
+
+" git support
+"Plugin 'tpope/vim-fugitive'
+
+" search
+"Plugin 'kien/ctrlp.vim'
+
+" nerd tree file explorer
+"Plugin 'scrooloose/nerdtree'
+
+" tag ar
+"Plugin 'majutsushi/tagbar'
+
+" syntax checker
+"Plugin 'scrooloose/syntastic'
+
+
+" utils
+"Plugin 'tpope/vim-eunuch'
+"Plugin 'tpope/vim-repeat'
+
+" programming aids
+"Plugin 'tpope/vim-commentary'
+"Plugin 'tpope/vim-abolish'
+"Plugin 'tpope/vim-surround'
+"Plugin 'tpope/vim-jdaddy'
+
+" xolox bundle
+"Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-easytags'
+"Plugin 'xolox/vim-notes'
+
+" ruby
+"Plugin 'tpope/vim-rbenv'
+"Plugin 'vim-ruby/vim-ruby'
+"Plugin 'tpope/vim-rake'
+"Plugin 'tpope/vim-bundler'
+"Plugin 'tpope/vim-endwise'
+"Plugin 'tpope/vim-haml'
+"Plugin 'tpope/vim-rails'
+
+" sites
+"Plugin 'mattn/gist-vim'
 
 call vundle#end()
+
+" vim config
 filetype plugin indent on
 
+let mapleader=","
+
+
+set wildmenu
+set wildmode=list:longest,full
+
+""" buffergator
+" right side of the screen
+let g:buffergator_viewport_split_policy = 'R'
+
+" enable keymappings...
+let g:buffergator_suppress_keymaps = 1
+
+" loop buffers
+let g:buffergator_mru_cycle_loop = 1
+
+" previous buffer open
+nmap <leader>jj :BuffergatorMruCyclePrev<cr>
+
+" next buffer open
+nmap <leader>kk :BuffergatorMruCycleNext<cr>
+
+" list of buffers open
+nmap <leader>bg :BuffergatorToggle<cr>
+
+""" snippets
+" sudo and save current file
 cmap w!! w !sudo tee > /dev/null %
+
+""" theme
+let g:rehash256 = 1
+colorscheme molokai
