@@ -7,6 +7,8 @@ for rcfile in ./prezto/*(.N); do
   rm "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 
+rm -rf "${ZDOTDIR:-$HOME}/.zprezto"
+
 # tmux
 for rcfile in ./tmux/*(.N); do
   rm "${ZDOTDIR:-$HOME}/.${rcfile:t}"
