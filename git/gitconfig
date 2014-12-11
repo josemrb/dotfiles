@@ -1,0 +1,17 @@
+[branch]
+	autosetuprebase = always
+[core]
+	editor = vim
+	autocrlf = false
+[color]
+	status = auto
+	branch = auto
+	interactive = auto
+	diff = auto
+[merge]
+	tool = meld
+[user]
+	name = josemrb
+	email = work@josemrb.com
+[push]
+	default = simple
