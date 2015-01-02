@@ -14,18 +14,14 @@ local rb
 rb=$(git describe --tags | cut --delimiter="-" -f1)
 git checkout $rb
 
-#git clone https://github.com/sstephenson/rbenv-default-gems.git $HOME/.rbenv/plugins/rbenv-default-gems
-#cd $HOME/.rbenv/plugins/rbenv-default-gems
-#git fetch --tags
-#local rdg
-#rdg=$(git describe --tags | cut --delimiter="-" -f1)
-#git checkout $rdg
-
-cat <<EOF > $HOME/.rbenv/default-gems 
+cat <<EOF > $HOME/.rbenv/default-gems
 bundler
-ripper-tags
+gem-ripper-tags
 gem-browse
-gem-ctags
+EOF
+
+cat <<EOF > $HOME/.gemrc
+gem: --no-document
 EOF
 
 exit 0
