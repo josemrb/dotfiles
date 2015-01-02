@@ -4,95 +4,290 @@ filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-" vundle manages vundle
+""" vundle manages vundle
 Plugin 'gmarik/Vundle.vim'
 
-""" system visuals
+""" themes
+Plugin 'tomasr/molokai'
+
+""" status and tab bars 
 " status bar / tab line
 Plugin 'bling/vim-airline'
 " status / show buffers
 Plugin 'bling/vim-bufferline'
 " buffer gator
 Plugin 'jeetsukumaran/vim-buffergator'
-" themes"
-Plugin 'tomasr/molokai'
 
-" git support
-"Plugin 'tpope/vim-fugitive'
-
-" search
-"Plugin 'kien/ctrlp.vim'
-
+""" file utils 
+" fuzzy search
+Plugin 'kien/ctrlp.vim'
 " nerd tree file explorer
-"Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+" buffer / files helper
+Plugin 'tpope/vim-eunuch'
 
-" tag ar
-"Plugin 'majutsushi/tagbar'
+""" omni completion
+" html5
+Plugin 'othree/html5.vim'
+" supertab
+Plugin 'ervandew/supertab'
 
+""" tags management
+" easytags
+"Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-shell'
+"Plugin 'xolox/vim-easytags'
+" tag bar
+Plugin 'majutsushi/tagbar'
+
+""" syntax
 " syntax checker
 "Plugin 'scrooloose/syntastic'
 
-
-" utils
-"Plugin 'tpope/vim-eunuch'
-"Plugin 'tpope/vim-repeat'
+""" snippets 
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
 
 " programming aids
-"Plugin 'tpope/vim-commentary'
-"Plugin 'tpope/vim-abolish'
-"Plugin 'tpope/vim-surround'
-"Plugin 'tpope/vim-jdaddy'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'tpope/vim-abolish'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-jdaddy'
 
-" xolox bundle
-"Plugin 'xolox/vim-misc'
-"Plugin 'xolox/vim-easytags'
-"Plugin 'xolox/vim-notes'
-
+""" programming languages
 " ruby
-"Plugin 'tpope/vim-rbenv'
-"Plugin 'vim-ruby/vim-ruby'
-"Plugin 'tpope/vim-rake'
-"Plugin 'tpope/vim-bundler'
-"Plugin 'tpope/vim-endwise'
-"Plugin 'tpope/vim-haml'
-"Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-rbenv'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-rake'
+Plugin 'tpope/vim-bundler'
+Plugin 'tpope/vim-haml'
+Plugin 'tpope/vim-rails'
 
-" sites
+""" utils
+"Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-dispatch'
+Plugin 'tpope/vim-unimpaired'
+
+""" external tools 
+" git support
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-fugitive'
+
+""" external sites
 "Plugin 'mattn/gist-vim'
 
 call vundle#end()
 
-" vim config
-filetype plugin indent on
+""" vim config
+set autoread
+set hidden
+set nobackup
+set noswapfile
 
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+set nrformats-=octal
+
+set ttimeout
+set ttimeoutlen=100
+
+" store lots of :cmdline history
+set history=1000
+set showcmd "show incomplete cmds down the bottom
+set showmode "show current mode down the bottom
+set number "show line numbers
+
+" display tabs and trailing spaces
+set list
+set listchars=tab:▷⋅,trail:⋅,extends:>,precedes:<,nbsp:+
+
+set incsearch "find the next match as we type the search
+set hlsearch "hilight searches by default
+
+set wrap "dont wrap lines
+set linebreak "wrap lines at convenient points
+set showbreak=↪
+set ruler
+
+" undo settings
+set undodir=~/.vim/undofiles
+set undofile
+set colorcolumn=+1 "mark the ideal max text width
+
+" tab/indent settings
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+set expandtab
+set smarttab
+set autoindent
+
+set foldmethod=indent "fold based on indent
+set foldnestmax=3 "deepest fold is 3 leves
+set nofoldenable "disable by default 
+
+set wildmode=list:longest,full "menu list config
+set wildmenu "enable menu list
+
+" formating options
+set formatoptions-=o
+set formatoptions+=j
+
+" horizontal/vertical scroll settings
+set scrolloff=3
+set sidescrolloff=7
+set sidescroll=1
+
+" complete mode
+set complete-=i
+
+" default encoding
+set encoding=utf-8
+
+" enable indent files
+filetype indent on
+" enable ft plugins
+filetype plugin on
+" enable syntax highlight
+syntax on
+
+" enable omnifunc
+set omnifunc=syntaxcomplete#Complete
+
+" enable 256 colors console
+set t_Co=256
+
+" set map leader
 let mapleader=","
 
+" nop unusual commands
+nnoremap Q <nop>
 
-set wildmenu
-set wildmode=list:longest,full
+" configure windows motion
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
+
+" disable highlight
+nnoremap <leader><space> :noh<cr>
+
+" ignore files
+set wildignore+=*/tmp/*,*.swp
+
+""" vim-airline
+" displays all the buffers when only one tab is open
+let g:airline#extensions#tabline#enabled = 1
+" set alternative separator to pipe
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+" displays always
+set laststatus=2
 
 """ buffergator
 " right side of the screen
 let g:buffergator_viewport_split_policy = 'R'
-
 " enable keymappings...
 let g:buffergator_suppress_keymaps = 1
-
 " loop buffers
 let g:buffergator_mru_cycle_loop = 1
-
 " previous buffer open
-nmap <leader>jj :BuffergatorMruCyclePrev<cr>
-
+nmap <leader>jb :BuffergatorMruCyclePrev<cr>
 " next buffer open
-nmap <leader>kk :BuffergatorMruCycleNext<cr>
-
+nmap <leader>kb :BuffergatorMruCycleNext<cr>
 " list of buffers open
-nmap <leader>bg :BuffergatorToggle<cr>
+nmap <leader>b :BuffergatorToggle<cr>
+
+""" CtrlP
+" use leader
+let g:ctrlp_map = '<leader>p'
+" set default mode
+let g:ctrlp_cmd = 'CtrlP'
+" set root dir mode
+let g:ctrlp_working_path_mode = 'raw'
+" default open file mode = current window
+let g:ctrlp_open_new_file = 'r'
+" multiple files open = current window
+let g:ctrlp_open_multiple_files = 'r'
+" customize promp mappings
+let g:ctrlp_prompt_mappings = {
+  \ 'AcceptSelection("h")': ['<c-i>'],
+  \ 'AcceptSelection("v")': ['<c-v>']
+  \ }
+
+""" NERDtree
+map <leader>n :NERDTreeToggle<CR>
+" change CWD to follow tree root
+let g:NERDTreeChDirMode = 2
+
+""" omni completion
+""" supertab
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-p>"
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextDiscoverDiscovery = ["&omnifunc:<c-x><c-o>"]
+" completion chaining omnifunc -> keyword or user completion
+autocmd FileType * 
+      \ if &omnifunc != '' |
+      \ call SuperTabChain(&omnifunc, "<c-p>") |
+      \ call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
+      \ endif
+
+""" vim-easytags
+" enable async mode
+"let g:easytags_async = 1
+" set easytags tags file
+"let g:easytags_file = '~/.vim/tags'
+" global ctags
+"let g:easytags_cmd = ''
+" ruby specific options
+"let g:easytags_languages = {
+      "\   'ruby': {
+      "\     'cmd': '/home/josemrb/.rbenv/versions/2.1.3/bin/ripper-tags',
+      "\       'args': [],
+      "\       'fileoutput_opt': '-f',
+      "\       'stdout_opt': '-f-',
+      "\       'recurse_flag': '-R'
+      "\   }
+      "\}
+
+" set relative tags file
+"set tags=./.tags;
+" enable dynamic tags
+"let g:easytags_dynamic_files = 2
+" events
+"let g:easytags_events = ['BufReadPost', 'BufWritePost']
+" disable auto highlight
+"let g:easytags_auto_highlight = 0
+" enable auto recursive
+"let g:easytags_autorecurse = 1
+" disable python integration
+"let g:easytags_python_enabled = 0
+
+""" tagbar
+nmap <leader>t :TagbarToggle<CR>
+let g:tagbar_type_ruby = {
+    \ 'kinds' : [
+        \ 'm:modules',
+        \ 'c:classes',
+        \ 'd:describes',
+        \ 'C:contexts',
+        \ 'f:methods',
+        \ 'F:singleton methods'
+    \ ]
+    \ }
 
 """ snippets
 " sudo and save current file
 cmap w!! w !sudo tee > /dev/null %
+
+""" vim-repeat
+" add handle for BuffergatorToggle
+" silent! call repeat#set("\<Plug><leader>bg", v:count)
 
 """ theme
 let g:rehash256 = 1
