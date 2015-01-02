@@ -1,32 +1,33 @@
 #!/bin/zsh
 
 setopt EXTENDED_GLOB
+pwd=${0:a:h}
 
 # prezto
-for rcfile in ./prezto/*(.N); do
+for rcfile in $pwd/../prezto/*(.N); do
   rm "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 
 rm -rf "${ZDOTDIR:-$HOME}/.zprezto"
 
 # tmux
-for rcfile in ./tmux/*(.N); do
+for rcfile in $pwd/../tmux/*(.N); do
   rm "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 
 # vim
-for rcfile in ./vim/*(.N); do
+for rcfile in  $pwd/../vim/*(.N); do
   rm "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 
 rm -rf "${ZDOTDIR:-$HOME}/.vim/bundle" 
 
 # git
-for rcfile in ./git/*(.N); do
+for rcfile in $pwd/../git/*(.N); do
   rm "${ZDOTDIR:-$HOME}/.${rcfile:t}"
 done
 
 # ssh
-for rcfile in ./ssh/*(.N); do
+for rcfile in $pwd/../ssh/*(.N); do
   rm "${ZDOTDIR:-$HOME}/.ssh/${rcfile:t}"
 done
