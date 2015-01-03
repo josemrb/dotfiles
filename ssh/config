@@ -1,4 +1,4 @@
 Host github.com
   User josemrb
-  IdentityFile /home/josemrb/.ssh/id_rsa.josemrb.com
+  IdentityFile ~/.ssh/id_rsa.josemrb.com
 
