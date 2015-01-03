@@ -29,7 +29,7 @@ for rcfile in $pwd/../git/*(.N); do
 done
 
 # ssh
-mkdir -p "${ZDOTDIR:-$HOME}/.ssh
+mkdir -p ${ZDOTDIR:-$HOME}/.ssh
 for rcfile in $pwd/../ssh/*(.N); do
   ln -s "$rcfile" "${ZDOTDIR:-$HOME}/.ssh/${rcfile:t}"
 done
