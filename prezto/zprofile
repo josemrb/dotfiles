@@ -44,9 +44,13 @@ typeset -gU cdpath fpath mailpath path
 # Set the list of directories that Zsh searches for programs.
 path=(
   /usr/local/{bin,sbin}
-  $home/Apps/bin
+  $home/apps/bin
   $path
 )
+
+if [[ ! -d "$VAGRANT_HOME" ]]; then
+  export VAGRANT_HOME="$HOME/infrastructure/vagrant"
+fi
 
 #
 # Less
