@@ -1,0 +1,29 @@
+" vim: set sw=2 ts=2 sts=2 et tw=120 foldmarker={,} foldlevel=0 foldmethod=marker
+" before
+" set defaults
+
+" enable 256 colors console
+set t_Co=256
+
+" set map leader
+let mapleader=","
+
+" nop unusual commands
+nnoremap Q <nop>
+
+" configure windows motion
+nnoremap <leader>h <C-w>h
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>l <C-w>l
+
+" disable highlight
+nnoremap <leader><space> :noh<cr>
+
+" ignore files
+set wildignore+=*/tmp/*,*.swp
+
+" call before local
+if filereadable(expand("~/.vimrc.before.local"))
+  source ~/.vimrc.before.local
+endif
