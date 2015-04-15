@@ -2,11 +2,11 @@
 " before
 " set defaults
 
-" enable 256 colors console
-set t_Co=256
+" set leader
+let mapleader=','
 
-" set map leader
-let mapleader=","
+" set localleader
+let maplocalleader='_'
 
 " nop unusual commands
 nnoremap Q <nop>
@@ -20,10 +20,14 @@ nnoremap <leader>l <C-w>l
 " disable highlight
 nnoremap <leader><space> :noh<cr>
 
-" ignore files
-set wildignore+=*/tmp/*,*.swp
+"wrapped lines handling
+noremap j gj
+noremap k gk
+
+" sudo and save current file
+cmap w!! w !sudo tee > /dev/null %
 
 " call before local
 if filereadable(expand("~/.vimrc.before.local"))
-  source ~/.vimrc.before.local
+  source \~/.vimrc.before.local
 endif

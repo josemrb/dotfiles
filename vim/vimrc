@@ -1,15 +1,18 @@
 " vim: set sw=2 ts=2 sts=2 et tw=120 foldmarker={,} foldlevel=0 foldmethod=marker
+" init
+set nocompatible
+
 " call before
 if filereadable(expand("~/.vimrc.before"))
-  source ~/.vimrc.before
+  source \~/.vimrc.before
 endif
 
 " call bundles
 if filereadable(expand("~/.vimrc.bundles"))
-  source ~/.vimrc.bundles
+  source \~/.vimrc.bundles
 endif
 
-""" vim config
+""" general
 " enable indent files
 filetype indent on
 " enable ft plugins
@@ -21,52 +24,110 @@ syntax on
 set mouse=a
 set mousehide
 
+" default encoding
+set encoding=utf-8
 scriptencoding utf-8
 
+" complete mode
+set complete-=i
+
 set autoread
+set shortmess+=filmnrxoOtT
+set viewoptions=folds,options,cursor,unix,slash
+set virtualedit=onemore
+set history=1000 "store lots of :cmdline history
+set spell
 set hidden
 set iskeyword-=.
 set iskeyword-=#
 set iskeyword-=-
 
 set nobackup
+if ('has_persistence_undo')
+  " undo settings
+  set undodir=~/.vim/undofiles
+  set undofile
+  set undolevels=1000
+  set undoreload=10000
+endif
 set noswapfile
+
+" ignore files
+set wildignore+=*/tmp/*,*.swp
+
+""" visual ui
+set tabpagemax=15 "show max 15 tabs
+set showmode "show current mode down the bottom
+set cursorline
+
+" set highlight colors
+highlight clear SignColumn
+highlight clear LineNr
+
+if has('cmdline_info')
+  set showcmd "show incomplete cmds down the bottom
+  set ruler
+  set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) "a ruler on steroids
+endif
+
+if has('statusline')
+  " displays always
+  set laststatus=2
+endif
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-
-set nrformats-=octal
-
-set ttimeout
-set ttimeoutlen=100
-
-set history=1000 "store lots of :cmdline history
-set tabpagemax=15 "show max 15 tabs
-set showcmd "show incomplete cmds down the bottom
-set showmode "show current mode down the bottom
+set linespace=0
 set number "show line numbers
-set cursorline
+
+" search highlight
+set showmatch
+set incsearch "find the next match as we type the search
+set hlsearch "hilight searches by default
+set winminheight=0 "min windows line height
+
+" case handling
+set ignorecase
+set smartcase
+
+" menu
+set wildmenu "enable menu list
+set wildmode=list:longest,full "menu list config
+set whichwrap=b.s.h.l<,>,[,]
+
+" horizontal/vertical scroll settings
+set scrolljump=5
+set scrolloff=3
+set sidescrolloff=7
+set sidescroll=1
+
+" fold
+set foldmethod=indent "fold based on indent
+set foldnestmax=3 "deepest fold is 3 leves
+set nofoldenable "disable by default
 
 " display tabs and trailing spaces
 set list
 set listchars=tab:▷⋅,trail:⋅,extends:>,precedes:<,nbsp:+
 
-set incsearch "find the next match as we type the search
-set hlsearch "hilight searches by default
-" set highlight colors
-highlight clear SignColumn
-highlight clear LineNr
+" configure default split
+set splitright
+set splitbelow
 
-set wrap "dont wrap lines
+set colorcolumn=+1 "mark the ideal max text width
+
+" enable 256 colors console
+set t_Co=256
+
+" theme
+let g:rehash256 = 1
+colorscheme molokai
+
+""" formatting
+set nowrap "dont wrap lines
 set linebreak "wrap lines at convenient points
 set showbreak=↪
-set ruler
-set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) "a ruler on steroids
-
-" undo settings
-set undodir=~/.vim/undofiles
-set undofile
-set colorcolumn=+1 "mark the ideal max text width
+set autoindent
 
 " tab/indent settings
 set tabstop=2
@@ -74,41 +135,70 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab
 set smarttab
-set autoindent
 
-set foldmethod=indent "fold based on indent
-set foldnestmax=3 "deepest fold is 3 leves
-set nofoldenable "disable by default 
+set pastetoggle=<F2>
+set nrformats-=octal
 
-set wildmode=list:longest,full "menu list config
-set wildmenu "enable menu list
+set ttimeout
+set ttimeoutlen=100
 
 " formating options
 set formatoptions-=o
 set formatoptions+=j
 
-" horizontal/vertical scroll settings
-set scrolloff=3
-set sidescrolloff=7
-set sidescroll=1
+""" key mapping
+nnoremap Y y$ "yank to the end-of-line like C D
 
-" complete mode
-set complete-=i
+" fold code maps
+nmap <leader>f0 :set foldlevel=0<CR>
+nmap <leader>f1 :set foldlevel=1<CR>
+nmap <leader>f2 :set foldlevel=2<CR>
+nmap <leader>f3 :set foldlevel=3<CR>
+nmap <leader>f4 :set foldlevel=4<CR>
+nmap <leader>f5 :set foldlevel=5<CR>
+nmap <leader>f6 :set foldlevel=6<CR>
+nmap <leader>f7 :set foldlevel=7<CR>
+nmap <leader>f8 :set foldlevel=8<CR>
+nmap <leader>f9 :set foldlevel=9<CR>
 
-" default encoding
-set encoding=utf-8
+nmap <silent> <leader>/ :set invhlsearch<CR>
 
-" enable omnifunc
-set omnifunc=syntaxcomplete#Complete
+" visual shifting
+vnoremap < <gv
+vnoremap > >gv
+
+" repeat in visual mode
+vnoremap . :normal .<CR>
+
+" adjust viewport size
+map <leader>= <C-w>=
+
+" horizontal scrolling
+map zl zL
+map zh zH
+
+""" plugins
+""" ack.vim
+
+""" vim-indent-guides
+let g:indent_guides_start_level = 2
+let g:indent_guides_guide_size = 1
+let g:indent_guides_enable_on_vim_startup = 1
+
+""" vim-over
+
+""" numbers
+let g:numbers_exclude = ['tagbar', 'nerdtree']
+nnoremap <F3> :NumbersToggle<CR>
+nnoremap <F4> :NumbersOnOff<CR>
 
 """ vim-airline
+let g:airline_theme = 'solarized'
 " displays all the buffers when only one tab is open
 let g:airline#extensions#tabline#enabled = 1
 " set alternative separator to pipe
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
-" displays always
-set laststatus=2
 
 """ buffergator
 " right side of the screen
@@ -123,6 +213,19 @@ nmap <leader>jb :BuffergatorMruCyclePrev<cr>
 nmap <leader>kb :BuffergatorMruCycleNext<cr>
 " list of buffers open
 nmap <leader>b :BuffergatorToggle<cr>
+
+""" NERDTree
+let g:NERDShutUp=1
+map <leader>n :NERDTreeToggle<CR>
+let NERDTreeShowBookmarks=1
+let NERDTreeIgnore=['\.git$']
+" change CWD to follow tree root
+let g:NERDTreeChDirMode = 2
+let g:NERDTreeQuitOnOpen=1
+let g:NERDTreeShowHidden=1
+
+""" NERDtree git
+""" vim-eunuch
 
 """ CtrlP
 " use leader
@@ -140,55 +243,81 @@ let g:ctrlp_prompt_mappings = {
   \ 'AcceptSelection("h")': ['<c-i>'],
   \ 'AcceptSelection("v")': ['<c-v>']
   \ }
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\.git$\|\.hg$\',
+  \ 'file': '\.exe\'
+  \ }
+let g:ctrlp_user_command = {
+  \ 'types': {
+    \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
+  \ },
+  \ 'fallback': s:ctrlp_fallback
+\ }
 
-""" NERDtree
-map <leader>n :NERDTreeToggle<CR>
-" change CWD to follow tree root
-let g:NERDTreeChDirMode = 2
+""" vim-surround
+""" vim-repeat
+""" vim-abolish
+""" vim-textobj-user
+""" vim-textobj-indent
 
-""" omni completion
-""" supertab
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-p>"
-let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextDiscoverDiscovery = ["&omnifunc:<c-x><c-o>"]
-" completion chaining omnifunc -> keyword or user completion
-"autocmd FileType * 
-"      \ if &omnifunc != '' |
-"      \ call SuperTabChain(&omnifunc, "<c-p>") |
-"      \ call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
-"      \ endif
+""" wildfire
+let g:wildfire_objects = {
+  \ '*' : ["i'", 'i"', "i)", 'i]', 'i}', 'ip'],
+  \ 'html,xml' : ['at'],
+  \ }
 
-""" vim-easytags
-" enable async mode
-"let g:easytags_async = 1
-" set easytags tags file
-"let g:easytags_file = '~/.vim/tags'
-" global ctags
-"let g:easytags_cmd = ''
-" ruby specific options
-"let g:easytags_languages = {
-      "\   'ruby': {
-      "\     'cmd': '/home/josemrb/.rbenv/versions/2.1.3/bin/ripper-tags',
-      "\       'args': [],
-      "\       'fileoutput_opt': '-f',
-      "\       'stdout_opt': '-f-',
-      "\       'recurse_flag': '-R'
-      "\   }
-      "\}
+""" vim-textobj-sentence
+augroup textobj_sentence
+  autocmd!
+  autocmd FileType markdown call textobj#sentence#init()
+  autocmd FileType textile call textobj#sentence#init()
+  autocmd FileType text call textobj#sentence#init()
+augroup END
 
-" set relative tags file
-"set tags=./.tags;
-" enable dynamic tags
-"let g:easytags_dynamic_files = 2
-" events
-"let g:easytags_events = ['BufReadPost', 'BufWritePost']
-" disable auto highlight
-"let g:easytags_auto_highlight = 0
-" enable auto recursive
-"let g:easytags_autorecurse = 1
-" disable python integration
-"let g:easytags_python_enabled = 0
+""" vim-textobj-quote
+augroup textobj_quote
+  autocmd!
+  autocmd FileType markdown call textobj#quote#init()
+  autocmd FileType textile call textobj#quote#init()
+  autocmd FileType text call textobj#quote#init()
+augroup END
+
+""" vim-multiple-cursors
+""" vim-easymotion
+
+""" syntastic
+""" NERDCommenter
+""" tabular
+nmap <Leader>a& :Tabularize /&<CR>
+vmap <Leader>a& :Tabularize /&<CR>
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a=> :Tabularize /=><CR>
+vmap <Leader>a=> :Tabularize /=><CR>
+nmap <Leader>a: :Tabularize /:<CR>
+vmap <Leader>a: :Tabularize /:<CR>
+nmap <Leader>a:: :Tabularize /:\zs<CR>
+vmap <Leader>a:: :Tabularize /:\zs<CR>
+nmap <Leader>a, :Tabularize /,<CR>
+vmap <Leader>a, :Tabularize /,<CR>
+nmap <Leader>a,, :Tabularize /,\zs<CR>
+vmap <Leader>a,, :Tabularize /,\zs<CR>
+nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
+
+""" vim-tags
+let g:vim_tags_auto_generate = 1
+let g:vim_tags_ctags_binary = 'ripper-tags'
+let g:vim_tags_project_tags_command = '{CTAGS} -R {OPTIONS} {DIRECTORY} 2>/dev/null'
+let g:vim_tags_gems_tags_command = '{CTAGS} -R {OPTIONS} `bundle show --paths` 2>/dev/null'
+let g:vim_tags_use_vim_dispatch = 1
+let g:vim_tags_use_language_field = 0
+let g:vim_tags_ignore_files = ['.gitignore', '.hgignore']
+let g:vim_tags_ignore_file_comment_pattern = '^[#"]'
+let g:vim_tags_directories = ['.git', '.hg']
+let g:vim_tags_main_file = 'tags'
+let g:vim_tags_extension = '.tags'
+let g:vim_tags_extension = expand($HOME)
 
 """ tagbar
 nmap <leader>t :TagbarToggle<CR>
@@ -203,21 +332,135 @@ let g:tagbar_type_ruby = {
     \ ]
     \ }
 
-""" snippets
-" sudo and save current file
-cmap w!! w !sudo tee > /dev/null %
+""" omnicomplete
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+" ruby
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
-""" vim-repeat
-" add handle for BuffergatorToggle
-" silent! call repeat#set("\<Plug><leader>bg", v:count)
+autocmd Filetype *
+  \if &omnifunc == "" |
+    \setlocal omnifunc=syntaxcomplete#Complete |
+  \endif
 
-""" ruby
-let g:rubycomplete_buffer_loading = 1 " ruby
+"hi Pmenu  guifg=#000000 guibg=#F8F8F8 ctermfg=black ctermbg=Lightgray
+"hi PmenuSbar  guifg=#8A95A7 guibg=#F8F8F8 gui=NONE ctermfg=darkcyan ctermbg=lightgray cterm=NONE
+"hi PmenuThumb  guifg=#F8F8F8 guibg=#8A95A7 gui=NONE ctermfg=lightgray ctermbg=darkcyan cterm=NONE
 
-""" theme
-let g:rehash256 = 1
-colorscheme molokai
+inoremap <expr> <Esc>      pumvisible() ? "\<C-e>" : "\<Esc>"
+inoremap <expr> <CR>       pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <expr> <Down>     pumvisible() ? "\<C-n>" : "\<Down>"
+inoremap <expr> <Up>       pumvisible() ? "\<C-p>" : "\<Up>"
+inoremap <expr> <C-d>      pumvisible() ? "\<PageDown>\<C-p>\<C-n>" : "\<C-d>"
+inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
+
+" open / close popup
+au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
+  set completeopt=menu,preview,longest
+endif
+
+""" ctags
+"set tags=./tags;/,~/.vimtags
+
+"" enable tags file in .git directory
+"let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
+"if gitroot != ''
+  "let &tags = &tags . ',' . gitroot . '/.git/tags'
+"endif
+
+""" neocomplete
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_fuzzy_completion = 1
+let g:neocomplete_enable_fuzzy_completion_start_length = 2
+let g:neocomplete_enable_camel_case_completion = 0
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#enable_auto_delimiter = 1
+let g:neocomplete#max_list = 15
+let g:neocomplete#force_overwrite_completefunc = 1
+let g:neocomplete#enable_auto_select = 0
+
+" define dictionary
+let g:neocomplete#sources#dictionary#dictionaries = {
+  \ 'default' : '',
+  \ 'vimshell' : $HOME.'/.vimshell_hist',
+  \ }
+
+" define keyword
+let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+" <C-k> Complete Snippet
+" <C-k> Jump to next snippet point
+imap <silent><expr><C-k> neosnippet#expandable() ?
+  \ "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ?
+  \ "\<C-e>" : "\<Plug>(neosnippet_expand_or_jump)")
+smap <TAB> <Right><Plug>(neosnippet_jump_or_expand)
+
+inoremap <expr><C-g> neocomplete#undo_completion()
+inoremap <expr><C-l> neocomplete#complete_common_string()
+"inoremap <expr><CR> neocomplete#complete_common_string()
+
+" <CR>: close popup
+" <s-CR>: close popup and save indent.
+inoremap <expr><s-CR> pumvisible() ? neocomplete#smart_close_popup()"\<CR>" : "\<CR>"
+
+function! CleverCr()
+  if pumvisible()
+    if neosnippet#expandable()
+      let exp = "\<Plug>(neosnippet_expand)"
+      return exp . neocomplete#smart_close_popup()
+    else
+      return neocomplete#smart_close_popup()
+    endif
+  else
+    return "\<CR>"
+  endif
+endfunction
+
+" <CR> close popup and save indent or expand snippet
+imap <expr> <CR> CleverCr()
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+inoremap <expr><C-y> neocomplete#smart_close_popup()
+endif
+" <TAB>: completion.
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+" Courtesy of Matteo Cavalleri
+function! CleverTab()
+  if pumvisible()
+      return "\<C-n>"
+  endif
+  let substr = strpart(getline('.'), 0, col('.') - 1)
+  let substr = matchstr(substr, '[^ \t]*$')
+  if strlen(substr) == 0
+    " nothing to match on empty string
+    return "\<Tab>"
+  else
+    " existing text matching
+    if neosnippet#expandable_or_jumpable()
+      return "\<Plug>(neosnippet_expand_or_jump)"
+    else
+      return neocomplete#start_manual_complete()
+    endif
+  endif
+endfunction
+
+imap <expr> <Tab> CleverTab()
+
+" integrate omnicomplete
+let g:neocomplete#sources#omni#input_patterns = {}
+let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
 
 " git
 " on revert git commit message reposition cursor
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+

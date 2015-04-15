@@ -26,6 +26,7 @@ endif
 Plugin 'tomasr/molokai'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'osyo-manga/vim-over'
+Plugin 'myusuf3/numbers.vim'
 
 """ status and tab bars 
 " status bar / tab line
@@ -39,10 +40,10 @@ Plugin 'jeetsukumaran/vim-buffergator'
 " nerd tree file explorer
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-" fuzzy search
-Plugin 'kien/ctrlp.vim'
 " buffer / files helper
 Plugin 'tpope/vim-eunuch'
+" fuzzy search
+Plugin 'kien/ctrlp.vim'
 
 """ text edit
 Plugin 'tpope/vim-surround'
@@ -118,8 +119,8 @@ Plugin 'mhinz/vim-signify'
 Plugin 'mattn/gist-vim'
 
 " call bundles local
-"if filereadable(expand("~/.vimrc.bundles.local"))
-"  source ~/.vimrc.bundles.local
-"endif
+if filereadable(expand("~/.vimrc.bundles.local"))
+  source \~/.vimrc.bundles.local
+endif
 
 call vundle#end()
