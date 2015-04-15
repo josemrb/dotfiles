@@ -93,7 +93,7 @@ set smartcase
 " menu
 set wildmenu "enable menu list
 set wildmode=list:longest,full "menu list config
-set whichwrap=b.s.h.l<,>,[,]
+set whichwrap=b,s,h,l,<,>,[,]
 
 " horizontal/vertical scroll settings
 set scrolljump=5
@@ -121,7 +121,6 @@ set t_Co=256
 
 " theme
 let g:rehash256 = 1
-colorscheme molokai
 
 """ formatting
 set nowrap "dont wrap lines
@@ -193,7 +192,6 @@ nnoremap <F3> :NumbersToggle<CR>
 nnoremap <F4> :NumbersOnOff<CR>
 
 """ vim-airline
-let g:airline_theme = 'solarized'
 " displays all the buffers when only one tab is open
 let g:airline#extensions#tabline#enabled = 1
 " set alternative separator to pipe
@@ -247,12 +245,6 @@ let g:ctrlp_custom_ignore = {
   \ 'dir': '\.git$\|\.hg$\',
   \ 'file': '\.exe\'
   \ }
-let g:ctrlp_user_command = {
-  \ 'types': {
-    \ 1: ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-  \ },
-  \ 'fallback': s:ctrlp_fallback
-\ }
 
 """ vim-surround
 """ vim-repeat
@@ -361,8 +353,7 @@ inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 
 " open / close popup
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-  set completeopt=menu,preview,longest
-endif
+set completeopt=menu,preview,longest
 
 """ ctags
 "set tags=./tags;/,~/.vimtags
@@ -392,6 +383,9 @@ let g:neocomplete#sources#dictionary#dictionaries = {
   \ }
 
 " define keyword
+if !exists('g:neocomplete#keyword_patterns')
+  let g:neocomplete#keyword_patterns = {}
+endif
 let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
@@ -429,7 +423,6 @@ imap <expr> <CR> CleverCr()
 " <C-h>, <BS>: close popup and delete backword char.
 inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 inoremap <expr><C-y> neocomplete#smart_close_popup()
-endif
 " <TAB>: completion.
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<TAB>"
@@ -464,3 +457,4 @@ let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\h\w*\|\h\w*::'
 " on revert git commit message reposition cursor
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
+colorscheme molokai
