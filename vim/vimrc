@@ -298,31 +298,39 @@ nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 
 """ vim-tags
-let g:vim_tags_auto_generate = 1
-let g:vim_tags_ctags_binary = 'ripper-tags'
-let g:vim_tags_project_tags_command = '{CTAGS} -R {OPTIONS} {DIRECTORY} 2>/dev/null'
-let g:vim_tags_gems_tags_command = '{CTAGS} -R {OPTIONS} `bundle show --paths` 2>/dev/null'
-let g:vim_tags_use_vim_dispatch = 1
-let g:vim_tags_use_language_field = 0
-let g:vim_tags_ignore_files = ['.gitignore', '.hgignore']
-let g:vim_tags_ignore_file_comment_pattern = '^[#"]'
-let g:vim_tags_directories = ['.git', '.hg']
-let g:vim_tags_main_file = 'tags'
-let g:vim_tags_extension = '.tags'
-let g:vim_tags_extension = expand($HOME)
+"let g:vim_tags_auto_generate = 1
+"let g:vim_tags_ctags_binary = 'ripper-tags'
+"let g:vim_tags_project_tags_command = '{CTAGS} -R {OPTIONS} {DIRECTORY} 2>/dev/null'
+"let g:vim_tags_gems_tags_command = '{CTAGS} -R {OPTIONS} `bundle show --paths` 2>/dev/null'
+"let g:vim_tags_use_vim_dispatch = 1
+"let g:vim_tags_use_language_field = 0
+"let g:vim_tags_ignore_files = ['.gitignore', '.hgignore']
+"let g:vim_tags_ignore_file_comment_pattern = '^[#"]'
+"let g:vim_tags_directories = ['.git', '.hg']
+"let g:vim_tags_main_file = 'tags'
+"let g:vim_tags_extension = '.tags'
+"let g:vim_tags_extension = expand($HOME)
 
-""" tagbar
+""" vim-gutentags
+let g:gutentags_executable = 'rbenv exec ripper-tags'
+let g:gutentags_tagfile = 'tags'
+let g:gutentags_auto_set_tags = 1
+
+"" tagbar
 nmap <leader>t :TagbarToggle<CR>
+
 let g:tagbar_type_ruby = {
-    \ 'kinds' : [
-        \ 'm:modules',
-        \ 'c:classes',
-        \ 'd:describes',
-        \ 'C:contexts',
-        \ 'f:methods',
-        \ 'F:singleton methods'
+  \ 'ctagsbin': '/home/josemrb/.rbenv/versions/2.2.0/bin/ripper-tags',
+  \ 'ctagsargs': '-R',
+  \ 'kinds' : [
+      \ 'm:modules',
+      \ 'c:classes',
+      \ 'd:describes',
+      \ 'C:contexts',
+      \ 'f:methods',
+      \ 'F:singleton methods'
     \ ]
-    \ }
+  \ }
 
 """ omnicomplete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -354,15 +362,6 @@ inoremap <expr> <C-u>      pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 " open / close popup
 au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menu,preview,longest
-
-""" ctags
-"set tags=./tags;/,~/.vimtags
-
-"" enable tags file in .git directory
-"let gitroot = substitute(system('git rev-parse --show-toplevel'), '[\n\r]', '', 'g')
-"if gitroot != ''
-  "let &tags = &tags . ',' . gitroot . '/.git/tags'
-"endif
 
 """ neocomplete
 let g:acp_enableAtStartup = 0

@@ -66,7 +66,9 @@ Plugin 'godlygeek/tabular'
 
 """ tags management
 " vim-tags
-Plugin 'szw/vim-tags'
+"Plugin 'szw/vim-tags'
+" vim-gutentags
+Plugin 'ludovicchabant/vim-gutentag'
 " tag bar
 Plugin 'majutsushi/tagbar'
 
