@@ -65,22 +65,14 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'godlygeek/tabular'
 
 """ tags management
-" vim-tags
-"Plugin 'szw/vim-tags'
-" vim-gutentags
-Plugin 'ludovicchabant/vim-gutentag'
 " tag bar
 Plugin 'majutsushi/tagbar'
+" vim-tags
+Plugin 'szw/vim-tags'
 
 """ snippets & autocomplete
-" neobundle
-Plugin 'Shougo/neocomplete.vim'
-Plugin 'Shougo/neosnippet'
-Plugin 'Shougo/neosnippet-snippets'
-" repository of snippets
-" Plugin 'honza/vim-snippets'
 " supertab
-" Plugin 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 
 """ programming languages
 """ javascript
