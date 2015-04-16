@@ -68,7 +68,7 @@ Plugin 'godlygeek/tabular'
 " tag bar
 Plugin 'majutsushi/tagbar'
 " vim-tags
-Plugin 'szw/vim-tags'
+Plugin 'josemrb/vim-tags'
 
 """ snippets & autocomplete
 " supertab
