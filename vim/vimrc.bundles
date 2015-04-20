@@ -64,14 +64,13 @@ Plugin 'kristijanhusak/vim-multiple-cursors'
 Plugin 'Lokaltog/vim-easymotion'
 
 """ general programming
+Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'godlygeek/tabular'
 
 """ tags management
 " tag bar
 Plugin 'majutsushi/tagbar'
-" vim-tags
-"Plugin 'josemrb/vim-tags'
 
 """ snippets & autocomplete
 " supertab
@@ -99,7 +98,6 @@ Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-haml'
 Plugin 'tpope/vim-rails'
-Plugin 'ngmy/vim-rubocop'
 
 """ others
 Plugin 'tpope/vim-markdown'
