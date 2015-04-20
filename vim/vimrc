@@ -145,37 +145,6 @@ set ttimeoutlen=100
 set formatoptions-=o
 set formatoptions+=j
 
-""" key mapping
-nnoremap Y y$ "yank to the end-of-line like C D
-
-" fold code maps
-nmap <leader>f0 :set foldlevel=0<CR>
-nmap <leader>f1 :set foldlevel=1<CR>
-nmap <leader>f2 :set foldlevel=2<CR>
-nmap <leader>f3 :set foldlevel=3<CR>
-nmap <leader>f4 :set foldlevel=4<CR>
-nmap <leader>f5 :set foldlevel=5<CR>
-nmap <leader>f6 :set foldlevel=6<CR>
-nmap <leader>f7 :set foldlevel=7<CR>
-nmap <leader>f8 :set foldlevel=8<CR>
-nmap <leader>f9 :set foldlevel=9<CR>
-
-nmap <silent> <leader>/ :set invhlsearch<CR>
-
-" visual shifting
-vnoremap < <gv
-vnoremap > >gv
-
-" repeat in visual mode
-vnoremap . :normal .<CR>
-
-" adjust viewport size
-map <leader>= <C-w>=
-
-" horizontal scrolling
-map zl zL
-map zh zH
-
 """ plugins
 """ ack.vim
 
@@ -211,6 +180,9 @@ nmap <leader>jb :BuffergatorMruCyclePrev<cr>
 nmap <leader>kb :BuffergatorMruCycleNext<cr>
 " list of buffers open
 nmap <leader>b :BuffergatorToggle<cr>
+
+""" vim-togglelist
+""" vim-unimpaired
 
 """ NERDTree
 let g:NERDShutUp=1
@@ -277,7 +249,6 @@ augroup END
 """ vim-multiple-cursors
 """ vim-easymotion
 
-""" syntastic
 """ NERDCommenter
 """ tabular
 nmap <Leader>a& :Tabularize /&<CR>
@@ -312,8 +283,6 @@ let g:vim_tags_main_file = 'tags'
 nmap <leader>t :TagbarToggle<CR>
 
 let g:tagbar_type_ruby = {
-  \ 'ctagsbin': 'ripper-tags',
-  \ 'ctagsargs': '-R',
   \ 'kinds' : [
       \ 'm:modules',
       \ 'c:classes',
@@ -331,7 +300,7 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " ruby
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
+autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
@@ -344,7 +313,7 @@ let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextDiscoverDiscovery = ["&omnifunc:<c-x><c-o>"]
 
 " completion chaining omnifunc -> keyword or user completion
-autocmd FileType * 
+autocmd FileType *
   \ if &omnifunc != '' |
     \ call SuperTabChain(&omnifunc, "<c-p>") |
     \ call SuperTabSetDefaultCompletionType("<c-x><c-u>") |

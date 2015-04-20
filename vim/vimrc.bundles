@@ -36,6 +36,10 @@ Plugin 'bling/vim-bufferline'
 " buffer gator
 Plugin 'jeetsukumaran/vim-buffergator'
 
+""" vim keymaps
+Plugin 'milkypostman/vim-togglelist'
+Plugin 'tpope/vim-unimpaired'
+
 """ file utils 
 " nerd tree file explorer
 Plugin 'scrooloose/nerdtree'
@@ -60,7 +64,6 @@ Plugin 'kristijanhusak/vim-multiple-cursors'
 Plugin 'Lokaltog/vim-easymotion'
 
 """ general programming
-Plugin 'scrooloose/syntastic'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'godlygeek/tabular'
 
@@ -68,7 +71,7 @@ Plugin 'godlygeek/tabular'
 " tag bar
 Plugin 'majutsushi/tagbar'
 " vim-tags
-Plugin 'josemrb/vim-tags'
+"Plugin 'josemrb/vim-tags'
 
 """ snippets & autocomplete
 " supertab
@@ -96,6 +99,7 @@ Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-haml'
 Plugin 'tpope/vim-rails'
+Plugin 'ngmy/vim-rubocop'
 
 """ others
 Plugin 'tpope/vim-markdown'
@@ -111,6 +115,7 @@ Plugin 'mhinz/vim-signify'
 
 """ external services
 Plugin 'mattn/gist-vim'
+Plugin 'mattn/webapi-vim'
 
 " call bundles local
 if filereadable(expand("~/.vimrc.bundles.local"))

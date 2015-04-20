@@ -10,12 +10,16 @@ let maplocalleader='_'
 
 " nop unusual commands
 nnoremap Q <nop>
+nnoremap q <nop>
 
 " configure windows motion
 nnoremap <leader>h <C-w>h
 nnoremap <leader>j <C-w>j
 nnoremap <leader>k <C-w>k
 nnoremap <leader>l <C-w>l
+
+" inverse highlight in search
+nmap <silent> <leader>/ :set invhlsearch<CR>
 
 " disable highlight
 nnoremap <leader><space> :noh<cr>
@@ -26,6 +30,35 @@ noremap k gk
 
 " sudo and save current file
 cmap w!! w !sudo tee > /dev/null %
+
+"yank to the end-of-line like C D
+nnoremap Y y$ 
+
+" fold code maps
+nmap <leader>f0 :set foldlevel=0<CR>
+nmap <leader>f1 :set foldlevel=1<CR>
+nmap <leader>f2 :set foldlevel=2<CR>
+nmap <leader>f3 :set foldlevel=3<CR>
+nmap <leader>f4 :set foldlevel=4<CR>
+nmap <leader>f5 :set foldlevel=5<CR>
+nmap <leader>f6 :set foldlevel=6<CR>
+nmap <leader>f7 :set foldlevel=7<CR>
+nmap <leader>f8 :set foldlevel=8<CR>
+nmap <leader>f9 :set foldlevel=9<CR>
+
+" visual shifting
+vnoremap < <gv
+vnoremap > >gv
+
+" repeat in visual mode
+vnoremap . :normal .<CR>
+
+" adjust viewport size
+map <leader>= <C-w>=
+
+" horizontal scrolling
+map zl zL
+map zh zH
 
 " call before local
 if filereadable(expand("~/.vimrc.before.local"))
