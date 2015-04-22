@@ -246,6 +246,9 @@ augroup textobj_quote
   autocmd FileType text call textobj#quote#init()
 augroup END
 
+""" vim-textobj-ruby
+let g:textobj_ruby_more_mappings = 1
+
 """ vim-multiple-cursors
 """ vim-easymotion
 

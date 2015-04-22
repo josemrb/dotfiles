@@ -50,6 +50,7 @@ Plugin 'tpope/vim-eunuch'
 Plugin 'kien/ctrlp.vim'
 
 """ text edit
+Plugin 'tmhedberg/matchit'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-abolish'
@@ -98,6 +99,8 @@ Plugin 'tpope/vim-rake'
 Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-haml'
 Plugin 'tpope/vim-rails'
+Plugin 'ecomba/vim-ruby-refactoring'
+Plugin 'rhysd/vim-textobj-ruby'
 
 """ others
 Plugin 'tpope/vim-markdown'
