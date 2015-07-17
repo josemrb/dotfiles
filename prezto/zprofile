@@ -80,3 +80,7 @@ TMPPREFIX="${TMPDIR%/}/zsh"
 if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
+
+if [[ -f ~/.nvm/nvm.sh ]]
+  . ~/.nvm/nvm.sh
+fi
