@@ -179,7 +179,7 @@ nmap <leader>jb :BuffergatorMruCyclePrev<cr>
 " next buffer open
 nmap <leader>kb :BuffergatorMruCycleNext<cr>
 " list of buffers open
-nmap <leader>b :BuffergatorToggle<cr>
+nmap <leader>bb :BuffergatorToggle<cr>
 
 """ vim-togglelist
 """ vim-unimpaired
@@ -214,7 +214,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'AcceptSelection("v")': ['<c-v>']
   \ }
 let g:ctrlp_custom_ignore = {
-  \ 'dir': '\.git$\|\.hg$\',
+  \ 'dir': '\v[\/](node_modules|bower_components|dist)|(\.(swp|git|hg))$',
   \ 'file': '\.exe\'
   \ }
 
@@ -324,8 +324,11 @@ autocmd FileType *
     \ call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
   \ endif
 
+" vim-mustache-handlebars
+let g:mustache_abbreviations = 1
+
 " git
 " on revert git commit message reposition cursor
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
-colorscheme molokai
+colorscheme PaperColor
