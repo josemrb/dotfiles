@@ -42,9 +42,13 @@ typeset -gU cdpath fpath mailpath path
 # )
 
 # Set the list of directories that Zsh searches for programs.
+PHPENV="/home/josemrb/.phpenv/bin"
+EXENV="/home/josemrb/.exenv/bin"
 path=(
-  /usr/local/{bin,sbin}
+  $PHPENV
+  $EXENV
   $home/apps/bin
+  /usr/local/{bin,sbin}
   $path
 )
 
@@ -81,6 +85,17 @@ if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
 
-if [[ -f ~/.nvm/nvm.sh ]]
+#
+# Version Managers
+#
+
+# nvm
+if [[ -f ~/.nvm/nvm.sh ]]; then
   . ~/.nvm/nvm.sh
 fi
+
+# phpenv
+eval "$(phpenv init -)"
+
+# exenv
+eval "$(exenv init -)"
