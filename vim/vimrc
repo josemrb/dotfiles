@@ -214,7 +214,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'AcceptSelection("v")': ['<c-v>']
   \ }
 let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v[\/](node_modules|bower_components|dist)|(\.(swp|git|hg))$',
+  \ 'dir': '\v[\/](node_modules|bower_components|dist|deps|_build)|(\.(swp|git|hg))$',
   \ 'file': '\.exe\'
   \ }
 
@@ -225,10 +225,12 @@ let g:ctrlp_custom_ignore = {
 """ vim-textobj-indent
 
 """ wildfire
+map <ENTER> <Plug>(wildfire-fuel)
 let g:wildfire_objects = {
-  \ '*' : ["i'", 'i"', "i)", 'i]', 'i}', 'ip'],
-  \ 'html,xml' : ['at'],
+  \ '*' : ["i'", 'i"', "i)", 'i]', 'i}','i>', 'ip'],
+  \ 'html,xml' : ['at', "it"],
   \ }
+nmap <leader>s <Plug>(wildfire-quick-select)
 
 """ vim-textobj-sentence
 augroup textobj_sentence
@@ -258,6 +260,8 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_elixir_checkers = ['elixir']
+let g:syntastic_enable_elixir_checker = 1
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -284,8 +288,33 @@ vmap <Leader>a,, :Tabularize /,\zs<CR>
 nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 
-"" tagbar
+""" tagbar
 nmap <leader>t :TagbarToggle<CR>
+
+let g:tagbar_type_css = {
+\ 'ctagstype' : 'Css',
+    \ 'kinds'     : [
+        \ 'c:classes',
+        \ 's:selectors',
+        \ 'i:identities'
+    \ ]
+\ }
+
+let g:tagbar_type_elixir = {
+\ 'ctagstype': 'Elixir',
+  \ 'kinds' : [
+      \ 'f:functions',
+      \ 'c:callbacks',
+      \ 'd:delegates',
+      \ 'e:exceptions',
+      \ 'i:implementations',
+      \ 'a:macros',
+      \ 'm:modules',
+      \ 'o:operations',
+      \ 'p:protocols',
+      \ 'r:records',
+    \ ]
+  \ }
 
 let g:tagbar_type_ruby = {
   \ 'kinds' : [
@@ -297,6 +326,21 @@ let g:tagbar_type_ruby = {
       \ 'F:singleton methods'
     \ ]
   \ }
+
+""" vim-tags
+" disabled by default
+let g:vim_tags_auto_generate = 0
+let g:vim_tags_ctags_binary = 'ctags'
+let g:vim_tags_project_tags_command = '{CTAGS} -R {OPTIONS} {DIRECTORY} 2>/dev/null'
+let g:vim_tags_gems_tags_command = ''
+let g:vim_tags_use_vim_dispatch = 1
+let g:vim_tags_use_language_field = 1
+let g:vim_tags_ignore_files = ['.gitignore', '.hgignore']
+let g:vim_tags_ignore_file_comment_pattern = '^[#"]'
+let g:vim_tags_directories = ['.git', '.hg']
+let g:vim_tags_main_file = 'tags'
+let g:vim_tags_extension = '.tags'
+let g:vim_tags_cache_dir = expand($HOME)
 
 """ omnicomplete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -324,11 +368,20 @@ autocmd FileType *
     \ call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
   \ endif
 
+" vim-emmet
+let g:user_emmet_mode='inv'
+let g:user_emmet_install_global = 0
+let g:user_emmet_leader_key='<C-z>'
+autocmd FileType css,eex,html EmmetInstall
+
 " vim-mustache-handlebars
 let g:mustache_abbreviations = 1
 
 " git
 " on revert git commit message reposition cursor
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
+" elixir
+autocmd FileType elixir let g:vim_tags_auto_generate = 1
 
 colorscheme PaperColor

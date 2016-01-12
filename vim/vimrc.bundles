@@ -73,6 +73,8 @@ Plugin 'godlygeek/tabular'
 """ tags management
 " tag bar
 Plugin 'majutsushi/tagbar'
+" vim-tags
+Plugin 'szw/vim-tags'
 
 """ snippets & autocomplete
 " supertab
@@ -88,6 +90,7 @@ Plugin 'kchmck/vim-coffee-script'
 """ html & css
 Plugin 'othree/html5.vim'
 Plugin 'amirh/HTML-AutoCloseTag'
+Plugin 'mattn/emmet-vim'
 Plugin 'groenewege/vim-less'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
@@ -103,6 +106,9 @@ Plugin 'tpope/vim-haml'
 Plugin 'tpope/vim-rails'
 Plugin 'ecomba/vim-ruby-refactoring'
 Plugin 'rhysd/vim-textobj-ruby'
+
+" elixir
+Plugin 'elixir-lang/vim-elixir'
 
 """ others
 Plugin 'tpope/vim-markdown'
