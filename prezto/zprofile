@@ -6,14 +6,6 @@
 #
 
 #
-# Browser
-#
-
-if [[ "$OSTYPE" == darwin* ]]; then
-  export BROWSER='open'
-fi
-
-#
 # Editors
 #
 
@@ -36,21 +28,24 @@ fi
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
-# Set the the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
+# Add version manager directories
+PHPENV_DIR="/home/josemrb/.phpenv"
+NVM_DIR="/home/josemrb/.nvm"
+EXENV_DIR="/home/josemrb/.exenv"
+
+PHPENV_BIN="$PHPENV_DIR/bin"
+NVM_BIN="$NVM_DIR/bin"
+EXENV_BIN="$EXENV_DIR/bin"
 
 # Set the list of directories that Zsh searches for programs.
 path=(
+  $PHPENV_BIN
+  $NVM_BIN
+  $EXENV_BIN
   /usr/local/{bin,sbin}
   $home/apps/bin
   $path
 )
-
-if [[ ! -d "$VAGRANT_HOME" ]]; then
-  export VAGRANT_HOME="$HOME/infrastructure/vagrant"
-fi
 
 #
 # Less
@@ -80,3 +75,24 @@ TMPPREFIX="${TMPDIR%/}/zsh"
 if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
+
+#
+# Infrastructure directories
+#
+
+if [[ ! -d "$VAGRANT_HOME" ]]; then
+  export VAGRANT_HOME="$HOME/infrastructure/vagrant"
+fi
+
+#
+# Version Managers
+#
+
+# phpenv
+eval "$(phpenv init -)"
+
+# nvm
+source "$NVM_DIR/nvm.sh"
+
+# exenv
+eval "$(exenv init -)"
