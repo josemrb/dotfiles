@@ -34,7 +34,7 @@ NVM_DIR="/home/josemrb/.nvm"
 EXENV_DIR="/home/josemrb/.exenv"
 
 PHPENV_BIN="$PHPENV_DIR/bin"
-NVM_BIN="$NVM_DIR/bin"
+NVM_BIN="$NVM_DIR"
 EXENV_BIN="$EXENV_DIR/bin"
 
 # Set the list of directories that Zsh searches for programs.

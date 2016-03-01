@@ -54,6 +54,7 @@ Plugin 'tmhedberg/matchit'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-abolish'
+Plugin 'PeterRincker/vim-argumentative'
 Plugin 'kana/vim-textobj-user'
 Plugin 'kana/vim-textobj-indent'
 Plugin 'whatyouhide/vim-textobj-xmlattr'
@@ -73,8 +74,6 @@ Plugin 'godlygeek/tabular'
 """ tags management
 " tag bar
 Plugin 'majutsushi/tagbar'
-" vim-tags
-Plugin 'szw/vim-tags'
 
 """ snippets & autocomplete
 " supertab
@@ -113,6 +112,7 @@ Plugin 'elixir-lang/vim-elixir'
 """ others
 Plugin 'tpope/vim-markdown'
 Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'vimwiki/vimwiki'
 
 """ utils
 Plugin 'tpope/vim-dispatch'
