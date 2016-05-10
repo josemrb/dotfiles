@@ -370,5 +370,5 @@ let g:vimwiki_list = [til_wiki]
 " git
 " on revert git commit message reposition cursor
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
-
+set background=dark
 colorscheme PaperColor
