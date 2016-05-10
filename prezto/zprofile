@@ -29,21 +29,15 @@ fi
 typeset -gU cdpath fpath mailpath path
 
 # Add version manager directories
-PHPENV_DIR="/home/josemrb/.phpenv"
-NVM_DIR="/home/josemrb/.nvm"
 EXENV_DIR="/home/josemrb/.exenv"
 
-PHPENV_BIN="$PHPENV_DIR/bin"
-NVM_BIN="$NVM_DIR"
 EXENV_BIN="$EXENV_DIR/bin"
 
 # Set the list of directories that Zsh searches for programs.
 path=(
-  $PHPENV_BIN
-  $NVM_BIN
   $EXENV_BIN
   /usr/local/{bin,sbin}
-  $home/apps/bin
+  $HOME/apps/bin
   $path
 )
 
@@ -87,12 +81,6 @@ fi
 #
 # Version Managers
 #
-
-# phpenv
-eval "$(phpenv init -)"
-
-# nvm
-source "$NVM_DIR/nvm.sh"
 
 # exenv
 eval "$(exenv init -)"
