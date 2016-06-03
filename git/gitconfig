@@ -9,9 +9,14 @@
 	interactive = auto
 	diff = auto
 [merge]
-	tool = meld
+	tool = vimdiff
+	conflictstyle = diff3
 [user]
 	name = josemrb
 	email = work@josemrb.com
 [push]
 	default = simple
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
