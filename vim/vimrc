@@ -2,6 +2,8 @@
 " init
 set nocompatible
 
+let localVimDir = '~/.vim/local'
+
 " call before
 if filereadable(expand("~/.vimrc.before"))
   source \~/.vimrc.before
@@ -42,15 +44,16 @@ set iskeyword-=.
 set iskeyword-=#
 set iskeyword-=-
 
-set nobackup
-if ('has_persistence_undo')
+if has('persistent_undo')
   " undo settings
-  set undodir=~/.vim/undofiles
+  let localVimUndodir = expand(localVimDir . '/undodir')
+  let &undodir = localVimUndodir
   set undofile
-  set undolevels=1000
+  set undolevels=100
   set undoreload=10000
 endif
 set noswapfile
+set nobackup
 
 " ignore files
 set wildignore+=*/tmp/*,*.swp
@@ -145,6 +148,9 @@ set ttimeoutlen=100
 set formatoptions-=o
 set formatoptions+=j
 
+" per project config
+set exrc
+
 """ plugins
 """ ack.vim
 
@@ -156,7 +162,7 @@ let g:indent_guides_enable_on_vim_startup = 1
 """ vim-over
 
 """ numbers
-let g:numbers_exclude = ['tagbar', 'nerdtree']
+let g:numbers_exclude = ['buffers', 'tagbar', 'nerdtree']
 nnoremap <F3> :NumbersToggle<CR>
 nnoremap <F4> :NumbersOnOff<CR>
 
@@ -190,7 +196,7 @@ map <leader>n :NERDTreeToggle<CR>
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.git$']
 " change CWD to follow tree root
-let g:NERDTreeChDirMode = 2
+let g:NERDTreeChDirMode=2
 let g:NERDTreeQuitOnOpen=1
 let g:NERDTreeShowHidden=1
 
@@ -214,23 +220,25 @@ let g:ctrlp_prompt_mappings = {
   \ 'AcceptSelection("v")': ['<c-v>']
   \ }
 let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v[\/](_build|bower_components|cover|dist|deps|doc|node_modules)|(\.(swp|git|hg))$',
+  \ 'dir': '\v[\/](_build|bower_components|cover|dist|deps|node_modules)|(\.(swp|git|hg))$',
   \ 'file': '\.exe\'
   \ }
+
+""" vimwiki
+let til_wiki = {}
+let til_wiki.path = '~/projects/josemrb/vimwiki'
+let g:vimwiki_list = [til_wiki]
 
 """ vim-surround
 """ vim-repeat
 """ vim-abolish
+""" vim-argumentative
+""" gundo.vim
+nnoremap <F5> :GundoToggle<CR>
+
 """ vim-textobj-user
 """ vim-textobj-indent
-
-""" wildfire
-map <ENTER> <Plug>(wildfire-fuel)
-let g:wildfire_objects = {
-  \ '*' : ["i'", 'i"', "i)", 'i]', 'i}','i>', 'ip'],
-  \ 'html,xml' : ['at', "it"],
-  \ }
-nmap <leader>s <Plug>(wildfire-quick-select)
+""" vim-textobj-xmlattr
 
 """ vim-textobj-sentence
 augroup textobj_sentence
@@ -248,27 +256,10 @@ augroup textobj_quote
   autocmd FileType text call textobj#quote#init()
 augroup END
 
-""" vim-textobj-ruby
-let g:textobj_ruby_more_mappings = 1
-
 """ vim-multiple-cursors
 """ vim-easymotion
 
-""" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_elixir_checkers = ['elixir']
-let g:syntastic_enable_elixir_checker = 0
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_enable_signs = 1
-
+""" neomake
 """ NERDCommenter
 """ tabular
 nmap <Leader>a& :Tabularize /&<CR>
@@ -327,24 +318,16 @@ let g:tagbar_type_ruby = {
     \ ]
   \ }
 
-""" omnicomplete
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" ruby
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-
-set completeopt=menu,preview,longest
+""" ultisnips
+let g:UltiSnipsSnippetsDir = "~/.vim/local/UltiSnips"
 
 """ supertab
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabContextDefaultCompletionType = "<c-p>"
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextDiscoverDiscovery = ["&omnifunc:<c-x><c-o>"]
+let g:SuperTabContextTextOmniPrecedence = ['&completefunc', '&omnifunc']
+let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+let g:SuperTabLongestEnhanced = 1
 
 " completion chaining omnifunc -> keyword or user completion
 autocmd FileType *
@@ -353,22 +336,48 @@ autocmd FileType *
     \ call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
   \ endif
 
-" vim-emmet
-let g:user_emmet_mode='inv'
-let g:user_emmet_install_global = 0
-let g:user_emmet_leader_key='<C-z>'
-autocmd FileType css,eex,html EmmetInstall
+""" javascript
 
-" vim-mustache-handlebars
+""" html5
+let g:html5_rdfa_attributes_complete = 0
+let g:html5_microdata_attributes_complete = 0
+
+""" emmet-vim
+let g:user_emmet_mode='inv'
+let g:user_emmet_install_global = 1
+let g:user_emmet_leader_key='<C-y>'
+
+""" vim-ruby
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
+let g:rubycomplete_load_gemfile = 0
+let g:rubycomplete_use_bundler = 1
+
+""" vim-rails
+autocmd FileType ruby,eruby let g:Tlist_Ctags_Cmd = "ripper-tags"
+let g:rails_ctags_arguments = "--format vim --tag-file ./.git/tags --tag-relative"
+
+""" vim-textobj-ruby
+let g:textobj_ruby_more_mappings = 1
+
+""" vim-mustache-handlebars
 let g:mustache_abbreviations = 1
 
-" vimwiki
-let til_wiki = {}
-let til_wiki.path = '~/projects/josemrb/vimwiki'
-let g:vimwiki_list = [til_wiki]
-
-" git
+""" vim-git
 " on revert git commit message reposition cursor
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
+""" omnicomplete
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+
+set completeopt=menu,preview,longest
+
 set background=dark
 colorscheme PaperColor
+
+set secure
