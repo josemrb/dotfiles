@@ -96,7 +96,6 @@ Plugin 'mattn/emmet-vim'
 Plugin 'groenewege/vim-less'
 Plugin 'hail2u/vim-css3-syntax'
 Plugin 'cakebaker/scss-syntax.vim'
-Plugin 'skammer/vim-css-color'
 
 """ ruby
 Plugin 'tpope/vim-rbenv'
@@ -115,7 +114,6 @@ Plugin 'elixir-lang/vim-elixir'
 """ others
 Plugin 'vim-scripts/dbext.vim'
 Plugin 'tpope/vim-markdown'
-"Plugin 'plasticboy/vim-markdown'
 Plugin 'mustache/vim-mustache-handlebars'
 
 """ utils
