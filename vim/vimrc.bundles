@@ -50,6 +50,8 @@ Plugin 'tpope/vim-eunuch'
 Plugin 'kien/ctrlp.vim'
 " wiki
 Plugin 'vimwiki/vimwiki'
+" todo.txt
+Plugin 'freitass/todo.txt-vim'
 
 """ text edit
 Plugin 'tmhedberg/matchit'
@@ -69,7 +71,8 @@ Plugin 'kristijanhusak/vim-multiple-cursors'
 Plugin 'Lokaltog/vim-easymotion'
 
 """ general programming
-Plugin 'neomake/neomake'
+Plugin 'scrooloose/syntastic'
+Plugin 'janko-m/vim-test'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'godlygeek/tabular'
 

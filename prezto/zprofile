@@ -84,3 +84,5 @@ fi
 
 # exenv
 eval "$(exenv init -)"
+
+export KMIX_PULSEAUDIO_DISABLE=1

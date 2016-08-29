@@ -86,7 +86,7 @@ set number "show line numbers
 " search highlight
 set showmatch
 set incsearch "find the next match as we type the search
-set hlsearch "hilight searches by default
+set hlsearch "highlight searches by default
 set winminheight=0 "min windows line height
 
 " case handling
@@ -106,12 +106,12 @@ set sidescroll=1
 
 " fold
 set foldmethod=indent "fold based on indent
-set foldnestmax=3 "deepest fold is 3 leves
+set foldnestmax=3 "deepest fold is 3 levels
 set nofoldenable "disable by default
 
 " display tabs and trailing spaces
 set list
-set listchars=tab:▷⋅,trail:⋅,extends:>,precedes:<,nbsp:+
+set listchars=tab:▷⋅,trail:⋅,extends:>,precedes:<,nbsp:+,eol:¬
 
 " configure default split
 set splitright
@@ -126,7 +126,7 @@ set t_Co=256
 let g:rehash256 = 1
 
 """ formatting
-set nowrap "dont wrap lines
+set nowrap "don't wrap lines
 set linebreak "wrap lines at convenient points
 set showbreak=↪
 set autoindent
@@ -144,7 +144,7 @@ set nrformats-=octal
 set ttimeout
 set ttimeoutlen=100
 
-" formating options
+" formatting options
 set formatoptions-=o
 set formatoptions+=j
 
@@ -259,7 +259,29 @@ augroup END
 """ vim-multiple-cursors
 """ vim-easymotion
 
-""" neomake
+""" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_ruby_checkers = ['rubocop']
+
+let g:syntastic_elixir_checkers = ['credo']
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_signs = 1
+
+""" vim-test
+let test#strategy = 'dispatch'
+"nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+"nmap <silent> <leader>a :TestSuite<CR>
+"nmap <silent> <leader>l :TestLast<CR>
+"nmap <silent> <leader>g :TestVisit<CR>
+
 """ NERDCommenter
 """ tabular
 nmap <Leader>a& :Tabularize /&<CR>
@@ -356,7 +378,7 @@ let g:rubycomplete_use_bundler = 1
 
 """ vim-rails
 autocmd FileType ruby,eruby let g:Tlist_Ctags_Cmd = "ripper-tags"
-let g:rails_ctags_arguments = "--format vim --tag-file ./.git/tags --tag-relative"
+let g:rails_ctags_arguments = "-f .git/tags --tag-relative -R --format vim"
 
 """ vim-textobj-ruby
 let g:textobj_ruby_more_mappings = 1
