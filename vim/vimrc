@@ -46,7 +46,7 @@ set iskeyword-=-
 
 if has('persistent_undo')
   " undo settings
-  let localVimUndodir = expand(localVimDir . '/undodir')
+  let localVimUndodir = expand(localVimDir . '/undo')
   let &undodir = localVimUndodir
   set undofile
   set undolevels=100
@@ -153,6 +153,9 @@ set exrc
 
 """ plugins
 """ ack.vim
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
 
 """ vim-indent-guides
 let g:indent_guides_start_level = 2
@@ -216,7 +219,7 @@ let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_open_multiple_files = 'r'
 " customize promp mappings
 let g:ctrlp_prompt_mappings = {
-  \ 'AcceptSelection("h")': ['<c-i>'],
+  \ 'AcceptSelection("h")': ['<c-x>'],
   \ 'AcceptSelection("v")': ['<c-v>']
   \ }
 let g:ctrlp_custom_ignore = {
