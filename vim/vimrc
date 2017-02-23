@@ -47,6 +47,9 @@ set iskeyword-=-
 if has('persistent_undo')
   " undo settings
   let localVimUndodir = expand(localVimDir . '/undo')
+  if !isdirectory(localVimUndodir)
+    call mkdir(localVimUndodir, "p", 0700)
+  endif
   let &undodir = localVimUndodir
   set undofile
   set undolevels=100
@@ -122,9 +125,6 @@ set colorcolumn=+1 "mark the ideal max text width
 " enable 256 colors console
 set t_Co=256
 
-" theme
-let g:rehash256 = 1
-
 """ formatting
 set nowrap "don't wrap lines
 set linebreak "wrap lines at convenient points
@@ -157,6 +157,11 @@ if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
 
+""" papercolor
+let g:PaperColor_Theme_Options = {
+  \   'transparent_background': 1
+  \ }
+
 """ vim-indent-guides
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
@@ -170,9 +175,15 @@ nnoremap <F3> :NumbersToggle<CR>
 nnoremap <F4> :NumbersOnOff<CR>
 
 """ vim-airline
+" theme
+let g:airline_theme='wombat'
+" populate gliphs
+let g:airline_powerline_fonts = 2
+" hide empty sections
+let g:airline_skip_empty_sections = 1
 " displays all the buffers when only one tab is open
 let g:airline#extensions#tabline#enabled = 1
-" set alternative separator to pipe
+" set alternative tab separator
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
@@ -263,10 +274,6 @@ augroup END
 """ vim-easymotion
 
 """ syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
 let g:syntastic_ruby_checkers = ['rubocop']
 
 let g:syntastic_elixir_checkers = ['credo']
@@ -392,6 +399,9 @@ let g:mustache_abbreviations = 1
 """ vim-git
 " on revert git commit message reposition cursor
 au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
+""" vim-fugitive
+set statusline+=%{fugitive#statusline()}
 
 """ omnicomplete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
