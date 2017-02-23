@@ -10,4 +10,24 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
+#
+# Version Managers
+#
+
+# exenv
+if [[ -s "$HOME/.exenv/bin/exenv" ]]; then
+  path=("$HOME/.exenv/bin" $path)
+  eval "$(exenv init - zsh)"
+fi
+
+# nodenv
+if [[ -s "$HOME/.nodenv/bin/nodenv" ]]; then
+  path=("$HOME/.nodenv/bin" $path)
+  eval "$(nodenv init - zsh)"
+fi
+
+# rbenv
+if [[ -s "$HOME/.rbenv/bin/rbenv" ]]; then
+  path=("$HOME/.rbenv/bin" $path)
+  eval "$(rbenv init - zsh)"
+fi

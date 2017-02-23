@@ -17,10 +17,7 @@ zstyle ':prezto:load' pmodule \
   'archive' \
   'git' \
   'gpg' \
-  'node' \
-  'rails' \
   'rsync' \
-  'ruby' \
   'ssh' \
   'tmux' \
   'syntax-highlighting' \
@@ -40,7 +37,7 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:git:status:ignore' submodules 'all'
 
 # ssh
-zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_rsa.josemrb.com'
+zstyle ':prezto:module:ssh:load' identities 'id_rsa.josemrb.com'
 
 # tmux
 # zstyle ':prezto:module:tmux:auto-start' local 'yes'
