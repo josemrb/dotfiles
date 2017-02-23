@@ -14,9 +14,12 @@
 [user]
 	name = josemrb
 	email = work@josemrb.com
+	signingkey = 24D836F0ED1E8908
 [push]
 	default = simple
 [diff]
 	tool = vimdiff
 [difftool]
 	prompt = false
+[commit]
+	gpgsign = true
