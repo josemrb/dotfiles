@@ -34,6 +34,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 " buffer gator
 Plugin 'jeetsukumaran/vim-buffergator'
+Plugin 'jgdavey/tslime.vim'
 
 """ vim keymaps
 Plugin 'milkypostman/vim-togglelist'
@@ -47,6 +48,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'tpope/vim-eunuch'
 " fuzzy search
 Plugin 'kien/ctrlp.vim'
+Plugin 'junegunn/fzf.vim'
 " wiki
 Plugin 'vimwiki/vimwiki'
 " todo.txt

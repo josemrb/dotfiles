@@ -166,13 +166,15 @@ let g:PaperColor_Theme_Options = {
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=darkgrey
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEvenm ctermbg=darkgrey
 
 """ vim-over
 
 """ numbers
 let g:numbers_exclude = ['buffers', 'tagbar', 'nerdtree']
 nnoremap <F3> :NumbersToggle<CR>
-nnoremap <F4> :NumbersOnOff<CR>
 
 """ vim-airline
 " theme
@@ -201,6 +203,11 @@ nmap <leader>kb :BuffergatorMruCycleNext<cr>
 " list of buffers open
 nmap <leader>bb :BuffergatorToggle<cr>
 
+"""tslime.vim
+map <C-c><C-c> <Plug>SendSelectionToTmux
+nmap <C-c><C-c> <Plug>NormalModeSendToTmux
+nmap <C-c>r <Plug>SetTmuxVars
+
 """ vim-togglelist
 """ vim-unimpaired
 
@@ -223,7 +230,7 @@ let g:ctrlp_map = '<leader>p'
 " set default mode
 let g:ctrlp_cmd = 'CtrlP'
 " set root dir mode
-let g:ctrlp_working_path_mode = 'raw'
+let g:ctrlp_working_path_mode = 'ra'
 " default open file mode = current window
 let g:ctrlp_open_new_file = 'r'
 " multiple files open = current window
@@ -237,6 +244,8 @@ let g:ctrlp_custom_ignore = {
   \ 'dir': '\v[\/](_build|bower_components|cover|dist|deps|node_modules)|(\.(swp|git|hg))$',
   \ 'file': '\.exe\'
   \ }
+""" fzf.vim
+let g:fzf_command_prefix = 'Fzf'
 
 """ vimwiki
 let til_wiki = {}
@@ -274,9 +283,9 @@ augroup END
 """ vim-easymotion
 
 """ syntastic
-let g:syntastic_ruby_checkers = ['rubocop']
-
 let g:syntastic_elixir_checkers = ['credo']
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_ruby_checkers = ['rubocop']
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
@@ -285,7 +294,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs = 1
 
 """ vim-test
-let test#strategy = 'dispatch'
+let test#strategy = 'tslime'
 "nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
 "nmap <silent> <leader>a :TestSuite<CR>
