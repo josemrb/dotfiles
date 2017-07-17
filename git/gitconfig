@@ -1,25 +1,28 @@
+[alias]
+  glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 [branch]
-	autosetuprebase = always
+  autosetuprebase = always
 [core]
-	editor = vim
-	autocrlf = false
+  editor = vim
+  autocrlf = false
+  excludesfile = /home/josemrb/.gitignore
 [color]
-	status = auto
-	branch = auto
-	interactive = auto
-	diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  diff = auto
 [merge]
-	tool = vimdiff
-	conflictstyle = diff3
+  tool = vimdiff
+  conflictstyle = diff3
 [user]
-	name = josemrb
-	email = work@josemrb.com
-	signingkey = 24D836F0ED1E8908
+  name = josemrb
+  email = work@josemrb.com
+  signingkey = 24D836F0ED1E8908
 [push]
-	default = simple
+  default = simple
 [diff]
-	tool = vimdiff
+  tool = vimdiff
 [difftool]
-	prompt = false
+  prompt = false
 [commit]
-	gpgsign = true
+  gpgsign = true
