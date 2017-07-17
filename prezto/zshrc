@@ -11,23 +11,26 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 #
+# Environment utils
+#
+
+# direnv
+if [[ -x "${ZDOTDIR:-$HOME}/.local/bin/direnv" ]]; then
+  eval "$(direnv hook zsh)"
+fi
+
+#
 # Version Managers
 #
 
-# exenv
-if [[ -s "$HOME/.exenv/bin/exenv" ]]; then
-  path=("$HOME/.exenv/bin" $path)
-  eval "$(exenv init - zsh)"
-fi
-
-# nodenv
-if [[ -s "$HOME/.nodenv/bin/nodenv" ]]; then
-  path=("$HOME/.nodenv/bin" $path)
-  eval "$(nodenv init - zsh)"
+# asdf-vm
+if [[ -s "${ZDOTDIR:-$HOME}/.asdf/asdf.sh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.asdf/asdf.sh"
+  source "${ZDOTDIR:-$HOME}/.asdf/completions/asdf.bash"
 fi
 
 # rbenv
-if [[ -s "$HOME/.rbenv/bin/rbenv" ]]; then
-  path=("$HOME/.rbenv/bin" $path)
+if [[ -x "${ZDOTDIR:-$HOME}/.rbenv/bin/rbenv" ]]; then
+  path=("${ZDOTDIR:-$HOME}/.rbenv/bin" $path)
   eval "$(rbenv init - zsh)"
 fi
