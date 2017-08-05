@@ -1,28 +1,33 @@
 #!/usr/bin/env zsh
 
-git clone https://github.com/sstephenson/rbenv.git $HOME/.rbenv
+git clone https://github.com/rbenv/rbenv.git $HOME/.rbenv
 cd $HOME/.rbenv
 git fetch --tags
 local rbenv
 rbenv=$(git describe --tags | cut --delimiter="-" -f1)
 git checkout $rbenv
 
-git clone https://github.com/sstephenson/ruby-build.git $HOME/.rbenv/plugins/ruby-build
+git clone https://github.com/rbenv/ruby-build.git $HOME/.rbenv/plugins/ruby-build
 cd $HOME/.rbenv/plugins/ruby-build
 git fetch --tags
 local rb
 rb=$(git describe --tags | cut --delimiter="-" -f1)
 git checkout $rb
 
-git clone https://github.com/josemrb/rbenv-ripper-tags.git $HOME/.rbenv/plugins/rbenv-ripper-tags
-cd $HOME/.rbenv/plugins/ruby-build
-git fetch --tags
-local rb
-rb=$(git describe --tags | cut --delimiter="-" -f1)
-git checkout $rb
+git clone https://github.com/rbenv/rbenv-default-gems.git $HOME/.rbenv/plugins/rbenv-default-gems
 cat <<EOF > $HOME/.rbenv/default-gems
-gem-ripper-tags
+awesome_print
 bundler
+byebug
+looksee
+pry
+pry-debundle
+pry-byebug
+pry-doc
+pry-rescue
+pry-stack_explorer
+ripper-tags
+gem-ripper-tags
 gem-browse
 EOF
 

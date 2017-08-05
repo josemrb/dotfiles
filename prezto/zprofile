@@ -28,16 +28,10 @@ fi
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
-# Add version manager directories
-EXENV_DIR="/home/josemrb/.exenv"
-
-EXENV_BIN="$EXENV_DIR/bin"
-
 # Set the list of directories that Zsh searches for programs.
 path=(
-  $EXENV_BIN
   /usr/local/{bin,sbin}
-  $HOME/apps/bin
+  $HOME/.local/bin
   $path
 )
 
@@ -70,17 +64,3 @@ if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
 
-#
-# Infrastructure directories
-#
-
-if [[ ! -d "$VAGRANT_HOME" ]]; then
-  export VAGRANT_HOME="$HOME/infrastructure/vagrant"
-fi
-
-#
-# Version Managers
-#
-
-# exenv
-eval "$(exenv init -)"

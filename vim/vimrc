@@ -2,9 +2,16 @@
 " init
 set nocompatible
 
+let localVimDir = '~/.vim/local'
+
 " call before
 if filereadable(expand("~/.vimrc.before"))
   source \~/.vimrc.before
+endif
+
+" load functions
+if filereadable(expand("~/.vimrc.functions"))
+  source \~/.vimrc.functions
 endif
 
 " call bundles
@@ -36,21 +43,25 @@ set shortmess+=filmnrxoOtT
 set viewoptions=folds,options,cursor,unix,slash
 set virtualedit=onemore
 set history=1000 "store lots of :cmdline history
-set spell
+set nospell
 set hidden
 set iskeyword-=.
 set iskeyword-=#
 set iskeyword-=-
 
-set nobackup
-if ('has_persistence_undo')
+if has('persistent_undo')
   " undo settings
-  set undodir=~/.vim/undofiles
+  let localVimUndodir = expand(localVimDir . '/undo')
+  if !isdirectory(localVimUndodir)
+    call mkdir(localVimUndodir, "p", 0700)
+  endif
+  let &undodir = localVimUndodir
   set undofile
-  set undolevels=1000
+  set undolevels=100
   set undoreload=10000
 endif
 set noswapfile
+set nobackup
 
 " ignore files
 set wildignore+=*/tmp/*,*.swp
@@ -83,7 +94,7 @@ set number "show line numbers
 " search highlight
 set showmatch
 set incsearch "find the next match as we type the search
-set hlsearch "hilight searches by default
+set hlsearch "highlight searches by default
 set winminheight=0 "min windows line height
 
 " case handling
@@ -103,12 +114,12 @@ set sidescroll=1
 
 " fold
 set foldmethod=indent "fold based on indent
-set foldnestmax=3 "deepest fold is 3 leves
+set foldnestmax=3 "deepest fold is 3 levels
 set nofoldenable "disable by default
 
 " display tabs and trailing spaces
 set list
-set listchars=tab:▷⋅,trail:⋅,extends:>,precedes:<,nbsp:+
+set listchars=tab:▷⋅,trail:⋅,extends:>,precedes:<,nbsp:+,eol:¬
 
 " configure default split
 set splitright
@@ -119,11 +130,8 @@ set colorcolumn=+1 "mark the ideal max text width
 " enable 256 colors console
 set t_Co=256
 
-" theme
-let g:rehash256 = 1
-
 """ formatting
-set nowrap "dont wrap lines
+set nowrap "don't wrap lines
 set linebreak "wrap lines at convenient points
 set showbreak=↪
 set autoindent
@@ -141,29 +149,48 @@ set nrformats-=octal
 set ttimeout
 set ttimeoutlen=100
 
-" formating options
+" formatting options
 set formatoptions-=o
 set formatoptions+=j
 
+" per project config
+set exrc
+
 """ plugins
 """ ack.vim
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+""" papercolor
+let g:PaperColor_Theme_Options = {
+      \   'transparent_background': 0
+      \ }
 
 """ vim-indent-guides
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_auto_colors = 0
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=darkgrey
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEvenm ctermbg=darkgrey
 
 """ vim-over
 
 """ numbers
-let g:numbers_exclude = ['tagbar', 'nerdtree']
+let g:numbers_exclude = ['buffers', 'tagbar', 'nerdtree']
 nnoremap <F3> :NumbersToggle<CR>
-nnoremap <F4> :NumbersOnOff<CR>
 
 """ vim-airline
+" theme
+let g:airline_theme='wombat'
+" populate gliphs
+let g:airline_powerline_fonts = 2
+" hide empty sections
+let g:airline_skip_empty_sections = 1
 " displays all the buffers when only one tab is open
 let g:airline#extensions#tabline#enabled = 1
-" set alternative separator to pipe
+" set alternative tab separator
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
 
@@ -181,6 +208,11 @@ nmap <leader>kb :BuffergatorMruCycleNext<cr>
 " list of buffers open
 nmap <leader>bb :BuffergatorToggle<cr>
 
+"""tslime.vim
+map <C-c><C-c> <Plug>SendSelectionToTmux
+nmap <C-c><C-c> <Plug>NormalModeSendToTmux
+nmap <C-c>r <Plug>SetTmuxVars
+
 """ vim-togglelist
 """ vim-unimpaired
 
@@ -190,7 +222,7 @@ map <leader>n :NERDTreeToggle<CR>
 let NERDTreeShowBookmarks=1
 let NERDTreeIgnore=['\.git$']
 " change CWD to follow tree root
-let g:NERDTreeChDirMode = 2
+let g:NERDTreeChDirMode=2
 let g:NERDTreeQuitOnOpen=1
 let g:NERDTreeShowHidden=1
 
@@ -203,34 +235,38 @@ let g:ctrlp_map = '<leader>p'
 " set default mode
 let g:ctrlp_cmd = 'CtrlP'
 " set root dir mode
-let g:ctrlp_working_path_mode = 'raw'
+let g:ctrlp_working_path_mode = 'ra'
 " default open file mode = current window
 let g:ctrlp_open_new_file = 'r'
 " multiple files open = current window
 let g:ctrlp_open_multiple_files = 'r'
 " customize promp mappings
 let g:ctrlp_prompt_mappings = {
-  \ 'AcceptSelection("h")': ['<c-i>'],
-  \ 'AcceptSelection("v")': ['<c-v>']
-  \ }
+      \ 'AcceptSelection("h")': ['<C-x>'],
+      \ 'AcceptSelection("v")': ['<C-v>']
+      \ }
 let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v[\/](_build|bower_components|cover|dist|deps|doc|node_modules)|(\.(swp|git|hg))$',
-  \ 'file': '\.exe\'
-  \ }
+      \ 'dir': '\v[\/](_build|bower_components|cover|dist|deps|node_modules)|(\.(swp|git|hg))$',
+      \ 'file': '\.exe\'
+      \ }
+""" fzf.vim
+let g:fzf_command_prefix = 'Fzf'
+
+""" vimwiki
+let til_wiki = {}
+let til_wiki.path = '/home/josemrb/documents/vimwiki'
+let g:vimwiki_list = [til_wiki]
 
 """ vim-surround
 """ vim-repeat
 """ vim-abolish
+""" vim-argumentative
+""" gundo.vim
+nnoremap <F5> :GundoToggle<CR>
+
 """ vim-textobj-user
 """ vim-textobj-indent
-
-""" wildfire
-map <ENTER> <Plug>(wildfire-fuel)
-let g:wildfire_objects = {
-  \ '*' : ["i'", 'i"', "i)", 'i]', 'i}','i>', 'ip'],
-  \ 'html,xml' : ['at', "it"],
-  \ }
-nmap <leader>s <Plug>(wildfire-quick-select)
+""" vim-textobj-xmlattr
 
 """ vim-textobj-sentence
 augroup textobj_sentence
@@ -248,26 +284,27 @@ augroup textobj_quote
   autocmd FileType text call textobj#quote#init()
 augroup END
 
-""" vim-textobj-ruby
-let g:textobj_ruby_more_mappings = 1
-
 """ vim-multiple-cursors
 """ vim-easymotion
 
 """ syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
+let g:syntastic_elixir_checkers = ['credo']
+let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_ruby_checkers = ['rubocop']
-let g:syntastic_elixir_checkers = ['elixir']
-let g:syntastic_enable_elixir_checker = 0
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_enable_signs = 1
+
+""" vim-test
+let test#strategy = 'tslime'
+nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>T :TestFile<CR>
+"nmap <silent> <leader>a :TestSuite<CR>
+"nmap <silent> <leader>l :TestLast<CR>
+"nmap <silent> <leader>g :TestVisit<CR>
 
 """ NERDCommenter
 """ tabular
@@ -288,87 +325,132 @@ vmap <Leader>a,, :Tabularize /,\zs<CR>
 nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 
+""" tags
+nnoremap <silent> <C-t><C-t> :call Tags()<CR>
+
 """ tagbar
-nmap <leader>t :TagbarToggle<CR>
+nmap <F4> :TagbarToggle<CR>
 
 let g:tagbar_type_css = {
-\ 'ctagstype' : 'Css',
-    \ 'kinds'     : [
-        \ 'c:classes',
-        \ 's:selectors',
-        \ 'i:identities'
-    \ ]
+  \ 'ctagstype' : 'Css',
+  \ 'kinds'     : [
+    \ 'c:classes',
+    \ 's:selectors',
+    \ 'i:identities'
+  \ ]
 \ }
 
 let g:tagbar_type_elixir = {
-\ 'ctagstype': 'Elixir',
+  \ 'ctagstype': 'Elixir',
   \ 'kinds' : [
-      \ 'f:functions',
-      \ 'c:callbacks',
-      \ 'd:delegates',
-      \ 'e:exceptions',
-      \ 'i:implementations',
-      \ 'a:macros',
-      \ 'm:modules',
-      \ 'o:operations',
-      \ 'p:protocols',
-      \ 'r:records',
-    \ ]
-  \ }
+    \ 'f:functions (public)',
+    \ 'g:functions (private)',
+    \ 'c:callbacks',
+    \ 'd:delegates',
+    \ 'e:exceptions',
+    \ 'i:implementations',
+    \ 'a:macros',
+    \ 'o:operators',
+    \ 'm:modules',
+    \ 'p:protocols',
+    \ 'r:records',
+    \ 't:types',
+    \ 'z:foo'
+  \ ]
+\ }
 
 let g:tagbar_type_ruby = {
   \ 'kinds' : [
-      \ 'm:modules',
-      \ 'c:classes',
-      \ 'd:describes',
-      \ 'C:contexts',
-      \ 'f:methods',
-      \ 'F:singleton methods'
-    \ ]
-  \ }
+    \ 'm:modules',
+    \ 'c:classes',
+    \ 'd:describes',
+    \ 'C:contexts',
+    \ 'f:methods',
+    \ 'F:singleton methods'
+  \ ]
+\ }
+
+""" ultisnips
+let g:UltiSnipsSnippetsDir = "~/.vim/local/UltiSnips"
+
+""" supertab
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<C-p>"
+let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
+let g:SuperTabContextTextOmniPrecedence = ['&completefunc', '&omnifunc']
+let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<C-x><C-u>", "&omnifunc:<C-x><C-o>"]
+let g:SuperTabLongestEnhanced = 1
+
+" completion chaining omnifunc -> keyword or user completion
+autocmd FileType *
+      \ if &omnifunc != '' |
+      \ call SuperTabChain(&omnifunc, "<C-p>") |
+      \ call SuperTabSetDefaultCompletionType("<C-x><C-u>") |
+      \ endif
+
+""" javascript
+
+""" html5
+let g:html5_rdfa_attributes_complete = 0
+let g:html5_microdata_attributes_complete = 0
+
+""" emmet-vim
+let g:user_emmet_mode='inv'
+let g:user_emmet_install_global = 1
+let g:user_emmet_leader_key='<C-y>'
+
+""" vim-ruby
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_classes_in_global = 1
+let g:rubycomplete_rails = 1
+let g:rubycomplete_load_gemfile = 0
+let g:rubycomplete_use_bundler = 1
+
+""" vim-rails
+augroup filetype_ruby
+  autocmd!
+  autocmd FileType ruby,eruby let g:Tlist_Ctags_Cmd = "ripper-tags"
+augroup END
+
+let g:ruby_ctags_arguments = "-f .git/tags -R --sort=yes --tag-relative=yes"
+let g:rails_ctags_arguments = "-f .git/tags -R --sort=yes --tag-relative=yes"
+
+""" vim-textobj-ruby
+let g:textobj_ruby_more_mappings = 1
+
+""" vim-elixir
+augroup filetype_elixir
+  autocmd!
+  autocmd FileType elixir let g:Tlist_Ctags_Cmd = "ctags"
+  autocmd FileType elixir set tags=.git/tags,tags;
+augroup END
+
+let g:elixir_ctags_arguments = "-f .git/tags -R --languages=Elixir --sort=yes --tag-relative=yes"
+
+""" alchemist.vim
+let g:alchemist_tag_disable = 1
+let g:alchemist#elixir_erlang_src = "/home/josemrb/projects/source/"
+
+""" vim-mustache-handlebars
+let g:mustache_abbreviations = 1
+
+""" vim-git
+" on revert git commit message reposition cursor
+au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
+
+""" vim-fugitive
+set statusline+=%{fugitive#statusline()}
 
 """ omnicomplete
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
 autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-" ruby
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
 set completeopt=menu,preview,longest
 
-""" supertab
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-p>"
-let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextDiscoverDiscovery = ["&omnifunc:<c-x><c-o>"]
-
-" completion chaining omnifunc -> keyword or user completion
-autocmd FileType *
-  \ if &omnifunc != '' |
-    \ call SuperTabChain(&omnifunc, "<c-p>") |
-    \ call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
-  \ endif
-
-" vim-emmet
-let g:user_emmet_mode='inv'
-let g:user_emmet_install_global = 0
-let g:user_emmet_leader_key='<C-z>'
-autocmd FileType css,eex,html EmmetInstall
-
-" vim-mustache-handlebars
-let g:mustache_abbreviations = 1
-
-" vimwiki
-let til_wiki = {}
-let til_wiki.path = '~/projects/josemrb/vimwiki'
-let g:vimwiki_list = [til_wiki]
-
-" git
-" on revert git commit message reposition cursor
-au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 set background=dark
 colorscheme PaperColor
+
+set secure

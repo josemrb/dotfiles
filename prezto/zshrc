@@ -10,4 +10,27 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
+#
+# Environment utils
+#
+
+# direnv
+if [[ -x "${ZDOTDIR:-$HOME}/.local/bin/direnv" ]]; then
+  eval "$(direnv hook zsh)"
+fi
+
+#
+# Version Managers
+#
+
+# asdf-vm
+if [[ -s "${ZDOTDIR:-$HOME}/.asdf/asdf.sh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.asdf/asdf.sh"
+  source "${ZDOTDIR:-$HOME}/.asdf/completions/asdf.bash"
+fi
+
+# rbenv
+if [[ -x "${ZDOTDIR:-$HOME}/.rbenv/bin/rbenv" ]]; then
+  path=("${ZDOTDIR:-$HOME}/.rbenv/bin" $path)
+  eval "$(rbenv init - zsh)"
+fi

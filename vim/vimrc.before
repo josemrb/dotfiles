@@ -32,7 +32,7 @@ noremap k gk
 cmap w!! w !sudo tee > /dev/null %
 
 "yank to the end-of-line like C D
-nnoremap Y y$ 
+nnoremap Y y$
 
 " fold code maps
 nmap <leader>f0 :set foldlevel=0<CR>
