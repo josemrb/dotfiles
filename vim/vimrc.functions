@@ -1,0 +1,31 @@
+" vim: set sw=2 ts=2 sts=2 et tw=120 foldmarker={,} foldlevel=0 foldmethod=marker
+" helper functions
+function! s:split(arg, ...)
+  return type(a:arg) == type([]) ? copy(a:arg) : split(a:arg, a:0 ? a:1 : "\n")
+endfunction
+
+" User functions
+function! Tags()
+  if exists("g:Tlist_Ctags_Cmd")
+    let cmd = g:Tlist_Ctags_Cmd
+  elseif executable("ctags")
+    let cmd = "ctags"
+  else
+    call s:error("ctags not found")
+    return ''
+  endif
+  echo "cmd = " . cmd
+
+  let type = &filetype
+  echo type
+
+  let arguments_var = type . '_ctags_arguments'
+  let defaults = '-f tags -R --languages=' . type
+  let args = s:split(get(g:, arguments_var, defaults))
+  echo args
+
+  try
+    execute ':Dispatch! '. cmd .' '. join(args,' ')
+  endtry
+  return ''
+endfunction

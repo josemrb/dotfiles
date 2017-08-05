@@ -27,6 +27,7 @@ Plugin 'NLKNguyen/papercolor-theme'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'osyo-manga/vim-over'
 Plugin 'myusuf3/numbers.vim'
+Plugin 'powerman/vim-plugin-AnsiEsc'
 
 """ status and tab bars
 " status bar / tab line
@@ -114,6 +115,7 @@ Plugin 'rhysd/vim-textobj-ruby'
 
 """ elixir
 Plugin 'elixir-lang/vim-elixir'
+Plugin 'slashmili/alchemist.vim'
 
 """ others
 Plugin 'vim-scripts/dbext.vim'

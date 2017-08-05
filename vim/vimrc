@@ -9,6 +9,11 @@ if filereadable(expand("~/.vimrc.before"))
   source \~/.vimrc.before
 endif
 
+" load functions
+if filereadable(expand("~/.vimrc.functions"))
+  source \~/.vimrc.functions
+endif
+
 " call bundles
 if filereadable(expand("~/.vimrc.bundles"))
   source \~/.vimrc.bundles
@@ -159,8 +164,8 @@ endif
 
 """ papercolor
 let g:PaperColor_Theme_Options = {
-  \   'transparent_background': 1
-  \ }
+      \   'transparent_background': 0
+      \ }
 
 """ vim-indent-guides
 let g:indent_guides_start_level = 2
@@ -237,19 +242,19 @@ let g:ctrlp_open_new_file = 'r'
 let g:ctrlp_open_multiple_files = 'r'
 " customize promp mappings
 let g:ctrlp_prompt_mappings = {
-  \ 'AcceptSelection("h")': ['<c-x>'],
-  \ 'AcceptSelection("v")': ['<c-v>']
-  \ }
+      \ 'AcceptSelection("h")': ['<C-x>'],
+      \ 'AcceptSelection("v")': ['<C-v>']
+      \ }
 let g:ctrlp_custom_ignore = {
-  \ 'dir': '\v[\/](_build|bower_components|cover|dist|deps|node_modules)|(\.(swp|git|hg))$',
-  \ 'file': '\.exe\'
-  \ }
+      \ 'dir': '\v[\/](_build|bower_components|cover|dist|deps|node_modules)|(\.(swp|git|hg))$',
+      \ 'file': '\.exe\'
+      \ }
 """ fzf.vim
 let g:fzf_command_prefix = 'Fzf'
 
 """ vimwiki
 let til_wiki = {}
-let til_wiki.path = '~/projects/josemrb/vimwiki'
+let til_wiki.path = '/home/josemrb/documents/vimwiki'
 let g:vimwiki_list = [til_wiki]
 
 """ vim-surround
@@ -295,7 +300,7 @@ let g:syntastic_enable_signs = 1
 
 """ vim-test
 let test#strategy = 'tslime'
-"nmap <silent> <leader>t :TestNearest<CR>
+nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
 "nmap <silent> <leader>a :TestSuite<CR>
 "nmap <silent> <leader>l :TestLast<CR>
@@ -320,62 +325,68 @@ vmap <Leader>a,, :Tabularize /,\zs<CR>
 nmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 vmap <Leader>a<Bar> :Tabularize /<Bar><CR>
 
+""" tags
+nnoremap <silent> <C-t><C-t> :call Tags()<CR>
+
 """ tagbar
-nmap <leader>t :TagbarToggle<CR>
+nmap <F4> :TagbarToggle<CR>
 
 let g:tagbar_type_css = {
-\ 'ctagstype' : 'Css',
-    \ 'kinds'     : [
-        \ 'c:classes',
-        \ 's:selectors',
-        \ 'i:identities'
-    \ ]
+  \ 'ctagstype' : 'Css',
+  \ 'kinds'     : [
+    \ 'c:classes',
+    \ 's:selectors',
+    \ 'i:identities'
+  \ ]
 \ }
 
 let g:tagbar_type_elixir = {
-\ 'ctagstype': 'Elixir',
+  \ 'ctagstype': 'Elixir',
   \ 'kinds' : [
-      \ 'f:functions',
-      \ 'c:callbacks',
-      \ 'd:delegates',
-      \ 'e:exceptions',
-      \ 'i:implementations',
-      \ 'a:macros',
-      \ 'm:modules',
-      \ 'o:operations',
-      \ 'p:protocols',
-      \ 'r:records',
-    \ ]
-  \ }
+    \ 'f:functions (public)',
+    \ 'g:functions (private)',
+    \ 'c:callbacks',
+    \ 'd:delegates',
+    \ 'e:exceptions',
+    \ 'i:implementations',
+    \ 'a:macros',
+    \ 'o:operators',
+    \ 'm:modules',
+    \ 'p:protocols',
+    \ 'r:records',
+    \ 't:types',
+    \ 'z:foo'
+  \ ]
+\ }
 
 let g:tagbar_type_ruby = {
   \ 'kinds' : [
-      \ 'm:modules',
-      \ 'c:classes',
-      \ 'd:describes',
-      \ 'C:contexts',
-      \ 'f:methods',
-      \ 'F:singleton methods'
-    \ ]
-  \ }
+    \ 'm:modules',
+    \ 'c:classes',
+    \ 'd:describes',
+    \ 'C:contexts',
+    \ 'f:methods',
+    \ 'F:singleton methods'
+  \ ]
+\ }
 
 """ ultisnips
 let g:UltiSnipsSnippetsDir = "~/.vim/local/UltiSnips"
 
 """ supertab
 let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-p>"
+let g:SuperTabContextDefaultCompletionType = "<C-p>"
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextTextOmniPrecedence = ['&completefunc', '&omnifunc']
-let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
+let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<C-x><C-u>", "&omnifunc:<C-x><C-o>"]
 let g:SuperTabLongestEnhanced = 1
 
 " completion chaining omnifunc -> keyword or user completion
 autocmd FileType *
-  \ if &omnifunc != '' |
-    \ call SuperTabChain(&omnifunc, "<c-p>") |
-    \ call SuperTabSetDefaultCompletionType("<c-x><c-u>") |
-  \ endif
+      \ if &omnifunc != '' |
+      \ call SuperTabChain(&omnifunc, "<C-p>") |
+      \ call SuperTabSetDefaultCompletionType("<C-x><C-u>") |
+      \ endif
 
 """ javascript
 
@@ -396,11 +407,29 @@ let g:rubycomplete_load_gemfile = 0
 let g:rubycomplete_use_bundler = 1
 
 """ vim-rails
-autocmd FileType ruby,eruby let g:Tlist_Ctags_Cmd = "ripper-tags"
-let g:rails_ctags_arguments = "-f .git/tags --tag-relative -R --format vim"
+augroup filetype_ruby
+  autocmd!
+  autocmd FileType ruby,eruby let g:Tlist_Ctags_Cmd = "ripper-tags"
+augroup END
+
+let g:ruby_ctags_arguments = "-f .git/tags -R --sort=yes --tag-relative=yes"
+let g:rails_ctags_arguments = "-f .git/tags -R --sort=yes --tag-relative=yes"
 
 """ vim-textobj-ruby
 let g:textobj_ruby_more_mappings = 1
+
+""" vim-elixir
+augroup filetype_elixir
+  autocmd!
+  autocmd FileType elixir let g:Tlist_Ctags_Cmd = "ctags"
+  autocmd FileType elixir set tags=.git/tags,tags;
+augroup END
+
+let g:elixir_ctags_arguments = "-f .git/tags -R --languages=Elixir --sort=yes --tag-relative=yes"
+
+""" alchemist.vim
+let g:alchemist_tag_disable = 1
+let g:alchemist#elixir_erlang_src = "/home/josemrb/projects/source/"
 
 """ vim-mustache-handlebars
 let g:mustache_abbreviations = 1
