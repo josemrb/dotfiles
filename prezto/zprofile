@@ -64,3 +64,12 @@ if [[ ! -d "$TMPPREFIX" ]]; then
   mkdir -p "$TMPPREFIX"
 fi
 
+# Set JVM options
+if (( $#commands[(i)java] )); then
+  export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dsun.java2d.xrender=true"
+fi
+
+# Set ERL flags
+if (( $#commands[(i)iex] )); then
+  export ERL_AFLAGS="-kernel shell_history enabled"
+fi

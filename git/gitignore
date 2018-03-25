@@ -1,4 +1,10 @@
+# Dolphin settings
+.directory
+
+# Ruby Byebug
 .byebug_history
+
+# Tools version
 .elixir-version
 .erlang-version
 .node-version

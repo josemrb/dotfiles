@@ -23,8 +23,3 @@ if (( $#commands[(i)fzf] )); then
   export FZF_DEFAULT_COMMAND="ag --all-text --hidden --ignore .git -g ''"
   export FZF_DEFAULT_OPTS=""
 fi
-
-# Set JVM options
-if (( $#commands[(i)java] )); then
-  export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dsun.java2d.xrender=true"
-fi
