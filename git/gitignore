@@ -1,6 +1,9 @@
 # Dolphin settings
 .directory
 
+# Tern
+.tern-port
+
 # Ruby Byebug
 .byebug_history
 

@@ -160,6 +160,7 @@ set exrc
 """ ack.vim
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
 endif
 
 """ papercolor
@@ -246,21 +247,16 @@ let g:ctrlp_open_multiple_files = 'r'
 let g:ctrlp_prompt_mappings = {
       \ 'AcceptSelection("h")': ['<C-x>'],
       \ 'AcceptSelection("v")': ['<C-v>']
-      \ }
+      \}
+
 let g:ctrlp_custom_ignore = {
       \ 'dir': '\v[\/](_build|bower_components|cover|dist|deps|node_modules)|(\.(swp|git|hg))$',
       \ 'file': '\.exe\'
-      \ }
+      \}
+
 """ fzf.vim
 let g:fzf_command_prefix = 'Fzf'
 nmap <leader>f :FzfFiles<CR>
-
-""" vimwiki
-let til_wiki = {}
-let til_wiki.path = '/home/josemrb/documents/vimwiki'
-let til_wiki.syntax = 'markdown'
-let til_wiki.ext = '.md'
-let g:vimwiki_list = [til_wiki]
 
 """ vim-surround
 """ vim-repeat
@@ -291,6 +287,45 @@ augroup END
 
 """ vim-multiple-cursors
 """ vim-easymotion
+
+""" ale
+let g:ale_completion_enabled = 0
+
+let g:ale_list_window_size = 5
+let g:ale_open_list = 1
+let g:ale_set_loclist = 0
+let g:ale_set_quickfix = 1
+
+" let g:ale_fix_on_save = 1
+
+let g:ale_linters = {
+      \ 'css': ['eslint'],
+      \ 'javascript': ['eslint'],
+      \ 'jsx': ['eslint']
+      \}
+
+let g:ale_linters_explicit = 1
+
+let g:ale_fixers = {
+      \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+      \ 'elixir': ['mix_format'],
+      \ 'ruby': ['rubocop'],
+      \ 'javascript': ['eslint', 'prettier'],
+      \ 'jsx': ['eslint', 'prettier']
+      \}
+
+let g:ale_fixers_explicit = 1
+
+let g:ale_pattern_options = {
+      \ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
+      \ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
+      \}
+
+let g:ale_elixir_elixir_ls_release = '~/.local/opt/elixir-ls'
+
+nmap <Leader>F <Plug>(ale_fix)
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 """ vim-test
 let test#strategy = 'tslime'
@@ -328,67 +363,135 @@ nnoremap <silent> <C-t><C-t> :call Tags()<CR>
 nmap <F4> :TagbarToggle<CR>
 
 let g:tagbar_type_css = {
-  \ 'ctagstype' : 'Css',
-  \ 'kinds'     : [
-    \ 'c:classes',
-    \ 's:selectors',
-    \ 'i:identities'
-  \ ]
-\ }
+      \ 'ctagstype' : 'Css',
+      \ 'kinds'     : [
+      \ 'c:classes',
+      \ 's:selectors',
+      \ 'i:identities'
+      \ ]
+      \ }
 
 let g:tagbar_type_elixir = {
-  \ 'ctagstype': 'Elixir',
-  \ 'kinds' : [
-    \ 'f:functions (public)',
-    \ 'g:functions (private)',
-    \ 'c:callbacks',
-    \ 'd:delegates',
-    \ 'e:exceptions',
-    \ 'i:implementations',
-    \ 'a:macros',
-    \ 'o:operators',
-    \ 'm:modules',
-    \ 'p:protocols',
-    \ 'r:records',
-    \ 't:types',
-    \ 'z:foo'
-  \ ]
-\ }
+      \ 'ctagstype': 'Elixir',
+      \ 'kinds' : [
+      \ 'f:functions (public)',
+      \ 'g:functions (private)',
+      \ 'c:callbacks',
+      \ 'd:delegates',
+      \ 'e:exceptions',
+      \ 'i:implementations',
+      \ 'a:macros',
+      \ 'o:operators',
+      \ 'm:modules',
+      \ 'p:protocols',
+      \ 'r:records',
+      \ 't:types',
+      \ 'z:foo'
+      \ ]
+      \ }
 
 let g:tagbar_type_ruby = {
-  \ 'kinds' : [
-    \ 'm:modules',
-    \ 'c:classes',
-    \ 'd:describes',
-    \ 'C:contexts',
-    \ 'f:methods',
-    \ 'F:singleton methods'
-  \ ]
-\ }
+      \ 'kinds' : [
+      \ 'm:modules',
+      \ 'c:classes',
+      \ 'd:describes',
+      \ 'C:contexts',
+      \ 'f:methods',
+      \ 'F:singleton methods'
+      \ ]
+      \ }
 
-""" ultisnips
-let g:UltiSnipsSnippetsDir = "~/.vim/local/UltiSnips"
+""" deoplete
+let g:deoplete#enable_at_startup = 1
+"let g:deoplete#enable_yarp = 1
+"let g:deoplete#complete_method = 'complete'
+"let g:deoplete#enable_ignore_case= 1
+"let g:deoplete#enable_smart_case= 1
+"let g:deoplete#enable_camel_case = 0
+"let g:deoplete#enable_refresh_always = 0
+"let g:deoplete#enable_on_insert_enter = 1
+"let g:deoplete#auto_complete_start_length = 2
+"let g:deoplete#disable_auto_complete = 0
+"let g:deoplete#enable_profile = 0
+"let g:deoplete#delimiters = ['/']
+"let g:deoplete#max_list = 35
+"let g:deoplete#max_processes = 2
+"let g:deoplete#max_abbr_width = 0
+"let g:deoplete#max_menu_width = 40
+"let g:deoplete#auto_complete_delay = 50
+"let g:deoplete#auto_refresh_delay = 50
+"let g:deoplete#skip_chars = []
+" sources
+" let g:deoplete#sources = {}
+" let g:deoplete#sources._ = ['buffer']
+" let g:deoplete#ignore_sources = {}
+" patterns
+" let g:deoplete#keyword_patterns = {}
+" let g:deoplete#omni_patterns = {}
+" let g:deoplete#member#prefix_patterns - defined in member.py
+" let g:deoplete#omni#input_patterns - defined in omni.py
+"let g:deoplete#omni#functions = {}
+"let g:deoplete#omni#functions.ruby = 'rubycomplete#complete'
+"let g:deoplete#file#enable_buffer_path = 0
+"let g:deoplete#tag#cache_limit_size = 500000
+"let g:deoplete#buffer#require_same_filetype = 1
 
-""" supertab
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<C-p>"
-let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
-let g:SuperTabContextTextOmniPrecedence = ['&completefunc', '&omnifunc']
-let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<C-x><C-u>", "&omnifunc:<C-x><C-o>"]
-let g:SuperTabLongestEnhanced = 1
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ deoplete#mappings#manual_complete()
+function! s:check_back_space() abort "{{{
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction"}}}
 
-" completion chaining omnifunc -> keyword or user completion
-autocmd FileType *
-      \ if &omnifunc != '' |
-      \ call SuperTabChain(&omnifunc, "<C-p>") |
-      \ call SuperTabSetDefaultCompletionType("<C-x><C-u>") |
-      \ endif
-""" elm
-let g:elm_format_autosave = 1
-let g:elm_format_fail_silently = 0
-let g:elm_setup_keybindings = 0
+" LanguageClient-neovim
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_rootMarkers = {'elixir': ['mix.exs']}
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['javascript-typescript-stdio'],
+    \ }
 
-""" javascript
+let g:LanguageClient_loggingLevel='DEBUG'
+
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <C-r>r :call LanguageClient#textDocument_rename()<CR>
+
+""" css filetype
+augroup filetype_css
+  autocmd!
+  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+augroup END
+
+""" javascript filetype
+" vim-javascript
+augroup filetype_javascript
+  autocmd!
+  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+augroup END
+
+augroup javascript_folding
+  autocmd!
+  autocmd FileType javascript setlocal foldmethod=syntax
+  autocmd FileType javascript set conceallevel=1
+augroup END
+
+autocmd BufNewFile,BufRead *.jsx, set filetype=javascript.jsx
+" vim-jsx
+
+""" json filetype
+augroup json_folding
+  autocmd!
+  autocmd FileType json setlocal foldmethod=syntax
+augroup END
+
+""" html filetype
+augroup filetype_html
+  autocmd!
+  autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
+augroup END
 
 """ html5
 let g:html5_rdfa_attributes_complete = 0
@@ -398,8 +501,24 @@ let g:html5_microdata_attributes_complete = 0
 let g:user_emmet_mode='inv'
 let g:user_emmet_install_global = 1
 let g:user_emmet_leader_key='<C-y>'
+let g:user_emmet_settings = {
+      \  'javascript.jsx' : {
+      \      'extends' : 'jsx',
+      \  },
+      \}
+
+""" ruby filetype
+augroup filetype_ruby
+  autocmd!
+  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+  autocmd FileType ruby,eruby let g:Tlist_Ctags_Cmd = "ripper-tags"
+augroup END
+
+let g:ruby_ctags_arguments = "-f .git/tags -R --sort=yes --tag-relative=yes"
+let g:rails_ctags_arguments = "-f .git/tags -R --sort=yes --tag-relative=yes"
 
 """ vim-ruby
+let g:ruby_indent_block_style = 'do'
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_classes_in_global = 1
 let g:rubycomplete_rails = 1
@@ -407,32 +526,42 @@ let g:rubycomplete_load_gemfile = 0
 let g:rubycomplete_use_bundler = 1
 
 """ vim-rails
-augroup filetype_ruby
-  autocmd!
-  autocmd FileType ruby,eruby let g:Tlist_Ctags_Cmd = "ripper-tags"
-augroup END
-
-let g:ruby_ctags_arguments = "-f .git/tags -R --sort=yes --tag-relative=yes"
-let g:rails_ctags_arguments = "-f .git/tags -R --sort=yes --tag-relative=yes"
-
 """ vim-textobj-ruby
 let g:textobj_ruby_more_mappings = 1
 
-""" vim-elixir
+""" elixir filetype
 augroup filetype_elixir
   autocmd!
-  autocmd FileType elixir let g:Tlist_Ctags_Cmd = "ctags"
-  autocmd FileType elixir set tags=.git/tags,tags;
+  autocmd FileType elixir,eelixir let g:Tlist_Ctags_Cmd = "ctags"
+  autocmd FileType elixir,eelixir set tags=.git/tags;
 augroup END
 
-let g:elixir_ctags_arguments = "-f .git/tags -R --languages=Elixir --sort=yes --tag-relative=yes"
+let g:elixir_ctags_arguments = "-f .git/tags --fields=+l --recurse --sort=yes --tag-relative=yes"
 
-""" alchemist.vim
-let g:alchemist_tag_disable = 1
-let g:alchemist#elixir_erlang_src = "/home/josemrb/projects/source/"
+""" vim-elixir
+"""" alchemist.vim
+"let g:alchemist_keyword_map = 'K'
+"let g:alchemist_tag_map = '<C-]>'
+"let g:alchemist_tag_stack_map = '<C-T>'
+"let g:alchemist#elixir_erlang_src = "/home/josemrb/projects/source/"
+
+""" typescript + jsx filetype
+autocmd BufNewFile,BufRead *.tsx, set filetype=typescript.jsx
+
+augroup filetype_typescript
+  autocmd!
+  autocmd FileType typescript JsPreTmpl html
+  autocmd FileType typescript syn clear foldBraces
+augroup END
 
 """ vim-markdown
 let g:markdown_fenced_languages = ['html', 'ruby', 'elixir', 'bash=sh']
+
+""" xml filetype
+augroup filetype_xml
+  autocmd!
+  autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup END
 
 """ vim-simpletodo
 let g:simple_todo_tick_symbol = '✔️'
@@ -448,12 +577,6 @@ au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 set statusline+=%{fugitive#statusline()}
 
 """ omnicomplete
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
-
 set completeopt=menu,preview,longest
 
 set background=dark

@@ -20,6 +20,20 @@ if [[ -x "${ZDOTDIR:-$HOME}/.local/bin/direnv" ]]; then
 fi
 
 #
+# Key management
+#
+
+# gpg-agent info
+if (( $#commands[(i)gpg-agent] )); then
+  export GPG_AGENT_INFO="${ZDOTDIR:-$HOME}/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
+fi
+
+# ssh-agent persistent socket
+if (( $#commands[(i)gpgconf] )); then
+  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+fi
+
+#
 # Version Managers
 #
 

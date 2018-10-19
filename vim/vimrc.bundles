@@ -1,151 +1,166 @@
 " vim: set sw=2 ts=2 sts=2 et tw=120 foldmarker={,} foldlevel=0 foldmethod=marker
-" bundles
 set nocompatible
 
-" vundle
+" vim-plug
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-""" vundle manages vundle
-Plugin 'gmarik/Vundle.vim'
 """ dependencies
-Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
 
 """ file search
 " ack.vim
 if executable('ag')
-  Plugin 'mileszs/ack.vim'
-  let g:ackprg = 'ag --nogroup --nocolor --column --smart-case'
+  Plug 'mileszs/ack.vim'
 elseif executable('ack')
-  Plugin 'mileszs/ack.vim'
+  Plug 'mileszs/ack.vim'
 endif
 
 """ visual aids
-Plugin 'NLKNguyen/papercolor-theme'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'osyo-manga/vim-over'
-Plugin 'myusuf3/numbers.vim'
-Plugin 'powerman/vim-plugin-AnsiEsc'
+Plug 'NLKNguyen/papercolor-theme'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'osyo-manga/vim-over'
+Plug 'myusuf3/numbers.vim'
+Plug 'powerman/vim-plugin-AnsiEsc'
 
 """ status and tab bars
 " status bar / tab line
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 " buffer gator
-Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'jgdavey/tslime.vim'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'jgdavey/tslime.vim'
 
 """ vim keymaps
-Plugin 'milkypostman/vim-togglelist'
-Plugin 'tpope/vim-unimpaired'
+Plug 'milkypostman/vim-togglelist'
+Plug 'tpope/vim-unimpaired'
 
 """ file utils
 " nerd tree file explorer
-Plugin 'scrooloose/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 " buffer / files helper
-Plugin 'tpope/vim-eunuch'
+Plug 'tpope/vim-eunuch'
 " fuzzy search
-Plugin 'kien/ctrlp.vim'
-Plugin 'junegunn/fzf.vim'
-" wiki
-Plugin 'vimwiki/vimwiki'
+Plug 'kien/ctrlp.vim'
+Plug 'junegunn/fzf.vim'
 " todo.txt
-Plugin 'freitass/todo.txt-vim'
+Plug 'freitass/todo.txt-vim'
 
 """ text edit
-Plugin 'tmhedberg/matchit'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-abolish'
-Plugin 'PeterRincker/vim-argumentative'
-Plugin 'sjl/gundo.vim'
-Plugin 'kana/vim-textobj-user'
-Plugin 'kana/vim-textobj-indent'
-Plugin 'whatyouhide/vim-textobj-xmlattr'
-Plugin 'reedes/vim-textobj-sentence'
-Plugin 'reedes/vim-textobj-quote'
+Plug 'tmhedberg/matchit'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-abolish'
+Plug 'PeterRincker/vim-argumentative'
+Plug 'sjl/gundo.vim'
+Plug 'kana/vim-textobj-user'
+Plug 'kana/vim-textobj-indent'
+Plug 'whatyouhide/vim-textobj-xmlattr'
+Plug 'reedes/vim-textobj-sentence'
+Plug 'reedes/vim-textobj-quote'
 
 """ cursor handling
-Plugin 'kristijanhusak/vim-multiple-cursors'
-Plugin 'Lokaltog/vim-easymotion'
+Plug 'kristijanhusak/vim-multiple-cursors'
+Plug 'Lokaltog/vim-easymotion'
 
 """ general programming
-Plugin 'w0rp/ale'
-"Plugin 'scrooloose/syntastic'
-Plugin 'janko-m/vim-test'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'godlygeek/tabular'
+Plug 'w0rp/ale'
+Plug 'janko-m/vim-test'
+Plug 'scrooloose/nerdcommenter'
+Plug 'godlygeek/tabular'
 
 """ tags management
 " tag bar
-Plugin 'majutsushi/tagbar'
+Plug 'majutsushi/tagbar'
 
-""" snippets & autocomplete
+""" snippets
 " ultisnips
-Plugin 'SirVer/ultisnips'
-" supertab
-Plugin 'ervandew/supertab'
+"Plug 'SirVer/ultisnips'
+
+""" autocomplete
+" YCM
+"Plug 'Valloric/YouCompleteMe'
+" deoplete
+Plug 'Shougo/deoplete.nvim'
+Plug 'roxma/nvim-yarp'
+Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'Shougo/neco-syntax'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 """ programming languages
+
 """ javascript
-Plugin 'tpope/vim-jdaddy'
-Plugin 'elzr/vim-json'
-Plugin 'pangloss/vim-javascript'
-Plugin 'moll/vim-node'
-Plugin 'elmcast/elm-vim'
+Plug 'tpope/vim-jdaddy'
+Plug 'elzr/vim-json'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'moll/vim-node'
+"Plug 'carlitux/deoplete-ternjs'
 
 """ html & css
-Plugin 'othree/html5.vim'
-Plugin 'docunext/closetag.vim'
-Plugin 'mattn/emmet-vim'
-Plugin 'groenewege/vim-less'
-Plugin 'hail2u/vim-css3-syntax'
-Plugin 'cakebaker/scss-syntax.vim'
+Plug 'othree/html5.vim'
+Plug 'docunext/closetag.vim'
+Plug 'mattn/emmet-vim'
+Plug 'groenewege/vim-less'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'cakebaker/scss-syntax.vim'
 
 """ ruby
-Plugin 'tpope/vim-rbenv'
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-endwise'
-Plugin 'tpope/vim-rake'
-Plugin 'tpope/vim-bundler'
-Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-haml'
-Plugin 'ecomba/vim-ruby-refactoring'
-Plugin 'rhysd/vim-textobj-ruby'
+Plug 'tpope/vim-rbenv'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-rake'
+Plug 'tpope/vim-bundler'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-haml'
+Plug 'ecomba/vim-ruby-refactoring'
+Plug 'rhysd/vim-textobj-ruby'
 
 """ elixir
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'slashmili/alchemist.vim'
-Plugin 'avdgaag/vim-phoenix'
+Plug 'elixir-lang/vim-elixir'
+Plug 'slashmili/alchemist.vim'
+
+""" rust
+Plug 'rust-lang/rust.vim'
+"Plug 'racer-rust/vim-racer'
+
+""" typescript
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'Quramy/vim-js-pretty-template'
+"Plug 'Quramy/tsuquyomi'
 
 """ others
-Plugin 'vim-scripts/dbext.vim'
-Plugin 'tpope/vim-markdown'
-Plugin 'vitalk/vim-simple-todo'
-Plugin 'mustache/vim-mustache-handlebars'
+Plug 'vim-scripts/dbext.vim'
+Plug 'tpope/vim-markdown'
+Plug 'vitalk/vim-simple-todo'
+Plug 'mustache/vim-mustache-handlebars'
+ Plug 'tmux-plugins/vim-tmux'
 
 """ utils
-Plugin 'tpope/vim-dispatch'
+Plug 'tpope/vim-dispatch'
 
 """ external tools
 " docker
-Plugin 'ekalinin/dockerfile.vim'
+Plug 'ekalinin/dockerfile.vim'
 
 " git
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-fugitive'
-Plugin 'mhinz/vim-signify'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-fugitive'
+Plug 'mhinz/vim-signify'
 
 """ external services
-Plugin 'mattn/webapi-vim'
-Plugin 'mattn/gist-vim'
+Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim'
 
 " call bundles local
 if filereadable(expand("~/.vimrc.bundles.local"))
   source \~/.vimrc.bundles.local
 endif
 
-call vundle#end()
+call plug#end()

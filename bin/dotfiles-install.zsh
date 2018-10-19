@@ -37,7 +37,7 @@ link-hidden-files-to-dir $pwd/../prezto ${ZDOTDIR:-$HOME}
 mkdir -p ${ZDOTDIR:-$HOME}/.vim/local
 link-hidden-files-to-dir $pwd/../vim ${ZDOTDIR:-$HOME}
 
-git clone https://github.com/gmarik/Vundle.vim.git ${ZDOTDIR:-$HOME}/.vim/bundle/Vundle.vim
-vim +PluginInstall +qall
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+vim +PlugInstall +qa
 
 exit 0
