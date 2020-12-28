@@ -3,27 +3,32 @@
 [branch]
   autosetuprebase = always
 [core]
-  editor = vim
   autocrlf = false
-  excludesfile = /home/josemrb/.gitignore
+  editor = vim
+  excludesfile = ~/.gitignore
 [color]
-  status = auto
   branch = auto
-  interactive = auto
   diff = auto
-[merge]
-  tool = vimdiff
-  conflictstyle = diff3
-  ff = false
-[user]
-  name = josemrb
-  email = work@josemrb.com
-  signingkey = 24D836F0ED1E8908
-[push]
-  default = simple
+  interactive = auto
+  status = auto
+  ui = auto
+[commit]
+  gpgsign = true
+  template = ~/.gitmessage
 [diff]
+  colorMoved = zebra
   tool = vimdiff
 [difftool]
   prompt = false
-[commit]
-  gpgsign = true
+[fetch]
+  prune = true
+[include]
+  path = ~/.gitconfig.local
+[merge]
+  conflictstyle = diff3
+  ff = true
+  tool = vimdiff
+[pull]
+  rebase = true
+[push]
+  default = current

@@ -11,40 +11,65 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 #
-# Environment utils
-#
-
-# direnv
-if [[ -x "${ZDOTDIR:-$HOME}/.local/bin/direnv" ]]; then
-  eval "$(direnv hook zsh)"
-fi
-
-#
 # Key management
 #
 
 # gpg-agent info
-if (( $#commands[(i)gpg-agent] )); then
-  export GPG_AGENT_INFO="${ZDOTDIR:-$HOME}/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
-fi
+#if (( $#commands[(i)gpg-agent] )); then
+#  export GPG_AGENT_INFO="${ZDOTDIR:-$HOME}/.gnupg/S.gpg-agent:$(pgrep gpg-agent):1"
+#fi
 
 # ssh-agent persistent socket
-if (( $#commands[(i)gpgconf] )); then
-  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
-fi
+#if (( $#commands[(i)gpgconf] )); then
+#  export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+#fi
+
+#
+# Prompt
+#
+
+# Order
+SPACESHIP_PROMPT_ORDER=(
+  user          # Username section
+  host          # Hostname section
+  dir           # Current directory section
+  git           # Git section (git_branch + git_status)
+  exec_time     # Execution time
+  line_sep      # Line break
+  jobs          # Background jobs indicator
+  char          # Prompt character
+)
+
+SPACESHIP_RPROMPT_ORDER=(
+  time          # Time stamps section
+)
+
+# Prompt
+SPACESHIP_PROMPT_FIRST_PREFIX_SHOW=true
+
+# Char
+SPACESHIP_CHAR_PREFIX=" "
+SPACESHIP_CHAR_SUFFIX=" "
+SPACESHIP_CHAR_SYMBOL="$"
+
+# Time
+SPACESHIP_TIME_SHOW=true
+SPACESHIP_TIME_FORMAT="%D{%F %H:%M:%S.%.}"
+
+# User
+SPACESHIP_USER_SHOW="always"
+SPACESHIP_USER_PREFIX=" "
+SPACESHIP_USER_SUFFIX=""
+
+# Host
+SPACESHIP_HOST_SHOW="always"
+SPACESHIP_HOST_PREFIX="@"
 
 #
 # Version Managers
 #
 
 # asdf-vm
-if [[ -s "${ZDOTDIR:-$HOME}/.asdf/asdf.sh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.asdf/asdf.sh"
-  source "${ZDOTDIR:-$HOME}/.asdf/completions/asdf.bash"
-fi
-
-# rbenv
-if [[ -x "${ZDOTDIR:-$HOME}/.rbenv/bin/rbenv" ]]; then
-  path=("${ZDOTDIR:-$HOME}/.rbenv/bin" $path)
-  eval "$(rbenv init - zsh)"
+if [[ -s "$HOME/.asdf/asdf.sh" ]]; then
+  source $HOME/.asdf/asdf.sh
 fi

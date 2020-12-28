@@ -1,0 +1,62 @@
+- defaults:
+    link:
+      create: true
+      relink: true
+
+- clean: ['~']
+
+- create:
+  - ~/documents
+  - ~/documents/desktop
+  - ~/documents/public
+  - ~/documents/templates
+  - ~/downloads
+  - ~/downloads/chrome
+  - ~/downloads/firefox
+  - ~/downloads/media
+  - ~/media/music
+  - ~/media/pictures
+  - ~/media/videos
+
+- link:
+    ~/.gemrc: ruby/gemrc
+    ~/.gitconfig: git/gitconfig
+    ~/.gitignore: git/gitignore
+    ~/.gitmessage: git/gitmessage
+    ~/.tmux.conf: tmux/tmux.conf
+    ~/.tmux.theme.conf: tmux/theme.conf
+    ~/.zlogin: prezto/zlogin
+    ~/.zlogout: prezto/zlogout
+    ~/.zpreztorc: prezto/zpreztorc
+    ~/.zprofile: prezto/zprofile
+    ~/.zshenv: prezto/zshenv
+    ~/.zshrc: prezto/zshrc
+    ~/.gnupg/:
+      glob: true
+      path: gnupg/*
+
+- shell:
+  -
+    command: rsync -av xdg_config/* $HOME/.config
+    stdout: true
+    description: copy base xdg config files
+  -
+    command: if [ ! -d "$HOME/.zprezto" ]; then git clone --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"; fi
+    stdout: true
+    description: download prezto
+  -
+    command: if [ ! -d "$HOME/.zprezto/contrib" ]; then git clone --recurse-submodules https://github.com/belak/prezto-contrib "$HOME/.zprezto/contrib"; fi
+    stdout: true
+    description: download prezto-contrib
+  -
+    command: if [ ! -d "$HOME/.zprezto/contrib/fzf-tab" ]; then git clone https://github.com/Aloxaf/fzf-tab "$HOME/.zprezto/contrib/fzf-tab"; fi
+    stdout: true
+    description: download fzf-tab
+  -
+    command: if [ ! -d "$HOME/.asdf" ]; then git clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf" --branch v0.8.0; fi
+    stdout: true
+    description: download asdf
+  -
+    command: ls -la
+    stdout: true
+    description: lists user directory

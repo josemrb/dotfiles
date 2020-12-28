@@ -13,3 +13,15 @@
 .node-version
 .ruby-version
 .tools-version
+
+
+.envrc
+.git/
+/bower_components/
+/log
+/node_modules/
+/tmp
+/vendor
+log/*.log
+tmp/**/*
+/tags

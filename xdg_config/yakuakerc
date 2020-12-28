@@ -1,0 +1,11 @@
+[Animation]
+Frames=15
+
+[Appearance]
+Skin=materia-dark
+
+[Dialogs]
+FirstRun=false
+
+[Window]
+Height=60
