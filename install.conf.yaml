@@ -45,15 +45,15 @@
     stdout: true
     description: download prezto
   -
-    command: if [ ! -d "$HOME/.zprezto/contrib" ]; then git clone --recurse-submodules https://github.com/belak/prezto-contrib "$HOME/.zprezto/contrib"; fi
+    command: if [ ! -d "$HOME/.zprezto/contrib" ]; then git clone --recurse-submodules https://github.com/belak/prezto-contrib.git "$HOME/.zprezto/contrib"; fi
     stdout: true
     description: download prezto-contrib
   -
-    command: if [ ! -d "$HOME/.zprezto/contrib/fzf-tab" ]; then git clone https://github.com/Aloxaf/fzf-tab "$HOME/.zprezto/contrib/fzf-tab"; fi
+    command: if [ ! -d "$HOME/.zprezto/contrib/fzf-tab" ]; then git clone https://github.com/Aloxaf/fzf-tab.git "$HOME/.zprezto/contrib/fzf-tab"; fi
     stdout: true
     description: download fzf-tab
   -
-    command: if [ ! -d "$HOME/.asdf" ]; then git clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf" --branch v0.8.0; fi
+    command: if [ ! -d "$HOME/.asdf" ]; then git clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf" --branch v0.8.1; fi
     stdout: true
     description: download asdf
   -
