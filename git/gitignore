@@ -20,6 +20,8 @@
 /bower_components/
 /log
 /node_modules/
+/priv/**/*.hash
+/priv/**/*.plt
 /tmp
 /vendor
 log/*.log

@@ -38,7 +38,6 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'alias-tip' \
   'archive' \
   'direnv' \
   'clipboard' \
@@ -46,7 +45,6 @@ zstyle ':prezto:load' pmodule \
   'fzf-tab' \
   'fasd' \
   'git' \
-  'gpg' \
   'rsync' \
   'tmux' \
   'syntax-highlighting' \

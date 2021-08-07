@@ -5,18 +5,18 @@ set nocompatible
 let localVimDir = '~/.vim/local'
 
 " call before
-if filereadable(expand("~/.vimrc.before"))
-  source \~/.vimrc.before
+if filereadable(expand("~/profiles/dotfiles/vim/vimrc.before"))
+  source \~/profiles/dotfiles/vim/vimrc.before
 endif
 
 " load functions
-if filereadable(expand("~/.vimrc.functions"))
-  source \~/.vimrc.functions
+if filereadable(expand("~/profiles/dotfiles/vim/vimrc.functions"))
+  source \~/profiles/dotfiles/vim/vimrc.functions
 endif
 
 " call bundles
-if filereadable(expand("~/.vimrc.bundles"))
-  source \~/.vimrc.bundles
+if filereadable(expand("~/profiles/dotfiles/vim/vimrc.bundles"))
+  source \~/profiles/dotfiles/vim/vimrc.bundles
 endif
 
 """ general
@@ -130,6 +130,12 @@ set colorcolumn=+1 "mark the ideal max text width
 " enable 256 colors console
 set t_Co=256
 
+if has('termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
 """ formatting
 set nowrap "don't wrap lines
 set linebreak "wrap lines at convenient points
@@ -158,63 +164,67 @@ set exrc
 
 """ plugins
 """ ack.vim
-if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
+if executable('rg')
+  let g:ackprg = 'rg --color=never --column --heading -S --vimgrep'
+elseif executable('ag')
+  let g:ackprg = 'ag --column -H --nocolor --nogroup -S --vimgrep'
 endif
 
+""" quickfix-reflector.vim
 """ papercolor
 let g:PaperColor_Theme_Options = {
-      \   'transparent_background': 0
-      \ }
+      \   'theme': {
+        \     'default.dark': {
+          \       'transparent_background': 1
+          \     }
+          \   }
+          \ }
 
 """ vim-indent-guides
 let g:indent_guides_start_level = 2
 let g:indent_guides_guide_size = 1
 let g:indent_guides_enable_on_vim_startup = 1
-let g:indent_guides_auto_colors = 0
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  ctermbg=darkgrey
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEvenm ctermbg=darkgrey
 
 """ vim-over
-
 """ numbers
 let g:numbers_exclude = ['buffers', 'tagbar', 'nerdtree']
 nnoremap <F3> :NumbersToggle<CR>
 
 """ vim-airline
-" theme
-let g:airline_theme='wombat'
 " populate gliphs
 let g:airline_powerline_fonts = 2
 " hide empty sections
 let g:airline_skip_empty_sections = 1
+" ALE integration
+let g:airline#extensions#ale#enabled = 1
+" CoC.vim integration >
+let g:airline#extensions#coc#enabled = 1
+" tabline integration
 " displays all the buffers when only one tab is open
 let g:airline#extensions#tabline#enabled = 1
 " set alternative tab separator
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = '|'
-" enable ale
-let g:airline#extensions#ale#enabled = 1
+" set formatter
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+
+""" vim-airline-themes
+" theme
+let g:airline_theme='wombat'
 
 """ buffergator
+" disable keymaps
+let g:buffergator_suppress_keymaps = 1
 " right side of the screen
 let g:buffergator_viewport_split_policy = 'R'
-" enable keymappings...
-let g:buffergator_suppress_keymaps = 1
 " loop buffers
 let g:buffergator_mru_cycle_loop = 1
 " previous buffer open
-nmap <leader>jb :BuffergatorMruCyclePrev<cr>
+nmap <Leader>jb :BuffergatorMruCyclePrev<CR>
 " next buffer open
-nmap <leader>kb :BuffergatorMruCycleNext<cr>
+nmap <Leader>kb :BuffergatorMruCycleNext<CR>
 " list of buffers open
-nmap <leader>bb :BuffergatorToggle<cr>
-
-"""tslime.vim
-map <C-c><C-c> <Plug>SendSelectionToTmux
-nmap <C-c><C-c> <Plug>NormalModeSendToTmux
-nmap <C-c>r <Plug>SetTmuxVars
+nmap <Leader>bb :BuffergatorToggle<CR>
 
 """ vim-togglelist
 """ vim-unimpaired
@@ -233,12 +243,14 @@ let g:NERDTreeShowHidden=1
 """ vim-eunuch
 
 """ CtrlP
-" use leader
-let g:ctrlp_map = '<leader>p'
+" use Leader
+let g:ctrlp_map = '<Leader>p'
 " set default mode
 let g:ctrlp_cmd = 'CtrlP'
 " set root dir mode
 let g:ctrlp_working_path_mode = 'ra'
+" additional markers
+let g:ctrlp_root_markers = ['mix.exs', 'package.json', 'Gemfile.rb']
 " default open file mode = current window
 let g:ctrlp_open_new_file = 'r'
 " multiple files open = current window
@@ -248,92 +260,82 @@ let g:ctrlp_prompt_mappings = {
       \ 'AcceptSelection("h")': ['<C-x>'],
       \ 'AcceptSelection("v")': ['<C-v>']
       \}
-
+" custom list program
+if executable('rg')
+  let g:ctrlp_user_command = 'rg %s --color=never --files --hidden --glob "!.git"'
+  let g:ctrlp_use_caching = 0
+endif
+" custom ignore list
 let g:ctrlp_custom_ignore = {
       \ 'dir': '\v[\/](_build|bower_components|cover|dist|deps|node_modules)|(\.(swp|git|hg))$',
       \ 'file': '\.exe\'
       \}
 
 """ fzf.vim
-let g:fzf_command_prefix = 'Fzf'
-nmap <leader>f :FzfFiles<CR>
+nmap <leader>f :GFiles<CR>
+
+""" vim-projectionist
+""" fuzzy-projectionist.vim
+nmap <Leader>fc :Fcontroller<CR>
+nmap <Leader>ft :Ftemplate<CR>
+nmap <Leader>fv :Fview<CR>
 
 """ vim-surround
 """ vim-repeat
 """ vim-abolish
-""" vim-argumentative
+""" vim-swap
 """ gundo.vim
 nnoremap <F5> :GundoToggle<CR>
 
 """ vim-textobj-user
+""" vim-textobj-entire
 """ vim-textobj-indent
 """ vim-textobj-xmlattr
 
-""" vim-textobj-sentence
-augroup textobj_sentence
-  autocmd!
-  autocmd FileType markdown call textobj#sentence#init()
-  autocmd FileType textile call textobj#sentence#init()
-  autocmd FileType text call textobj#sentence#init()
-augroup END
-
-""" vim-textobj-quote
-augroup textobj_quote
-  autocmd!
-  autocmd FileType markdown call textobj#quote#init()
-  autocmd FileType textile call textobj#quote#init()
-  autocmd FileType text call textobj#quote#init()
-augroup END
-
+""" matchit
 """ vim-multiple-cursors
 """ vim-easymotion
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+" `s{char}{char}{label}`
+nmap s <Plug>(easymotion-overwin-f2)
+" Turn on case-insensitive feature
+let g:EasyMotion_smartcase = 1
+" Line motions
+map <Leader>L <Plug>(easymotion-bd-jk)
+nmap <Leader>L <Plug>(easymotion-overwin-line)
+" Word motions
+map  <Leader>w <Plug>(easymotion-bd-w)
+nmap <Leader>w <Plug>(easymotion-overwin-w)
 
 """ ale
 let g:ale_completion_enabled = 0
 
-let g:ale_list_window_size = 5
-let g:ale_open_list = 1
-let g:ale_set_loclist = 0
-let g:ale_set_quickfix = 1
-
-" let g:ale_fix_on_save = 1
-
 let g:ale_linters = {
       \ 'css': ['eslint'],
+      \ 'elixir': ['credo'],
       \ 'javascript': ['eslint'],
+      \ 'json': ['jq'],
       \ 'jsx': ['eslint']
       \}
-
 let g:ale_linters_explicit = 1
-
 let g:ale_fixers = {
       \ '*': ['remove_trailing_lines', 'trim_whitespace'],
       \ 'elixir': ['mix_format'],
       \ 'ruby': ['rubocop'],
-      \ 'javascript': ['eslint', 'prettier'],
-      \ 'jsx': ['eslint', 'prettier']
+      \ 'javascript': ['prettier'],
+      \ 'jsx': ['prettier']
       \}
-
 let g:ale_fixers_explicit = 1
-
 let g:ale_pattern_options = {
       \ '\.min\.js$': {'ale_linters': [], 'ale_fixers': []},
       \ '\.min\.css$': {'ale_linters': [], 'ale_fixers': []},
       \}
-
-let g:ale_elixir_elixir_ls_release = '~/.local/opt/elixir-ls'
-
 nmap <Leader>F <Plug>(ale_fix)
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 """ vim-test
 let test#strategy = 'tslime'
 nmap <silent> <leader>t :TestNearest<CR>
 nmap <silent> <leader>T :TestFile<CR>
-"nmap <silent> <leader>a :TestSuite<CR>
-"nmap <silent> <leader>l :TestLast<CR>
-"nmap <silent> <leader>g :TestVisit<CR>
 
 """ NERDCommenter
 """ tabular
@@ -361,156 +363,120 @@ nnoremap <silent> <C-t><C-t> :call Tags()<CR>
 
 """ tagbar
 nmap <F4> :TagbarToggle<CR>
-
+" custom css map
 let g:tagbar_type_css = {
       \ 'ctagstype' : 'Css',
       \ 'kinds'     : [
-      \ 'c:classes',
-      \ 's:selectors',
-      \ 'i:identities'
-      \ ]
-      \ }
-
+        \ 'c:classes',
+        \ 's:selectors',
+        \ 'i:identities'
+        \ ]
+        \ }
+" custom elixir map
 let g:tagbar_type_elixir = {
       \ 'ctagstype': 'Elixir',
       \ 'kinds' : [
-      \ 'f:functions (public)',
-      \ 'g:functions (private)',
-      \ 'c:callbacks',
-      \ 'd:delegates',
-      \ 'e:exceptions',
-      \ 'i:implementations',
-      \ 'a:macros',
-      \ 'o:operators',
-      \ 'm:modules',
-      \ 'p:protocols',
-      \ 'r:records',
-      \ 't:types',
-      \ 'z:foo'
-      \ ]
-      \ }
-
+        \ 'f:functions (public)',
+        \ 'g:functions (private)',
+        \ 'c:callbacks',
+        \ 'd:delegates',
+        \ 'e:exceptions',
+        \ 'i:implementations',
+        \ 'a:macros',
+        \ 'o:operators',
+        \ 'm:modules',
+        \ 'p:protocols',
+        \ 'r:records',
+        \ 't:types',
+        \ 'z:foo'
+        \ ]
+        \ }
+" custom ruby map
 let g:tagbar_type_ruby = {
       \ 'kinds' : [
-      \ 'm:modules',
-      \ 'c:classes',
-      \ 'd:describes',
-      \ 'C:contexts',
-      \ 'f:methods',
-      \ 'F:singleton methods'
-      \ ]
-      \ }
+        \ 'm:modules',
+        \ 'c:classes',
+        \ 'd:describes',
+        \ 'C:contexts',
+        \ 'f:methods',
+        \ 'F:singleton methods'
+        \ ]
+        \ }
 
-""" deoplete
-let g:deoplete#enable_at_startup = 1
-"let g:deoplete#enable_yarp = 1
-"let g:deoplete#complete_method = 'complete'
-"let g:deoplete#enable_ignore_case= 1
-"let g:deoplete#enable_smart_case= 1
-"let g:deoplete#enable_camel_case = 0
-"let g:deoplete#enable_refresh_always = 0
-"let g:deoplete#enable_on_insert_enter = 1
-"let g:deoplete#auto_complete_start_length = 2
-"let g:deoplete#disable_auto_complete = 0
-"let g:deoplete#enable_profile = 0
-"let g:deoplete#delimiters = ['/']
-"let g:deoplete#max_list = 35
-"let g:deoplete#max_processes = 2
-"let g:deoplete#max_abbr_width = 0
-"let g:deoplete#max_menu_width = 40
-"let g:deoplete#auto_complete_delay = 50
-"let g:deoplete#auto_refresh_delay = 50
-"let g:deoplete#skip_chars = []
-" sources
-" let g:deoplete#sources = {}
-" let g:deoplete#sources._ = ['buffer']
-" let g:deoplete#ignore_sources = {}
-" patterns
-" let g:deoplete#keyword_patterns = {}
-" let g:deoplete#omni_patterns = {}
-" let g:deoplete#member#prefix_patterns - defined in member.py
-" let g:deoplete#omni#input_patterns - defined in omni.py
-"let g:deoplete#omni#functions = {}
-"let g:deoplete#omni#functions.ruby = 'rubycomplete#complete'
-"let g:deoplete#file#enable_buffer_path = 0
-"let g:deoplete#tag#cache_limit_size = 500000
-"let g:deoplete#buffer#require_same_filetype = 1
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ deoplete#mappings#manual_complete()
-function! s:check_back_space() abort "{{{
+""" coc.vim
+" confirm first item on CR
+inoremap <silent><expr> <cr>
+      \ pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+" use TAB to trigger completion
+function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
+endfunction
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
 
-" LanguageClient-neovim
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_rootMarkers = {'elixir': ['mix.exs']}
-let g:LanguageClient_serverCommands = {
-    \ 'javascript': ['javascript-typescript-stdio'],
-    \ 'javascript.jsx': ['javascript-typescript-stdio'],
-    \ }
+" use S-TAB to move back
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Use <C-l> for trigger snippet expand
+imap <C-l> <Plug>(coc-snippets-expand)
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+" Use `[c` and `]c` to navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" Show doc on hover
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+" Using CocList
+" - Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" - Show yank list
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
-let g:LanguageClient_loggingLevel='DEBUG'
-
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <C-r>r :call LanguageClient#textDocument_rename()<CR>
-
-""" css filetype
-augroup filetype_css
-  autocmd!
-  autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-augroup END
-
-""" javascript filetype
-" vim-javascript
-augroup filetype_javascript
-  autocmd!
-  autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-augroup END
-
-augroup javascript_folding
-  autocmd!
-  autocmd FileType javascript setlocal foldmethod=syntax
-  autocmd FileType javascript set conceallevel=1
-augroup END
-
-autocmd BufNewFile,BufRead *.jsx, set filetype=javascript.jsx
-" vim-jsx
-
-""" json filetype
-augroup json_folding
-  autocmd!
-  autocmd FileType json setlocal foldmethod=syntax
-augroup END
-
-""" html filetype
-augroup filetype_html
-  autocmd!
-  autocmd FileType html setlocal omnifunc=htmlcomplete#CompleteTags
-augroup END
-
-""" html5
+""" html5.vim
 let g:html5_rdfa_attributes_complete = 0
 let g:html5_microdata_attributes_complete = 0
 
+""" vim-less
+""" vim-css3
+""" scss-syntax.vim
 """ emmet-vim
 let g:user_emmet_mode='inv'
-let g:user_emmet_install_global = 1
+let g:user_emmet_install_global = 0
 let g:user_emmet_leader_key='<C-y>'
 let g:user_emmet_settings = {
-      \  'javascript.jsx' : {
-      \      'extends' : 'jsx',
-      \  },
-      \}
+      \  'elixir.eelixir' : {
+        \      'extends' : 'html',
+        \  },
+        \  'javascript.jsx' : {
+          \      'extends' : 'jsx',
+          \  },
+          \}
+
+""" vim-jdaddy
+""" vim-json
+""" vim-javascript
+""" vim-jsx
 
 """ ruby filetype
 augroup filetype_ruby
   autocmd!
-  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
   autocmd FileType ruby,eruby let g:Tlist_Ctags_Cmd = "ripper-tags"
 augroup END
 
@@ -534,28 +500,20 @@ augroup filetype_elixir
   autocmd!
   autocmd FileType elixir,eelixir let g:Tlist_Ctags_Cmd = "ctags"
   autocmd FileType elixir,eelixir set tags=.git/tags;
+  autocmd FileType elixir,eelixir let b:ale_fix_on_save = 1
 augroup END
 
 let g:elixir_ctags_arguments = "-f .git/tags --fields=+l --recurse --sort=yes --tag-relative=yes"
 
-""" vim-elixir
-"""" alchemist.vim
-"let g:alchemist_keyword_map = 'K'
-"let g:alchemist_tag_map = '<C-]>'
-"let g:alchemist_tag_stack_map = '<C-T>'
-"let g:alchemist#elixir_erlang_src = "/home/josemrb/projects/source/"
-
-""" typescript + jsx filetype
-autocmd BufNewFile,BufRead *.tsx, set filetype=typescript.jsx
-
-augroup filetype_typescript
+augroup filetype_eelixir
   autocmd!
-  autocmd FileType typescript JsPreTmpl html
-  autocmd FileType typescript syn clear foldBraces
+  autocmd FileType eelixir EmmetInstall
 augroup END
 
+""" vim-elixir
 """ vim-markdown
 let g:markdown_fenced_languages = ['html', 'ruby', 'elixir', 'bash=sh']
+let g:vim_markdown_no_extensions_in_markdown = 1
 
 """ xml filetype
 augroup filetype_xml
@@ -563,11 +521,15 @@ augroup filetype_xml
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
 
-""" vim-simpletodo
-let g:simple_todo_tick_symbol = '✔️'
+augroup filetype_wiki
+  autocmd!
+  autocmd BufRead,BufNewFile *.wiki set filetype=markdown
+augroup END
 
-""" vim-mustache-handlebars
-let g:mustache_abbreviations = 1
+""" vimwiki
+let g:vimwiki_list = [{'path': '~/documents/wiki/',
+      \ 'syntax': 'markdown',
+      \ 'ext': '.md'}]
 
 """ vim-git
 " on revert git commit message reposition cursor
@@ -575,6 +537,11 @@ au FileType gitcommit au! BufEnter COMMIT_EDITMSG call setpos('.', [0, 1, 1, 0])
 
 """ vim-fugitive
 set statusline+=%{fugitive#statusline()}
+
+"""tslime.vim
+map <C-c><C-c> <Plug>SendSelectionToTmux
+nmap <C-c><C-c> <Plug>NormalModeSendToTmux
+nmap <C-c>r <Plug>SetTmuxVars
 
 """ omnicomplete
 set completeopt=menu,preview,longest

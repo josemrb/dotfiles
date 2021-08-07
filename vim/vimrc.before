@@ -61,6 +61,6 @@ map zl zL
 map zh zH
 
 " call before local
-if filereadable(expand("~/.vimrc.before.local"))
-  source \~/.vimrc.before.local
+if filereadable(expand("~/profiles/dotfiles/vim/vimrc.before.local"))
+  source \~/profiles/dotfiles/vim/vimrc.before.local
 endif

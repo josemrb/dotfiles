@@ -57,6 +57,10 @@
     stdout: true
     description: download asdf
   -
+    command: curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    stdout: true
+    description: download vim-plug
+  -
     command: ls -la
     stdout: true
     description: lists user directory
