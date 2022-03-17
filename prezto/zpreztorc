@@ -217,7 +217,7 @@ zstyle ':prezto:module:terminal:multiplexer-title' format '%s'
 # zstyle ':prezto:module:tmux:iterm' integrate 'yes'
 
 # Set the default session name:
-zstyle ':prezto:module:tmux:session' name 'working-draft'
+zstyle ':prezto:module:tmux:session' name 'draft'
 
 #
 # Utility

@@ -24,7 +24,7 @@
     ~/.gitignore: git/gitignore
     ~/.gitmessage: git/gitmessage
     ~/.tmux.conf: tmux/tmux.conf
-    ~/.tmux.theme.conf: tmux/theme.conf
+    ~/.local/share/tmux/themes/surface.conf: tmux/theme.conf
     ~/.zlogin: prezto/zlogin
     ~/.zlogout: prezto/zlogout
     ~/.zpreztorc: prezto/zpreztorc
@@ -60,6 +60,10 @@
     command: curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     stdout: true
     description: download vim-plug
+  -
+    command: git clone https://github.com/tmux-plugins/tmux-resurrect ~/.local/share/tmux/plugins/tmux-resurrect
+    stdout: true
+    description: download tmux-resurrect
   -
     command: ls -la
     stdout: true

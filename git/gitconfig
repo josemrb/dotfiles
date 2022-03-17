@@ -36,3 +36,5 @@
 	signingkey = 24D836F0ED1E8908
 	name = josemrb
 	email = work@josemrb.com
+[init]
+	defaultBranch = develop
