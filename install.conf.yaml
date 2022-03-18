@@ -19,6 +19,12 @@
   - ~/media/videos
 
 - link:
+    ~/.config/luacheck/.luacheckrc: lua/luacheckrc
+    ~/.config/nvim/init.lua: nvim/init.lua
+    ~/.config/nvim/lua/profile/functions.lua: nvim/lua/profile/functions.lua
+    ~/.config/nvim/lua/profile/keymaps.lua: nvim/lua/profile/keymaps.lua
+    ~/.config/nvim/lua/profile/options.lua: nvim/lua/profile/options.lua
+    ~/.config/nvim/lua/profile/plugins.lua: nvim/lua/profile/plugins.lua
     ~/.gemrc: ruby/gemrc
     ~/.gitconfig: git/gitconfig
     ~/.gitignore: git/gitignore
@@ -56,6 +62,10 @@
     command: if [ ! -d "$HOME/.asdf" ]; then git clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf" --branch v0.8.1; fi
     stdout: true
     description: download asdf
+  -
+    command: git clone --depth 1 https://github.com/wbthomason/packer.nvim.git "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    stdout: true
+    description: download packer.nvim
   -
     command: curl -fLo "$HOME/.vim/autoload/plug.vim" --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     stdout: true

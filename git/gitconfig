@@ -38,3 +38,5 @@
 	email = work@josemrb.com
 [init]
 	defaultBranch = develop
+[url "https://github.com/"]
+	insteadOf = git://github.com/
