@@ -49,23 +49,23 @@
     stdout: true
     description: copy base xdg config files
   -
-    command: if [ ! -d "$HOME/.zprezto" ]; then git clone --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"; fi
+    command: if [ ! -d "$HOME/.zprezto" ]; then git clone --depth 1 --recursive https://github.com/sorin-ionescu/prezto.git "$HOME/.zprezto"; fi
     stdout: true
     description: download prezto
   -
-    command: if [ ! -d "$HOME/.zprezto/contrib" ]; then git clone --recurse-submodules https://github.com/belak/prezto-contrib.git "$HOME/.zprezto/contrib"; fi
+    command: if [ ! -d "$HOME/.zprezto/contrib" ]; then git clone --depth 1 --recurse-submodules https://github.com/belak/prezto-contrib.git "$HOME/.zprezto/contrib"; fi
     stdout: true
     description: download prezto-contrib
   -
-    command: if [ ! -d "$HOME/.zprezto/contrib/fzf-tab" ]; then git clone https://github.com/Aloxaf/fzf-tab.git "$HOME/.zprezto/contrib/fzf-tab"; fi
+    command: if [ ! -d "$HOME/.zprezto/contrib/fzf-tab" ]; then git clone --depth 1 https://github.com/Aloxaf/fzf-tab.git "$HOME/.zprezto/contrib/fzf-tab"; fi
     stdout: true
     description: download fzf-tab
   -
-    command: if [ ! -d "$HOME/.asdf" ]; then git clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf" --branch v0.8.1; fi
+    command: if [ ! -d "$HOME/.asdf" ]; then git clone --depth 1 https://github.com/asdf-vm/asdf.git "$HOME/.asdf" --branch v0.9.0; fi
     stdout: true
     description: download asdf
   -
-    command: git clone --depth 1 https://github.com/wbthomason/packer.nvim.git "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
+    command: if [ ! -d "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim" ]; then git clone --depth 1 https://github.com/wbthomason/packer.nvim.git "$HOME/.local/share/nvim/site/pack/packer/start/packer.nvim"
     stdout: true
     description: download packer.nvim
   -
@@ -73,9 +73,9 @@
     stdout: true
     description: download vim-plug
   -
-    command: git clone https://github.com/tmux-plugins/tmux-resurrect ~/.local/share/tmux/plugins/tmux-resurrect
+    command: if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then git clone --depth 1 https://github.com/tmux-plugins/tpm "$HOME/.tmux/plugins/tpm"
     stdout: true
-    description: download tmux-resurrect
+    description: download tpm
   -
     command: ls -la
     stdout: true

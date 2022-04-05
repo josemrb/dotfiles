@@ -74,3 +74,10 @@ SPACESHIP_HOST_PREFIX="@"
 if [[ -s "$HOME/.asdf/asdf.sh" ]]; then
   source $HOME/.asdf/asdf.sh
 fi
+
+#
+# Local
+#
+if [[ -s "${ZDOTDIR:-$HOME}/.zshrc.local" ]]; then
+    source "${ZDOTDIR:-$HOME}/.zshrc.local"
+fi
