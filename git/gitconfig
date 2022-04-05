@@ -4,7 +4,7 @@
   autosetuprebase = always
 [core]
   autocrlf = false
-  editor = vim
+  editor = nvim
   excludesfile = ~/.gitignore
 [color]
   branch = auto
@@ -15,11 +15,13 @@
 [commit]
   gpgsign = true
   template = ~/.gitmessage
+[difftool]
+  prompt = true
 [diff]
   colorMoved = zebra
-  tool = vimdiff
-[difftool]
-  prompt = false
+  tool = nvimdiff
+[difftool "nvimdiff"]
+  cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [fetch]
   prune = true
 [include]
@@ -33,10 +35,10 @@
 [push]
   default = current
 [user]
-	signingkey = 24D836F0ED1E8908
-	name = josemrb
-	email = work@josemrb.com
+  signingkey = 24D836F0ED1E8908
+  name = josemrb
+  email = work@josemrb.com
 [init]
-	defaultBranch = develop
+  defaultBranch = develop
 [url "https://github.com/"]
-	insteadOf = git://github.com/
+  insteadOf = git://github.com/
