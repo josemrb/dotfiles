@@ -50,7 +50,7 @@ local options = {
   termguicolors = true,
   whichwrap = "b,s,<,>,[,]",
   -- whichwrap = { "b", "s", "<", ">", "[" ,"]" },
-  -- whichwrap = { 
+  -- whichwrap = {
   --   b = true,
   --   s = true,
   --   "<" = true,
@@ -62,7 +62,8 @@ local options = {
   pumblend = 20,
   pumheight = 12,
   -- complete
-  completeopt = { "menuone", "preview", "longest" },
+  -- completeopt = { "menuone", "preview", "longest" },
+  completeopt = { "menu", "menuone", "noselect" },
   -- scroll
   scrolljump = 3,
   scrolloff = 8,
@@ -75,7 +76,10 @@ local options = {
   timeoutlen = 500,
   -- persistent undo
   undofile = true,
-  undolevels = 25
+  undolevels = 25,
+  -- grep
+  grepprg = "rg -H --no-heading --vimgrep --smart-case",
+  grepformat = "%f:%l:%c:%m"
 }
 
-set_opt(options)
+_G.set_opt(options)

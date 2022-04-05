@@ -21,10 +21,12 @@
 - link:
     ~/.config/luacheck/.luacheckrc: lua/luacheckrc
     ~/.config/nvim/init.lua: nvim/init.lua
-    ~/.config/nvim/lua/profile/functions.lua: nvim/lua/profile/functions.lua
-    ~/.config/nvim/lua/profile/keymaps.lua: nvim/lua/profile/keymaps.lua
-    ~/.config/nvim/lua/profile/options.lua: nvim/lua/profile/options.lua
-    ~/.config/nvim/lua/profile/plugins.lua: nvim/lua/profile/plugins.lua
+    ~/.config/nvim/lua/plugins/:
+      glob: true
+      path: nvim/lua/plugins/*.lua
+    ~/.config/nvim/lua/profile/:
+      glob: true
+      path: nvim/lua/profile/*.lua
     ~/.gemrc: ruby/gemrc
     ~/.gitconfig: git/gitconfig
     ~/.gitignore: git/gitignore

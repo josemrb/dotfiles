@@ -1,3 +1,6 @@
+-- local
+local set_keymap = _G.set_keymap
+
 -- modes
 --   normal_mode = "n",
 --   insert_mode = "i",
@@ -9,34 +12,55 @@
 -- clear keymap for leader key
 set_keymap {"", ",", ""}
 
+-- horizontal scrolling
+set_keymap {"", "zl", "zL"}
+set_keymap {"", "zh", "zH"}
+
+-- line motion
+set_keymap {"", "j", "gj"}
+set_keymap {"", "k", "gk"}
+--set_keymap {"n", "k", "v:count == 0 ? 'gk' : 'k'", {noremap = true, expr = true, silent = true}}
+--set_keymap {"n", "j", "v:count == 0 ? 'gj' : 'j'", {noremap = true, expr = true, silent = true}}
+
+--
+-- visual mode
+--
+-- indent
+set_keymap {"v", "<", "<gv"}
+set_keymap {"v", ">", ">gv"}
+
+-- repeat
+set_keymap {"v", ".", ":normal .<CR>"}
+
+--
+-- visual block mode
+--
+-- text move
+set_keymap {"x", "J", ":move '>+1<CR>gv-gv"}
+set_keymap {"x", "K", ":move '<-2<CR>gv-gv"}
+
+--
 -- normal mode
+--
+-- nop unused commands
+set_keymap {"n", "q", ""}
+set_keymap {"n", "Q", ""}
+
+-- search highlight
+set_keymap {"n", "<Leader><Space>", ":nohlsearch<CR>"}
+
 -- window navigation
 set_keymap {"n", "<C-h>", "<C-w>h"}
 set_keymap {"n", "<C-j>", "<C-w>j"}
 set_keymap {"n", "<C-k>", "<C-w>k"}
 set_keymap {"n", "<C-l>", "<C-w>l"}
+
 -- window resize
 set_keymap {"n", "<C-Up>", ":resize -2<CR>"}
 set_keymap {"n", "<C-Down>", ":resize +2<CR>"}
 set_keymap {"n", "<C-Left>", ":vertical resize -2<CR>"}
 set_keymap {"n", "<C-Right>", ":vertical resize +2<CR>"}
--- buffer goto
-set_keymap {"n", "<leader>1b", ":BufferLineGoToBuffer 1<CR>"}
-set_keymap {"n", "<leader>2b", ":BufferLineGoToBuffer 2<CR>"}
-set_keymap {"n", "<leader>3b", ":BufferLineGoToBuffer 3<CR>"}
-set_keymap {"n", "<leader>4b", ":BufferLineGoToBuffer 4<CR>"}
-set_keymap {"n", "<leader>5b", ":BufferLineGoToBuffer 5<CR>"}
-set_keymap {"n", "<leader>6b", ":BufferLineGoToBuffer 6<CR>"}
-set_keymap {"n", "<leader>7b", ":BufferLineGoToBuffer 7<CR>"}
-set_keymap {"n", "<leader>8b", ":BufferLineGoToBuffer 8<CR>"}
--- buffer navigation
-set_keymap {"n", "<leader>jb", ":BufferLineCycleNext<CR>"}
-set_keymap {"n", "<leader>kb", ":BufferLineCyclePrev<CR>"}
--- buffer picker
-set_keymap {"n", "gb", ":BufferLinePick<CR>"}
--- buffer order management
-set_keymap {"n", "<leader>lb", ":BufferLineMoveNext<CR>"}
-set_keymap {"n", "<leader>hb", ":BufferLineMovePrev<CR>"}
-set_keymap {"n", "<leader>xb", ":BufferLineCloseRight<CR>"}
--- buffer close
-set_keymap {"n", "<leader>tb", ":BDelete this<CR>"}
+
+-- panel
+set_keymap {"n", "<C-v>", ":vsplit<CR>"}
+set_keymap {"n", "<C-x>", ":split<CR>"}

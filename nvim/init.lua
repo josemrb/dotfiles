@@ -1,90 +1,161 @@
 --
--- functions
+-- local profile
 --
 
-require("profile.functions")
+require("profile/functions")
+
+require("profile/options")
+
+require("profile/keymaps")
 
 --
--- options
---
-
-require("profile.options")
-
---
--- global variables 
+-- global variables
 --
 
 vim.g.mapleader = ","
-vim.g.maplocalleader = "_"
+vim.g.maplocalleader = "-"
 
 vim.g.python3_host_prog = "/usr/bin/python3"
+
+vim.g.loaded_gzip = false
+vim.g.loaded_matchit = false
+vim.g.loaded_netrwPlugin = false
+vim.g.loaded_tarPlugin = false
+vim.g.loaded_zipPlugin = false
+vim.g.loaded_man = false
+vim.g.loaded_2html_plugin = false
+vim.g.loaded_remote_plugins = false
 
 --
 -- plugins
 --
 
-require("profile.plugins")
+-- local import
+local set_keymap = _G.set_keymap
 
 --
--- setup
+-- system
 --
+-- plugin manager
+require("plugins/packer")
+-- cache
+require("impatient")
 
--- ui
--- colorscheme
-vim.cmd("colorscheme PaperColor")
--- icons
-require("nvim-web-devicons").setup {}
--- buffer line = bufferline.nvim
-require("bufferline").setup {
-  options = {
-    diagnostics = "nvim_lsp",
-    diagnostics_indicator = function(count, level, diagnostics_dict, context)
-      local icon = level:match("error") and "" or ""
-      return " " .. icon .. count
-    end,
-    numbers = function(opts)
-      return string.format("%s·%s", opts.raise(opts.id), opts.lower(opts.ordinal))
-    end,
-    show_buffer_icons = false,
-    show_buffer_close_icons = false,
-    show_close_icon = false,
-    separator_style = "thick",
-    always_show_bufferline = true
-  }
-}
--- buffer close = close-buffers.nvim
-require("close_buffers").setup {
-  preserve_window_layout = { "this" },
-  next_buffer_cmd = function(windows)
-    require("bufferline").cycle(1)
-    local bufnr = vim.api.nvim_get_current_buf()
+--
+-- editor behaviour
+--
+-- syntax parser
+require("plugins/syntax")
+-- snippet
+require("plugins/snippet")
+-- lsp
+require("plugins/lsp")
+-- dap
+require("plugins/debugger")
+-- completion
+require("plugins/completion")
 
-    for _, window in ipairs(windows) do
-      vim.api.nvim_win_set_buf(window, bufnr)
-    end
-  end
-}
--- status line = lualine.nvim
-require("lualine").setup {
-  options = {theme = "ayu_mirage"},
-  extensions = {"aerial", "fugitive", "fzf", "nvim-tree", "quickfix"}
-}
--- indent guides = indent-blankline.nvim
-require("indent_blankline").setup {
-  space_char_blankline = " ",
-  -- show_current_context = true,
-  -- show_current_context_start = true
-}
--- quickfix & location list
+--
+-- editor mappings
+--
+-- motion
+local hop = require("hop")
+hop.setup {}
+
+set_keymap {"n", "<Leader><Leader>w", "<Cmd>HopWord<CR>", {}}
+set_keymap {"o", "<Leader><Leader>w", "<Cmd>HopWord<CR>", {}}
+set_keymap {"n", "<Leader><Leader>l", "<Cmd>HopLine<CR>", {}}
+set_keymap {"o", "<Leader><Leader>l", "<Cmd>HopLine<CR>", {}}
+-- match
+vim.g.matchup_surround_enabled = 0
+-- comments
+local todo_comments = require("todo-comments")
+todo_comments.setup {}
+set_keymap {"n", "<Leader>td", "<Cmd>TodoTrouble<CR>"}
+-- text alignment
+set_keymap {"n", "<Leader>a&", "<Cmd>Tabularize /&<CR>", {}}
+set_keymap {"v", "<Leader>a&", "<Cmd>Tabularize /&<CR>", {}}
+set_keymap {"n", "<Leader>a=", "<Cmd>Tabularize /=<CR>", {}}
+set_keymap {"v", "<Leader>a=", "<Cmd>Tabularize /=<CR>", {}}
+set_keymap {"n", "<Leader>a==", "<Cmd>Tabularize /=/=<CR>", {}}
+set_keymap {"v", "<Leader>a==", "<Cmd>Tabularize /=/=<CR>", {}}
+set_keymap {"n", "<Leader>a=>", "<Cmd>Tabularize /=><CR>", {}}
+set_keymap {"v", "<Leader>a=>", "<Cmd>Tabularize /=><CR>", {}}
+set_keymap {"n", "<Leader>a:", "<Cmd>Tabularize /:<CR>", {}}
+set_keymap {"v", "<Leader>a:", "<Cmd>Tabularize /:<CR>", {}}
+set_keymap {"n", "<Leader>a::", "<Cmd>Tabularize /:\zs<CR>", {}}
+set_keymap {"v", "<Leader>a::", "<Cmd>Tabularize /:\zs<CR>", {}}
+set_keymap {"n", "<Leader>a,", "<Cmd>Tabularize /,<CR>", {}}
+set_keymap {"v", "<Leader>a,", "<Cmd>Tabularize /,<CR>", {}}
+set_keymap {"n", "<Leader>a,,", "<Cmd>Tabularize /,\zs<CR>", {}}
+set_keymap {"v", "<Leader>a,,", "<Cmd>Tabularize /,\zs<CR>", {}}
+set_keymap {"n", "<Leader>a<Bar>", "<Cmd>Tabularize /<Bar><CR>", {}}
+set_keymap {"v", "<Leader>a<Bar>", "<Cmd>Tabularize /<Bar><CR>", {}}
+-- substite
+set_keymap {"n", "s", "<Plug>(SubversiveSubstitute)", noremap = false}
+set_keymap {"n", "ss", "<Plug>(SubversiveSubstituteLine)", noremap = false}
+set_keymap {"n", "S", "<Plug>(SubversiveSubstituteToEndOfLine)", noremap = false}
+set_keymap {"x", "s", "<Plug>(SubversiveSubstitute)", noremap = false}
+set_keymap {"x", "p", "<Plug>(SubversiveSubstitute)", noremap = false}
+set_keymap {"x", "P", "<Plug>(SubversiveSubstitute)", noremap = false}
+set_keymap {"n", "<Leader>s", "<Plug>(SubversiveSubvertRange)", noremap = false}
+set_keymap {"x", "<Leader>s", "<Plug>(SubversiveSubvertRange)", noremap = false}
+set_keymap {"n", "<Leader>ss", "<Plug>(SubversiveSubvertWordRange)", noremap = false}
+set_keymap {"n", "<Leader>sc", "<Plug>(SubversiveSubvertRangeConfirm)", noremap = false}
+set_keymap {"x", "<Leader>sc", "<Plug>(SubversiveSubvertRangeConfirm)", noremap = false}
+set_keymap {"n", "<Leader>ssc", "<Plug>(SubversiveSubvertWordRangeConfirm)", noremap = false}
+-- better paste
+set_keymap {"n", "<C-n>", "<Plug>(YoinkPostPasteSwapBack)", noremap = false}
+set_keymap {"n", "<C-p>", "<Plug>(YoinkPostPasteSwapForward)", noremap = false}
+set_keymap {"n", "p", "<Plug>(YoinkPaste_p)", noremap = false}
+set_keymap {"n", "P", "<Plug>(YoinkPaste_P)", noremap = false}
 -- visual keymap
-require("which-key").setup {}
+-- require("which-key").setup {}
 
+--
+-- editor ui
+--
+-- theme
+require("plugins/theme")
+-- buffer line
+require("plugins/buffer")
+-- status line
+require("plugins/status")
+-- colorizer
+local colorizer = require("colorizer")
+colorizer.setup {}
+
+--
 -- utilities
--- git signs = gitsigns.nvim
-require("gitsigns").setup {}
 --
--- keymaps
+-- quickfix & loclist
+set_keymap {"n", "<Leader>q", "<Plug>(qf_qf_toggle)", noremap = false}
+set_keymap {"n", "<Leader>l", "<Plug>(qf_loc_toggle)", noremap = false}
+
+vim.g.qf_mapping_ack_style = 1
+vim.g.qf_auto_open_quickfix = 0
+vim.g.qf_auto_open_loclist = 0
+
+-- diagnostics
+require("plugins/diagnostics")
+-- file explorer
+require("plugins/file_explorer")
+-- fuzzy finder
+require("plugins/fuzzy_finder")
+-- undo
+set_keymap {"n", "<F5>", "<Cmd>UndotreeToggle<CR>"}
+-- git
+require("plugins/git")
+-- wiki engine
+require("plugins/wiki")
+-- code drawer
+require("litee.lib").setup {}
+require("litee.bookmarks").setup {}
+require("litee.calltree").setup {}
+require("litee.symboltree").setup {}
+
+--
+-- autocommands
 --
 
-require("profile.keymaps")
-
+require("profile/autocommands")
