@@ -16,11 +16,11 @@ set_keymap {"", ",", ""}
 set_keymap {"", "zl", "zL"}
 set_keymap {"", "zh", "zH"}
 
--- line motion
-set_keymap {"", "j", "gj"}
-set_keymap {"", "k", "gk"}
---set_keymap {"n", "k", "v:count == 0 ? 'gk' : 'k'", {noremap = true, expr = true, silent = true}}
---set_keymap {"n", "j", "v:count == 0 ? 'gj' : 'j'", {noremap = true, expr = true, silent = true}}
+--
+-- term mode
+--
+-- mode
+set_keymap {"t", "<C-o>", "<C-\\><C-n>", noremap = false}
 
 --
 -- visual mode
@@ -42,6 +42,10 @@ set_keymap {"x", "K", ":move '<-2<CR>gv-gv"}
 --
 -- normal mode
 --
+-- line motion
+set_keymap {"n", "k", "v:count == 0 ? 'gk' : 'k'", noremap = true, expr = true, silent = true}
+set_keymap {"n", "j", "v:count == 0 ? 'gj' : 'j'", noremap = true, expr = true, silent = true}
+
 -- nop unused commands
 set_keymap {"n", "q", ""}
 set_keymap {"n", "Q", ""}

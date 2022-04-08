@@ -78,7 +78,7 @@ local options = {
   undofile = true,
   undolevels = 25,
   -- grep
-  grepprg = "rg -H --no-heading --vimgrep --smart-case",
+  grepprg = "rg --no-heading --vimgrep --smart-case",
   grepformat = "%f:%l:%c:%m"
 }
 

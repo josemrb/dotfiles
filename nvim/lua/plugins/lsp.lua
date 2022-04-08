@@ -66,6 +66,12 @@ lspconfig.elixirls.setup {
     debounce_text_changes = 150,
   },
   on_attach = on_attach,
+  settings = {
+    elixirLS = {
+      dialyzerEnabled = false,
+      fetchDeps = false,
+    },
+  },
 }
 
 -- sumneko_lua

@@ -109,6 +109,12 @@ set_keymap {"n", "<C-n>", "<Plug>(YoinkPostPasteSwapBack)", noremap = false}
 set_keymap {"n", "<C-p>", "<Plug>(YoinkPostPasteSwapForward)", noremap = false}
 set_keymap {"n", "p", "<Plug>(YoinkPaste_p)", noremap = false}
 set_keymap {"n", "P", "<Plug>(YoinkPaste_P)", noremap = false}
+-- test
+vim.cmd [[let test#strategy = "neovim"]]
+vim.cmd [[let g:test#echo_command = 0]]
+set_keymap {"n", "<Leader>tt", "<Cmd>TestNearest<CR>", noremap = false, silent = true}
+set_keymap {"n", "<Leader>tf", "<Cmd>TestFile<CR>", noremap = false, silent = true}
+set_keymap {"n", "<Leader>ta", "<Cmd>TestSuite<CR>", noremap = false, silent = true}
 -- visual keymap
 -- require("which-key").setup {}
 

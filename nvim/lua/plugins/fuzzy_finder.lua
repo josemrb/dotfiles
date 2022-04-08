@@ -1,6 +1,28 @@
 -- local
 local telescope = require("telescope")
+local actions = require("telescope.actions")
+-- setup
 telescope.setup {
+  defaults = {
+    mappings = {
+      i = {
+        ["<ESC>"] = actions.close,
+      },
+    },
+  },
+  pickers = {
+    buffers = {
+      previewer = false,
+      theme = "dropdown"
+    },
+    find_files = {
+      -- find_command =  { "fd", "--type", "f" },
+      -- find_command =  { "rg", "--files" },
+      hidden = true,
+      previewer = false,
+      theme = "dropdown"
+    },
+  },
   extensions = {
     -- command_palette = {
       -- {"File",
@@ -49,6 +71,16 @@ telescope.load_extension("file_browser")
 telescope.load_extension("fzf")
 -- local import
 local set_keymap = _G.set_keymap
+-- vim pickers
+set_keymap {"n", "<Leader>fb", "<Cmd>Telescope buffers<CR>"}
+-- file pickers
 set_keymap {"n", "<Leader>ff", "<Cmd>Telescope find_files<CR>"}
 set_keymap {"n", "<Leader>fg", "<Cmd>Telescope live_grep<CR>"}
+-- set_keymap {"n", "<Leader>fr", "<Cmd>Telescope registers<CR>"}
+-- lsp pickers
+set_keymap {"n", "<Leader>fi", "<Cmd>Telescope lsp_implementations<CR>"}
+set_keymap {"n", "<Leader>fd", "<Cmd>Telescope lsp_definitions<CR>"}
+set_keymap {"n", "<Leader>fr", "<Cmd>Telescope lsp_references<CR>"}
+set_keymap {"n", "<Leader>ft", "<Cmd>Telescope lsp_type_definitions<CR>"}
+-- git pickers
 -- set_keymap {"n", "<C-p>", "<Cmd>Telescope command_palette<CR>"}
