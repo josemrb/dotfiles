@@ -4,8 +4,8 @@
   autosetuprebase = always
 [core]
   autocrlf = false
-  editor = nvim
-  excludesfile = ~/.gitignore
+  editor = "$EDITOR"
+  excludesfile = "$XDG_CONFIG_HOME/git/ignore"
 [color]
   branch = auto
   diff = auto
@@ -14,7 +14,7 @@
   ui = auto
 [commit]
   gpgsign = true
-  template = ~/.gitmessage
+  template = "$XDG_CONFIG_HOME/git/message"
 [difftool]
   prompt = true
 [diff]
@@ -24,8 +24,6 @@
   cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [fetch]
   prune = true
-[include]
-  path = ~/.gitconfig.local
 [merge]
   conflictstyle = diff3
   ff = true

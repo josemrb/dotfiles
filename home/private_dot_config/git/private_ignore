@@ -14,7 +14,6 @@
 .ruby-version
 .tool-versions
 
-
 .envrc
 .git/
 /bower_components/
