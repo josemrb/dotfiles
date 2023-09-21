@@ -11,6 +11,12 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 #
+# Aliases
+#
+
+alias gco='git checkout'
+
+#
 # Key management
 #
 
@@ -70,9 +76,10 @@ SPACESHIP_HOST_PREFIX="@"
 # Version Managers
 #
 
-# asdf-vm
-if [[ -s "$HOME/.asdf/asdf.sh" ]]; then
-  source $HOME/.asdf/asdf.sh
+
+# rtx
+if (( $#commands[(i)rtx] )); then
+  eval "$(rtx activate zsh)"
 fi
 
 #
