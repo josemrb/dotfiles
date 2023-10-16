@@ -17,11 +17,17 @@ fi
 # Editors
 #
 
+if [[ -z "$DIFF" ]]; then
+  export EDITOR='nvimdiff'
+fi
 if [[ -z "$EDITOR" ]]; then
-  export EDITOR='vim'
+  export EDITOR='nvim'
+fi
+if [[ -z "$MERGE" ]]; then
+  export EDITOR='nvimdiff'
 fi
 if [[ -z "$VISUAL" ]]; then
-  export VISUAL='vim'
+  export VISUAL='nvim'
 fi
 if [[ -z "$PAGER" ]]; then
   export PAGER='less'
@@ -56,7 +62,7 @@ fpath=(
 # Set the list of directories that Zsh searches for programs.
 path=(
   $HOME/.local/{,s}bin(N)
-  /opt/{homebrew,local}/{,s}bin(N)
+  /opt/local/{,s}bin(N)
   /usr/local/{,s}bin(N)
   $path
 )

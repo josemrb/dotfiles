@@ -10,6 +10,9 @@ if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; t
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
 
+# Set gnupg options
+export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
+
 # Set fzf options
 export FZF_DEFAULT_COMMAND="ag --all-text --hidden --ignore .git -g ''"
 export FZF_DEFAULT_OPTS=""
