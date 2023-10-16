@@ -6,6 +6,7 @@
   autocrlf = false
   editor = "$EDITOR"
   excludesfile = "$XDG_CONFIG_HOME/git/ignore"
+  pager = delta
 [color]
   branch = auto
   diff = auto
@@ -15,28 +16,46 @@
 [commit]
   gpgsign = true
   template = "$XDG_CONFIG_HOME/git/message"
+[delta]
+  ; features = side-by-side line-numbers decorations
+  features = line-numbers decorations
+  navigate = true
+[diff]
+  colorMoved = dimmed-zebra
+  tool = "$DIFF"
 [difftool]
   prompt = true
-[diff]
-  colorMoved = zebra
-  tool = nvimdiff
 [difftool "nvimdiff"]
   cmd = "nvim -d \"$LOCAL\" \"$REMOTE\""
 [fetch]
   prune = true
+[format]
+  signoff = true
+[init]
+  defaultBranch = develop
+[interactive]
+  diffFilter = delta --color-only
 [merge]
   conflictstyle = diff3
   ff = true
-  tool = vimdiff
+  tool = "$MERGE"
+[mergetool]
+  prompt = true
+[mergetool "nvimdiff"]
+  cmd = "nvim -d \"$LOCAL\" \"$REMOTE\" \"$MERGED\""
 [pull]
   rebase = true
 [push]
   default = current
 [user]
-  signingkey = 24D836F0ED1E8908
-  name = josemrb
   email = work@josemrb.com
-[init]
-  defaultBranch = develop
+  name = josemrb
+  signingkey = 24D836F0ED1E8908
 [url "https://github.com/"]
   insteadOf = git://github.com/
+[credential "https://github.com"]
+  helper = 
+  helper = !/usr/bin/env gh auth git-credential
+[credential "https://gist.github.com"]
+  helper = 
+  helper = !/usr/bin/env gh auth git-credential
