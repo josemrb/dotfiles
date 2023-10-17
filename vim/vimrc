@@ -5,18 +5,18 @@ set nocompatible
 let localVimDir = '~/.vim/local'
 
 " call before
-if filereadable(expand("~/profiles/dotfiles/vim/vimrc.before"))
-  source \~/profiles/dotfiles/vim/vimrc.before
+if filereadable(expand("~/.vim/vimrc.before"))
+  source \~/.vim/vimrc.before
 endif
 
 " load functions
-if filereadable(expand("~/profiles/dotfiles/vim/vimrc.functions"))
-  source \~/profiles/dotfiles/vim/vimrc.functions
+if filereadable(expand("~/.vim/vimrc.functions"))
+  source \~/.vim/vimrc.functions
 endif
 
 " call bundles
-if filereadable(expand("~/profiles/dotfiles/vim/vimrc.bundles"))
-  source \~/profiles/dotfiles/vim/vimrc.bundles
+if filereadable(expand("~/.vim/vimrc.bundles"))
+  source \~/.vim/vimrc.bundles
 endif
 
 """ general
