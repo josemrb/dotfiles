@@ -34,6 +34,7 @@ Plug 'tpope/vim-unimpaired'
 " nerd tree file explorer
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'PhilRunninger/nerdtree-visual-selection'
 " buffer / files helper
 Plug 'tpope/vim-eunuch'
 " fuzzy search
@@ -42,14 +43,13 @@ Plug 'junegunn/fzf.vim'
 " projectionist
 Plug 'tpope/vim-projectionist'
 Plug 'c-brenn/fuzzy-projectionist.vim'
-Plug 'dkuku/vim-projectionist-elixir'
 
 """ text edit
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-abolish'
 Plug 'machakann/vim-swap'
-Plug 'sjl/gundo.vim'
+Plug 'mbbill/undotree'
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-indent'
@@ -61,7 +61,7 @@ Plug 'kristijanhusak/vim-multiple-cursors'
 Plug 'Lokaltog/vim-easymotion'
 
 """ general programming
-Plug 'w0rp/ale'
+Plug 'w0rp/ale', {'branch': 'v3.1.x'}
 Plug 'janko-m/vim-test'
 Plug 'scrooloose/nerdcommenter'
 Plug 'godlygeek/tabular'
@@ -69,12 +69,12 @@ Plug 'godlygeek/tabular'
 """ tags management
 Plug 'majutsushi/tagbar'
 
-""" snippets
-Plug 'honza/vim-snippets'
-Plug 'SirVer/ultisnips'
-
 """ autocomplete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+
+""" snippets
+Plug 'honza/vim-snippets'
+Plug 'neoclide/coc-snippets', {'do': 'yarn install'}
 
 """ programming languages
 """ html & css
@@ -92,6 +92,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'maxmellon/vim-jsx-pretty'
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'moll/vim-node'
+Plug 'neoclide/coc-json', {'do': 'yarn install'}
 
 """ ruby
 Plug 'tpope/vim-rbenv'
@@ -105,6 +106,8 @@ Plug 'rhysd/vim-textobj-ruby'
 """ elixir
 Plug 'elixir-editors/vim-elixir'
 Plug 'andyl/vim-textobj-elixir'
+"Plug 'mhinz/vim-mix-format'
+Plug 'elixir-lsp/coc-elixir', {'do': 'yarn install && yarn prepack'}
 
 """ rust
 Plug 'rust-lang/rust.vim'
@@ -117,7 +120,8 @@ Plug 'neoclide/coc-neco'
 Plug 'chrisbra/csv.vim'
 Plug 'tpope/vim-dadbod'
 Plug 'plasticboy/vim-markdown'
-Plug 'vimwiki/vimwiki'
+Plug 'mmai/vim-markdown-wiki'
+"Plug 'vimwiki/vimwiki'
 
 """ external tools
 " ansible

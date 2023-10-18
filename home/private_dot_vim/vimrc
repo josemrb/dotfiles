@@ -53,7 +53,7 @@ if has('persistent_undo')
   " undo settings
   let localVimUndodir = expand(localVimDir . '/undo')
   if !isdirectory(localVimUndodir)
-    call mkdir(localVimUndodir, "p", 0700)
+    call mkdir(localVimUndodir, "p", 0600)
   endif
   let &undodir = localVimUndodir
   set undofile
@@ -272,20 +272,27 @@ let g:ctrlp_custom_ignore = {
       \}
 
 """ fzf.vim
-nmap <leader>f :GFiles<CR>
+nmap <leader>fg :GFiles<CR>
 
 """ vim-projectionist
 """ fuzzy-projectionist.vim
+nmap <Leader>fl :Flib<CR>
+nmap <Leader>ft :Ftest<CR>
 nmap <Leader>fc :Fcontroller<CR>
-nmap <Leader>ft :Ftemplate<CR>
 nmap <Leader>fv :Fview<CR>
+nmap <Leader>fs :Ftemplate<CR>
+nmap <Leader>fm :Flive<CR>
+nmap <Leader>fh :Fchannel<CR>
 
 """ vim-surround
 """ vim-repeat
 """ vim-abolish
 """ vim-swap
 """ gundo.vim
-nnoremap <F5> :GundoToggle<CR>
+"nnoremap <F5> :GundoToggle<CR>
+""" undotree
+nnoremap <F5> :UndotreeToggle<CR>
+
 
 """ vim-textobj-user
 """ vim-textobj-entire
@@ -370,8 +377,8 @@ let g:tagbar_type_css = {
         \ 'c:classes',
         \ 's:selectors',
         \ 'i:identities'
-        \ ]
-        \ }
+      \ ]
+    \ }
 " custom elixir map
 let g:tagbar_type_elixir = {
       \ 'ctagstype': 'Elixir',
@@ -389,8 +396,8 @@ let g:tagbar_type_elixir = {
         \ 'r:records',
         \ 't:types',
         \ 'z:foo'
-        \ ]
-        \ }
+      \ ]
+    \ }
 " custom ruby map
 let g:tagbar_type_ruby = {
       \ 'kinds' : [
@@ -400,54 +407,62 @@ let g:tagbar_type_ruby = {
         \ 'C:contexts',
         \ 'f:methods',
         \ 'F:singleton methods'
-        \ ]
-        \ }
+      \ ]
+    \ }
 
 """ coc.vim
-" confirm first item on CR
-inoremap <silent><expr> <cr>
-      \ pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-" use TAB to trigger completion
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
 function! s:check_back_space() abort
   let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
-      \ coc#refresh()
 
-" use S-TAB to move back
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" Use <C-l> for trigger snippet expand
-imap <C-l> <Plug>(coc-snippets-expand)
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-" Use `[c` and `]c` to navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
-" Remap keys for gotos
+" Make <CR> auto-select the first completion item
+inoremap <silent><expr> <CR>
+      \ pumvisible() ? coc#_select_confirm()
+      \: "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-" Show doc on hover
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
-" Use K to show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
-" Using CocList
-" - Show all diagnostics
-nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
-" - Show yank list
-nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
 """ html5.vim
 let g:html5_rdfa_attributes_complete = 0
@@ -466,8 +481,8 @@ let g:user_emmet_settings = {
         \  },
         \  'javascript.jsx' : {
           \      'extends' : 'jsx',
-          \  },
-          \}
+        \  },
+      \}
 
 """ vim-jdaddy
 """ vim-json
@@ -498,9 +513,9 @@ let g:textobj_ruby_more_mappings = 1
 """ elixir filetype
 augroup filetype_elixir
   autocmd!
-  autocmd FileType elixir,eelixir let g:Tlist_Ctags_Cmd = "ctags"
-  autocmd FileType elixir,eelixir set tags=.git/tags;
-  autocmd FileType elixir,eelixir let b:ale_fix_on_save = 1
+  autocmd FileType elixir let g:Tlist_Ctags_Cmd = "ctags"
+  autocmd FileType elixir set tags=.git/tags;
+  autocmd FileType elixir let b:ale_fix_on_save = 1
 augroup END
 
 let g:elixir_ctags_arguments = "-f .git/tags --fields=+l --recurse --sort=yes --tag-relative=yes"
@@ -508,12 +523,22 @@ let g:elixir_ctags_arguments = "-f .git/tags --fields=+l --recurse --sort=yes --
 augroup filetype_eelixir
   autocmd!
   autocmd FileType eelixir EmmetInstall
+  autocmd FileType eelixir let b:ale_fix_on_save = 1
 augroup END
 
 """ vim-elixir
+""" vim-textobj-elixir'
+""" vim-mix-format'
+"let g:mix_format_on_save = 1
+"let g:mix_format_silent_errors = 1
+
 """ vim-markdown
-let g:markdown_fenced_languages = ['html', 'ruby', 'elixir', 'bash=sh']
-let g:vim_markdown_no_extensions_in_markdown = 1
+augroup filetype_md
+  autocmd!
+  autocmd FileType markdown set conceallevel=2
+augroup END
+
+let g:vim_markdown_fenced_languages = ['html', 'ruby=rb', 'elixir=ex', 'bash=sh']
 
 """ xml filetype
 augroup filetype_xml
@@ -521,15 +546,18 @@ augroup filetype_xml
   autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 augroup END
 
-augroup filetype_wiki
-  autocmd!
-  autocmd BufRead,BufNewFile *.wiki set filetype=markdown
-augroup END
-
 """ vimwiki
-let g:vimwiki_list = [{'path': '~/documents/wiki/',
-      \ 'syntax': 'markdown',
-      \ 'ext': '.md'}]
+let wiki_documents = {}
+let wiki_documents.path = '~/documents/wiki'
+let wiki_documents.path_html = '~/documents/wiki/html'
+let wiki_documents.syntax = 'markdown'
+let wiki_documents.ext = '.md'
+
+let g:vimwiki_list = [wiki_documents]
+
+let g:vimwiki_ext2syntax = {'.md': 'markdown', '.markdown': 'markdown', '.mdown': 'markdown'}
+
+let g:vimwiki_global_ext = 0
 
 """ vim-git
 " on revert git commit message reposition cursor
