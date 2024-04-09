@@ -6,7 +6,7 @@
   autocrlf = false
   editor = "$EDITOR"
   excludesfile = "$XDG_CONFIG_HOME/git/ignore"
-  pager = delta
+  pager = "$GIT_PAGER"
 [color]
   branch = auto
   diff = auto
@@ -17,12 +17,11 @@
   gpgsign = true
   template = "$XDG_CONFIG_HOME/git/message"
 [delta]
-  ; features = side-by-side line-numbers decorations
   features = line-numbers decorations
   navigate = true
 [diff]
   colorMoved = dimmed-zebra
-  tool = "$DIFF"
+  tool = "$GIT_DIFF"
 [difftool]
   prompt = true
 [difftool "nvimdiff"]
@@ -38,7 +37,7 @@
 [merge]
   conflictstyle = diff3
   ff = true
-  tool = "$MERGE"
+  tool = "$GIT_MERGE"
 [mergetool]
   prompt = true
 [mergetool "nvimdiff"]
@@ -59,3 +58,10 @@
 [credential "https://gist.github.com"]
   helper = 
   helper = !/usr/bin/env gh auth git-credential
+[rerere]
+	enabled = true
+[filter "lfs"]
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
