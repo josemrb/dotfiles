@@ -1,0 +1,22 @@
+[".config/tmux/plugins/tpm"]
+type = "git-repo"
+url = "https://github.com/tmux-plugins/tpm.git"
+refreshPeriod = "168h"
+[".config/zsh/.zprezto"]
+type = "git-repo"
+url = "https://github.com/sorin-ionescu/prezto.git"
+clone.args = ["--recurse-submodules"]
+refreshPeriod = "168h"
+[".config/zsh/.zprezto/contrib"]
+type = "git-repo"
+url = "https://github.com/belak/prezto-contrib.git"
+clone.args = ["--recurse-submodules"]
+refreshPeriod = "168h"
+[".config/zsh/.zprezto/contrib/fzf-tab"]
+type = "git-repo"
+url = "https://github.com/Aloxaf/fzf-tab.git"
+refreshPeriod = "168h"
+[".vim/autoload/plug.vim"]
+type = "file"
+url = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+refreshPeriod = "168h"
