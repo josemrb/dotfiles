@@ -3,3 +3,9 @@ umask = 0o077
 
 [diff]
   command = "delta"
+  pager = "delta"
+
+[merge]
+  command = "nvim"
+  args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
+
