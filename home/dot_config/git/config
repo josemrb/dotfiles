@@ -5,7 +5,7 @@
 [core]
   autocrlf = false
   editor = "$GIT_EDITOR"
-  excludesfile = "$HOME/.config/git/ignore"
+  excludesfile = "~/.config/git/ignore"
   pager = "$GIT_PAGER"
 [color]
   branch = auto
@@ -15,7 +15,7 @@
   ui = auto
 [commit]
   gpgsign = true
-  template = $HOME/.config/git/message"
+  template = "~/.config/git/message"
 [delta]
   features = line-numbers decorations
   navigate = true
