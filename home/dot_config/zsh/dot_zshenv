@@ -1,17 +1,11 @@
 #
 # Defines environment variables.
 #
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
 
 # Ensure that a non-login, non-interactive shell has a defined environment.
-if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprofile"
+if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR}/.zprofile" ]]; then
+  source "${ZDOTDIR}/.zprofile"
 fi
-
-# Set gnupg options
-export GNUPGHOME="$XDG_CONFIG_HOME/gnupg"
 
 # Set fzf options
 export FZF_DEFAULT_COMMAND="ag --all-text --hidden --ignore .git -g ''"
@@ -22,3 +16,5 @@ export ERL_AFLAGS="-kernel shell_history enabled"
 
 # Set JVM options
 export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Dsun.java2d.xrender=true"
+
+export EGET_CONFIG="$XDG_CONFIG_HOME/eget.toml"

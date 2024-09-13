@@ -15,6 +15,7 @@ fi
 #
 
 alias gco='git checkout'
+alias nvimdiff='nvim -d'
 
 #
 # Key management
@@ -73,13 +74,17 @@ SPACESHIP_HOST_SHOW="always"
 SPACESHIP_HOST_PREFIX="@"
 
 #
-# Version Managers
+# Utilities
 #
 
+# atuin
+if (( $#commands[(i)atuin] )); then
+  eval "$(atuin init zsh)"
+fi
 
-# rtx
-if (( $#commands[(i)rtx] )); then
-  eval "$(rtx activate zsh)"
+# mise
+if (( $#commands[(i)mise] )); then
+  eval "$(mise activate zsh)"
 fi
 
 #

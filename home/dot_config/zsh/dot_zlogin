@@ -26,9 +26,4 @@ if [[ -o INTERACTIVE && -t 2 ]]; then
     print
   fi
 
-  # Print neofetch.
-  # if (( $+commands[neofetch] )); then
-  #   neofetch
-  #   print
-  # fi
 fi >&2

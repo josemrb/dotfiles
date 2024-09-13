@@ -17,18 +17,23 @@ fi
 # Editors
 #
 
-if [[ -z "$DIFF" ]]; then
-  export EDITOR='nvimdiff'
-fi
 if [[ -z "$EDITOR" ]]; then
   export EDITOR='nvim'
-fi
-if [[ -z "$MERGE" ]]; then
-  export EDITOR='nvimdiff'
 fi
 if [[ -z "$VISUAL" ]]; then
   export VISUAL='nvim'
 fi
+
+if [[ -z "$GIT_DIFF" ]]; then
+  export GIT_DIFF='nvimdiff'
+fi
+if [[ -z "$GIT_MERGE" ]]; then
+  export GIT_MERGE='nvimdiff'
+fi
+if [[ -z "$GIT_PAGER" ]]; then
+  export GIT_PAGER='delta'
+fi
+
 if [[ -z "$PAGER" ]]; then
   export PAGER='less'
 fi
@@ -55,7 +60,7 @@ typeset -gU cdpath fpath mailpath path
 
 # Set the list of directories that Zsh searches for completion.
 fpath=(
-  $HOME/.local/share/zsh/site-functions
+  $XDG_DATA_HOME/zsh/site-functions
   $fpath
 )
 
@@ -84,16 +89,16 @@ if [[ -z "$LESSOPEN" ]] && (( $#commands[(i)lesspipe(|.sh)] )); then
   export LESSOPEN="| /usr/bin/env $commands[(i)lesspipe(|.sh)] %s 2>&-"
 fi
 
-#
-# Temporary Files
-#
+##
+## Temporary Files
+##
 
-if [[ ! -d "$TMPDIR" ]]; then
-  export TMPDIR="/tmp/$USER"
-  mkdir -p -m 700 "$TMPDIR"
-fi
+#if [[ ! -d "$TMPDIR" ]]; then
+#  export TMPDIR="/tmp/$USER"
+#  mkdir -p -m 700 "$TMPDIR"
+#fi
 
-TMPPREFIX="${TMPDIR%/}/zsh"
-if [[ ! -d "$TMPPREFIX" ]]; then
-  mkdir -p "$TMPPREFIX"
-fi
+#TMPPREFIX="${TMPDIR%/}/zsh"
+#if [[ ! -d "$TMPPREFIX" ]]; then
+#  mkdir -p "$TMPPREFIX"
+#fi

@@ -37,25 +37,19 @@ zstyle ':prezto:load' pmodule \
   'directory' \
   'spectrum' \
   'utility' \
-  'completion' \
-# optional
   'archive' \
-  'direnv' \
+  'completion' \
   'clipboard' \
+  'direnv' \
   'enhancd' \
   'fzf-tab' \
-  'fasd' \
   'git' \
   'rsync' \
   'tmux' \
-  'extra' \
-# end
   'syntax-highlighting' \
   'history-substring-search' \
-# optional
   'autosuggestions' \
   'contrib-prompt' \
-# end
   'prompt'
 
 #
