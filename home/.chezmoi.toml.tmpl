@@ -7,5 +7,5 @@ umask = 0o077
 
 [merge]
   command = "nvim"
-  args = ["-d", "{{ .Destination }}", "{{ .Source }}", "{{ .Target }}"]
+  args = ["-d", "{{ "{{" }} .Destination {{ "}}" }}", "{{ "{{" }} .Source {{ "}}" }}", "{{ "{{" }} .Target {{ "}}" }}"]
 
