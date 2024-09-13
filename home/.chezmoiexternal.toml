@@ -2,6 +2,30 @@
 type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm.git"
 refreshPeriod = "168h"
+[".config/zsh/plugins.d/fast-syntax-highlighting"]
+type = "git-repo"
+url = "https://github.com/zdharma-continuum/fast-syntax-highlighting.git"
+refreshPeriod = "168h"
+[".config/zsh/plugins.d/fzf-tab"]
+type = "git-repo"
+url = "https://github.com/Aloxaf/fzf-tab.git"
+refreshPeriod = "168h"
+[".config/zsh/plugins.d/zsh-autosuggestions"]
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-autosuggestions.git"
+refreshPeriod = "168h"
+[".config/zsh/plugins.d/zsh-completions"]
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-completions.git"
+refreshPeriod = "168h"
+[".config/zsh/plugins.d/zsh-history-substring-search"]
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-history-substring-search.git"
+refreshPeriod = "168h"
+[".config/zsh/plugins.d/zsh-syntax-highlighting"]
+type = "git-repo"
+url = "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+refreshPeriod = "168h"
 [".config/zsh/.zprezto"]
 type = "git-repo"
 url = "https://github.com/sorin-ionescu/prezto.git"
@@ -11,10 +35,6 @@ refreshPeriod = "168h"
 type = "git-repo"
 url = "https://github.com/belak/prezto-contrib.git"
 clone.args = ["--recurse-submodules"]
-refreshPeriod = "168h"
-[".config/zsh/.zprezto/contrib/fzf-tab"]
-type = "git-repo"
-url = "https://github.com/Aloxaf/fzf-tab.git"
 refreshPeriod = "168h"
 [".vim/autoload/plug.vim"]
 type = "file"
