@@ -87,6 +87,11 @@ if (( $#commands[(i)mise] )); then
   eval "$(mise activate zsh)"
 fi
 
+# starship
+if (( $#commands[(i)starship] )); then
+  eval "$(starship init zsh)"
+fi
+
 #
 # Local
 #

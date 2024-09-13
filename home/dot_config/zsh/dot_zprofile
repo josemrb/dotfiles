@@ -1,17 +1,15 @@
 #
 # Executes commands at login pre-zshrc.
 #
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
 
 #
 # Browser
 #
 
-if [[ -z "$BROWSER" && "$OSTYPE" == darwin* ]]; then
-  export BROWSER='open'
+if [[ -z "$BROWSER" ]]; then
+  export BROWSER='google-chrome-stable'
 fi
+
 
 #
 # Editors
@@ -20,16 +18,23 @@ fi
 if [[ -z "$EDITOR" ]]; then
   export EDITOR='nvim'
 fi
+
 if [[ -z "$VISUAL" ]]; then
   export VISUAL='nvim'
+fi
+
+if [[ -z "$GIT_EDITOR" ]]; then
+  export GIT_EDITOR='nvim'
 fi
 
 if [[ -z "$GIT_DIFF" ]]; then
   export GIT_DIFF='nvimdiff'
 fi
+
 if [[ -z "$GIT_MERGE" ]]; then
   export GIT_MERGE='nvimdiff'
 fi
+
 if [[ -z "$GIT_PAGER" ]]; then
   export GIT_PAGER='delta'
 fi
@@ -37,6 +42,7 @@ fi
 if [[ -z "$PAGER" ]]; then
   export PAGER='less'
 fi
+
 
 #
 # Language
@@ -66,6 +72,7 @@ fpath=(
 
 # Set the list of directories that Zsh searches for programs.
 path=(
+  $HOME/.local/share/gem/ruby/3.3.0/bin
   $HOME/.local/{,s}bin(N)
   /opt/local/{,s}bin(N)
   /usr/local/{,s}bin(N)
