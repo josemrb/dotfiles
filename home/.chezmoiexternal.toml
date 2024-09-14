@@ -1,3 +1,8 @@
+[".local/bin/eget"]
+type = "archive-file"
+url = "https://github.com/zyedidia/eget/releases/download/v1.3.4/eget-1.3.4-linux_amd64.tar.gz"
+stripComponents = 1
+path = "eget"
 [".config/tmux/plugins/tpm"]
 type = "git-repo"
 url = "https://github.com/tmux-plugins/tpm.git"

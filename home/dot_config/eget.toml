@@ -1,0 +1,110 @@
+# eget config
+# date: 2024-09-14
+
+[global]
+  target = "~/.local/bin"
+
+#
+# shell
+#
+
+["atuinsh/atuin"]
+  asset_filters = ["^musl", ".tar.gz"]
+
+["direnv/direnv"]
+
+["junegunn/fzf"]
+
+["sharkdp/pastel"]
+  asset_filters = ["^musl", ".tar.gz"]
+
+["starship/starship"]
+  asset_filters = ["^musl", ".tar.gz"]
+
+["sharkdp/vivid"]
+  asset_filters = ["^musl", ".tar.gz"]
+
+#
+# core
+#
+
+["sharkdp/bat"]
+  asset_filters = ["^musl", ".tar.gz"]
+
+["bootandy/dust"]
+  asset_filters = ["^musl", ".tar.gz"]
+
+["eza-community/eza"]
+  asset_filters = ["^musl", ".tar.gz"]
+
+["sharkdp/fd"]
+  asset_filters = ["^musl", ".tar.gz"]
+
+["dundee/gdu"]
+  asset_filters = ["^amd64-x", "^static", ".tgz"]
+  target = "~/.local/bin/gdu"
+
+["dalance/procs"]
+
+["BurntSushi/ripgrep"]
+
+#
+# data
+#
+
+["antonmedv/fx"]
+
+["jqlang/jq"]
+  asset_filters = ["amd64"]
+
+["johnkerl/miller"]
+  asset_filters = [".tar.gz"]
+
+["jqnatividad/qsv"]
+  asset_filters = ["^musl"]
+
+#
+# dev
+#
+
+["dandavison/delta"]
+  asset_filters = ["^musl", ".tar.gz"]
+
+["jdx/mise"]
+  asset_filters = ["^musl", ".tar.xz"]
+
+#
+# network
+#
+
+["ogham/dog"]
+  asset_filters = ["^minisig"]
+
+["ducaale/xh"]
+
+#
+# utils
+#
+
+["FiloSottile/age"]
+  asset_filters = ["^proof", ".tar.gz"]
+
+["extrawurst/gitui"]
+
+["charmbracelet/glow"]
+  asset_filters = ["^sbom"]
+
+["sharkdp/hexyl"]
+  asset_filters = ["^musl", ".tar.gz"]
+
+["jesseduffield/lazydocker"]
+
+["jesseduffield/lazygit"]
+
+#
+# external
+#
+
+["cli/cli"]
+  asset_filters = [".tar.gz"]
+
